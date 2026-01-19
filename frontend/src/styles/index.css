@@ -1,0 +1,11 @@
+@import url('./normalize.css');
+@import url('./fonts.css');
+@import 'tailwindcss';
+
+@theme inline {
+  --font-atyp: atyp;
+}
+
+body {
+  font-family: atyp, sans-serif;
+}
