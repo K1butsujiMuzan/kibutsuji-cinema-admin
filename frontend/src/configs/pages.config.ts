@@ -1,4 +1,4 @@
 export const PAGES = {
-  LOGIN: '/',
+  MAIN: '/',
   DASHBOARD: '/dashboard',
 } as const

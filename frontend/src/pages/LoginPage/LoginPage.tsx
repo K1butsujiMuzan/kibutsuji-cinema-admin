@@ -1,0 +1,24 @@
+import LoginForm from './LoginForm.tsx'
+import LoginHeader from '../../components/layouts/LoginHeader.tsx'
+
+const LoginPage = () => {
+  return (
+    <>
+      <LoginHeader />
+      <main className={'py-10 md:pb-15 md:pt-35'}>
+        <div className={'px-10 w-full flex flex-col items-center gap-4'}>
+          <h1
+            className={
+              'text-2xl leading-8 md:text-34 md:leading-11 font-medium'
+            }
+          >
+            Login
+          </h1>
+          <LoginForm />
+        </div>
+      </main>
+    </>
+  )
+}
+
+export default LoginPage

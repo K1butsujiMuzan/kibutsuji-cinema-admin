@@ -2,8 +2,63 @@
 @import url('./fonts.css');
 @import 'tailwindcss';
 
-@theme inline {
+@theme {
+  --breakpoint-sn: 30rem;
+  --breakpoint-md: 50rem;
+
   --font-atyp: atyp;
+  --text-5: 0.3125rem;
+  --text-6: 0.375rem;
+  --text-10: 0.625rem;
+  --text-18: 1.125rem;
+  --text-22: 1.375rem;
+  --text-28: 1.75rem;
+  --text-32: 2rem;
+  --text-34: 2.125rem;
+  --text-40: 2.5rem;
+  --text-44: 2.75rem;
+  --text-54: 3.375rem;
+  --text-56: 3.5rem;
+  --text-80: 5rem;
+
+  --color-pink-50: #ede7f6;
+  --color-pink-100: #d1c4e8;
+  --color-pink-200: #b388ff;
+  --color-pink-300: #7e57c2;
+  --color-pink-400: #5e35b1;
+  --color-pink-450: #5833a2;
+  --color-pink-500: #513094;
+
+  --color-red-400: #ed1818;
+
+  --color-gray-50: #f2f2f3;
+  --color-gray-75: #a0a0a0;
+  --color-gray-100: #bfbfbf;
+  --color-gray-200: #59595b;
+  --color-gray-600: #3a3a3c;
+  --color-gray-700: #212529;
+  --color-gray-750: #252527;
+  --color-gray-800: #1c1c1c;
+  --color-gray-950: #0a0a0a;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-700);
+  }
+  html.dark {
+    background-color: var(--color-gray-950);
+    color: var(--color-gray-100);
+  }
+}
+
+.theme {
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 body {
