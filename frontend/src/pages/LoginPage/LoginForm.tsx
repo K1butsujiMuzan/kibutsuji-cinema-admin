@@ -4,6 +4,11 @@ import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { loginSchema, type TLogin } from '../../shared/schemes/login.schema.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { adminLogin } from '../../services/login.ts'
+import { useState } from 'react'
+import ErrorMessage from '../../components/ui/ErrorMessage/ErrorMessage.tsx'
+import { PAGES } from '../../configs/pages.config.ts'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
   const {
@@ -18,9 +23,18 @@ const LoginForm = () => {
     },
     resolver: zodResolver(loginSchema),
   })
+  const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
 
   const onFormSubmit: SubmitHandler<TLogin> = async (data) => {
-    console.log(data)
+    setError(null)
+    const response = await adminLogin(data.email, data.password)
+    if ('error' in response) {
+      setError(response.error)
+    } else {
+      localStorage.setItem('token', response.token)
+      navigate(PAGES.DASHBOARD)
+    }
   }
 
   return (
@@ -42,6 +56,7 @@ const LoginForm = () => {
             />
           )}
         />
+        {error && <ErrorMessage message={error} />}
         <Controller
           name={'password'}
           control={control}

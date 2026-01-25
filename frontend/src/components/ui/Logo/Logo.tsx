@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Logo = () => {
   return (
     <Link
-      to={PAGES.MAIN}
+      to={PAGES.DASHBOARD}
       aria-label={'to the main page'}
       className={'h-9 md:h-12.5'}
     >

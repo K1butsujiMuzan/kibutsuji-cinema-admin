@@ -1,5 +1,19 @@
 import LoginForm from './LoginForm.tsx'
-import LoginHeader from '../../components/layouts/LoginHeader.tsx'
+import LoginHeader from '../../components/layouts/LoginHeader/LoginHeader.tsx'
+import { checkToken } from '../../services/token.ts'
+import { PAGES } from '../../configs/pages.config.ts'
+import { redirect } from 'react-router-dom'
+
+export async function MainLoader() {
+  const token = localStorage.getItem('token') || ''
+  if (token) {
+    const isAuthorize = await checkToken(token)
+    if (isAuthorize) {
+      return redirect(PAGES.DASHBOARD)
+    }
+  }
+  return null
+}
 
 const LoginPage = () => {
   return (

@@ -5,15 +5,26 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { PAGES } from './configs/pages.config.ts'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
+import Header from './components/layouts/Header/Header.tsx'
+import ThemeProvider from './providers/ThemeProvider.tsx'
+import { MainLoader } from './pages/LoginPage/LoginPage.tsx'
+import { DashboardLoader } from './pages/DashboardPage/DashboardPage.tsx'
 
 const router = createBrowserRouter([
   {
     path: PAGES.MAIN,
     element: <LoginPage />,
+    loader: MainLoader,
   },
   {
-    path: PAGES.DASHBOARD,
-    element: <DashboardPage />,
+    element: <Header />,
+    loader: DashboardLoader,
+    children: [
+      {
+        path: PAGES.DASHBOARD,
+        element: <DashboardPage />,
+      },
+    ],
   },
   {
     path: '*',
@@ -23,6 +34,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>,
 )

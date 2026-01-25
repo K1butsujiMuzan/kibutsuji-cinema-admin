@@ -1,9 +1,9 @@
-import Logo from '../ui/Logo/Logo.tsx'
+import Logo from '../../ui/Logo/Logo.tsx'
 
 const LoginHeader = () => {
   return (
     <header
-      className={'bg-pink-50/60 dark:bg-gray-750/60 w-full px-3 py-2 shadow-sm'}
+      className={'bg-pink-50 dark:bg-gray-750 w-full px-3 py-2 shadow-sm'}
     >
       <div className={'flex justify-center'}>
         <Logo />
