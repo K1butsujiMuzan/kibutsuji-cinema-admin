@@ -1,6 +1,4 @@
-import type { ROLES } from '../schemes/roles.ts'
-
-export type TRole = (typeof ROLES)[keyof typeof ROLES]
+import type { TRole } from './roles.type.ts'
 
 export interface IUser {
   id: string

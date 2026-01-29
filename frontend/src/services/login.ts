@@ -44,7 +44,6 @@ export async function adminLogin(
       return { error: data.error || ERRORS.SOMETHING_WRONG }
     }
   } catch (error) {
-    alert(error)
     console.error(error)
     return {
       error: ERRORS.SOMETHING_WRONG,

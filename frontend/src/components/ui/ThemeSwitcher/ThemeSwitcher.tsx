@@ -1,4 +1,4 @@
-import { toggleTheme, useIsDark } from '../../../../stores/useThemeStore.ts'
+import { toggleTheme, useIsDark } from '../../../stores/useThemeStore.ts'
 import { DarkIcon, LightIcon } from './ThemeIcons.tsx'
 
 const ThemeSwitcher = () => {

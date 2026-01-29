@@ -8,10 +8,14 @@ body {
   background-color: inherit;
   color: inherit;
   transition: inherit;
+  margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  margin: 0;
-  min-height: 100%;
 }
 
 :where([fill]:not([fill='none'], [fill^='url'])) {

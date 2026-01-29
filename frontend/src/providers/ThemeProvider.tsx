@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useIsDark } from '../../stores/useThemeStore.ts'
+import { useIsDark } from '../stores/useThemeStore.ts'
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const isDark = useIsDark()
