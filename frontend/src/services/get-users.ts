@@ -1,4 +1,4 @@
-import { API_ENDPOINTS } from '../configs/api-endpoints.ts'
+import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import type { IUsers } from '../shared/types/users.type.ts'
 
 type IGetUsers = {

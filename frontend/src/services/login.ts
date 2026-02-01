@@ -1,5 +1,5 @@
-import { API_ENDPOINTS } from '../configs/api-endpoints.ts'
-import { ERRORS } from '../configs/errors.ts'
+import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
+import { ERRORS } from '../constants/errors.ts'
 import type { IUser } from '../shared/types/user.type.ts'
 
 interface ILoginError {

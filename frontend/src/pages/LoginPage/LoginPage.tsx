@@ -3,9 +3,10 @@ import LoginHeader from '../../components/layouts/LoginHeader/LoginHeader.tsx'
 import { checkToken } from '../../services/token.ts'
 import { PAGES } from '../../configs/pages.config.ts'
 import { redirect } from 'react-router-dom'
+import { getToken } from '../../lib/get-token.ts'
 
 export async function MainLoader() {
-  const token = localStorage.getItem('token') || ''
+  const token = getToken()
   if (token) {
     const isAuthorize = await checkToken(token)
     if (isAuthorize) {

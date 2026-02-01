@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Header from '../Header/Header.tsx'
 import Sidebar from '../Sidebar/Sidebar.tsx'
+import ToastBox from '../../ui/Toast/ToastBox.tsx'
 
 const MainLayout = () => {
   return (
@@ -12,6 +13,7 @@ const MainLayout = () => {
           <Outlet />
         </main>
       </div>
+      <ToastBox />
     </>
   )
 }

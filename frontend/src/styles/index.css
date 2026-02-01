@@ -22,10 +22,10 @@
   --text-80: 5rem;
 
   --color-pink-50: #ede7f6;
-  --color-pink-60: #ede7f6;
+  --color-pink-60: #e5ddf3;
   --color-pink-75: #ddd2ef;
   --color-pink-100: #d1c4e8;
-  --color-pink-150: #b9a9d0;
+  --color-pink-150: #c8bbe5;
   --color-pink-200: #b388ff;
   --color-pink-300: #7e57c2;
   --color-pink-400: #5e35b1;
@@ -60,6 +60,20 @@
   }
 }
 
+#toasts-box {
+  z-index: 100;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modal-hidden {
+  overflow: hidden;
+}
+
 .theme {
   transition:
     background-color 0.3s,
@@ -68,4 +82,14 @@
 
 body {
   font-family: atyp, sans-serif;
+}
+
+.hide-toast-indicator::after {
+  animation: hideToastIndicator 5s ease-in forwards;
+}
+
+@keyframes hideToastIndicator {
+  to {
+    width: 0;
+  }
 }
