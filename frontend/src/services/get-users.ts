@@ -5,7 +5,7 @@ type IGetUsers = {
   users: IUsers[]
 }
 
-export const getUsers = async (token: string): Promise<IUsers[] | null> => {
+export const getUsers = async (token: string): Promise<IUsers[] | []> => {
   try {
     const response = await fetch(API_ENDPOINTS.USERS, {
       method: 'GET',
@@ -14,7 +14,7 @@ export const getUsers = async (token: string): Promise<IUsers[] | null> => {
       },
     })
     if (!response.ok) {
-      return null
+      return []
     }
 
     const data: IGetUsers = await response.json()
@@ -22,6 +22,6 @@ export const getUsers = async (token: string): Promise<IUsers[] | null> => {
     return data.users
   } catch (error) {
     console.log(error)
-    return null
+    return []
   }
 }

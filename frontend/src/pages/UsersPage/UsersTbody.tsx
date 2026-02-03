@@ -35,7 +35,7 @@ const UsersTbody = ({ isEven, user, onChange, isChecked }: Props) => {
     >
       <td>
         <TableCheckbox
-          className={'p-2.5'}
+          className={'p-3'}
           id={id}
           name={'user'}
           checked={isChecked}

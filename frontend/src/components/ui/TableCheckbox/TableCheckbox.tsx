@@ -26,10 +26,14 @@ const TableCheckbox = ({ className, id, name, checked, onChange }: Props) => {
       onKeyDown={onLabelKeyDown}
       role={'checkbox'}
       aria-checked={checked}
-      className={cn('relative flex items-center justify-center', className, {
-        'bg-gray-50 dark:bg-gray-950': !checked,
-        'bg-pink-300': checked,
-      })}
+      className={cn(
+        'relative flex items-center justify-center transition duration-300',
+        className,
+        {
+          'bg-gray-50 dark:bg-gray-950': !checked,
+          'bg-pink-300': checked,
+        },
+      )}
       tabIndex={0}
       htmlFor={id}
     >

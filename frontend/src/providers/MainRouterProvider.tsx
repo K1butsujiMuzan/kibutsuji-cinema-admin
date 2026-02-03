@@ -15,6 +15,8 @@ import StatusesPage from '../pages/StatusesPage'
 import TypesPage from '../pages/TypesPage'
 import UsersPage from '../pages/UsersPage'
 import VerificationsPage from '../pages/VerificationsPage'
+import { Suspense } from 'react'
+import PageLoader from '../components/ui/PageLoader/PageLoader.tsx'
 
 const router = createBrowserRouter([
   {
@@ -64,7 +66,11 @@ const router = createBrowserRouter([
       },
       {
         path: PAGES.USERS,
-        element: <UsersPage />,
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <UsersPage />
+          </Suspense>
+        ),
       },
       {
         path: PAGES.VERIFICATIONS,

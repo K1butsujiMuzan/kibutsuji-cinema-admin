@@ -1,8 +1,6 @@
 import { getUsers } from '../../services/get-users.ts'
-import type { IUsers } from '../../shared/types/users.type.ts'
 import { userColumns } from './user-page.data.ts'
-import { useEffect, useState } from 'react'
-import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
+import { useState } from 'react'
 import { deleteUsers } from '../../services/delete-users.ts'
 import { useAddToast } from '../../stores/useToastsStore.ts'
 import Thead from '../../components/ui/Thead/Thead.tsx'
@@ -12,32 +10,35 @@ import AddButton from '../../components/ui/AddButton/AddButton.tsx'
 import DeleteButton from '../../components/ui/DeleteButton/DeleteButton.tsx'
 import CreateUser from './CreateUser.tsx'
 import { getToken } from '../../lib/get-token.ts'
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
+import { QUERY_KEYS } from '../../constants/query-keys.ts'
 
 const UsersPage = () => {
-  const [users, setUsers] = useState<IUsers[] | []>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [checkboxes, setCheckboxes] = useState<string[]>([])
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
   const addToast = useAddToast()
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const token = getToken()
-      const data = await getUsers(token)
+  const queryClient = useQueryClient()
 
-      if (data) {
-        setUsers(data)
+  const { data } = useSuspenseQuery({
+    queryFn: () => getUsers(getToken()),
+    queryKey: [QUERY_KEYS.USERS],
+  })
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (ids: string[]) => deleteUsers(getToken(), ids),
+    onSuccess: (data) => {
+      addToast(data)
+      if (data.isSuccess) {
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        setCheckboxes([])
       }
-
-      setIsLoading(false)
-    }
-
-    fetchUsers()
-  }, [])
-
-  if (isLoading) {
-    return <PageLoader />
-  }
+    },
+  })
 
   const onHandleCheck = (id: string) => {
     const isChecked: boolean = checkboxes.includes(id)
@@ -49,18 +50,12 @@ const UsersPage = () => {
   }
 
   const toggleAll = () => {
-    if (checkboxes.length === users.length) {
+    if (checkboxes.length === data.length) {
       setCheckboxes([])
     } else {
-      const allUsers: string[] = users.map((user) => user.id)
+      const allUsers: string[] = data.map((user) => user.id)
       setCheckboxes([...allUsers])
     }
-  }
-
-  const onDelete = async () => {
-    const token = getToken()
-    const data = await deleteUsers(token, checkboxes)
-    addToast(data)
   }
 
   return (
@@ -73,7 +68,11 @@ const UsersPage = () => {
             onClick={() => setIsCreateModalOpen(true)}
           />
           {checkboxes.length > 0 && (
-            <DeleteButton label={'user(s)'} onClick={onDelete} />
+            <DeleteButton
+              label={'user(s)'}
+              onClick={() => mutate(checkboxes)}
+              disabled={isPending}
+            />
           )}
         </div>
         <div className={'overflow-x-auto'}>
@@ -82,12 +81,12 @@ const UsersPage = () => {
           >
             <Thead
               columns={userColumns}
-              isChecked={users.length > 0 && users.length === checkboxes.length}
+              isChecked={data.length > 0 && data.length === checkboxes.length}
               onChange={toggleAll}
             />
             <tbody className={'divide-y text-sm'}>
-              {!!users.length &&
-                users.map((item, index) => (
+              {!!data.length &&
+                data.map((item, index) => (
                   <UsersTbody
                     user={item}
                     key={item.id}
@@ -98,8 +97,8 @@ const UsersPage = () => {
                 ))}
             </tbody>
           </table>
-          {!users.length && <EmptyTable />}
         </div>
+        {!data.length && <EmptyTable />}
       </div>
       {isCreateModalOpen && <CreateUser setIsOpen={setIsCreateModalOpen} />}
     </>

@@ -54,7 +54,7 @@ const CreateModal = ({ id, children, label, setIsOpen }: Props) => {
     >
       <div
         className={
-          'bg-gray-50 dark:bg-gray-950 w-full max-w-100 rounded-2xl p-3 flex flex-col items-center relative'
+          'bg-gray-50 dark:bg-gray-950 w-full max-w-150 rounded-2xl p-4 flex flex-col items-center relative max-h-full overflow-auto'
         }
         role={'dialog'}
         aria-modal={true}

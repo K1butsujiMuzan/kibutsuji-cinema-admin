@@ -12,6 +12,9 @@ import {
 } from '../../shared/schemes/create-user.schema.ts'
 import { createUser } from '../../services/create-user.ts'
 import { useAddToast } from '../../stores/useToastsStore.ts'
+import { getToken } from '../../lib/get-token.ts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { QUERY_KEYS } from '../../constants/query-keys.ts'
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -19,11 +22,23 @@ interface Props {
 
 const CreateUser = ({ setIsOpen }: Props) => {
   const addToast = useAddToast()
+  const queryClient = useQueryClient()
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: TCreateUser) => createUser(getToken(), data),
+    onSuccess: (data) => {
+      addToast(data)
+      if (data.isSuccess) {
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        setIsOpen(false)
+      }
+    },
+  })
 
   const {
     control,
     handleSubmit,
-    formState: { isValid, errors, dirtyFields, isSubmitting },
+    formState: { isValid, errors, dirtyFields },
   } = useForm<TCreateUser>({
     resolver: zodResolver(createUserSchema),
     mode: 'onChange',
@@ -36,12 +51,7 @@ const CreateUser = ({ setIsOpen }: Props) => {
   })
 
   const onFormSubmit: SubmitHandler<TCreateUser> = async (data) => {
-    const token = localStorage.getItem('token') ?? ''
-    const response = await createUser(token, data)
-    addToast(response)
-    if (response.isSuccess) {
-      setIsOpen(false)
-    }
+    mutate(data)
   }
 
   return (
@@ -108,8 +118,8 @@ const CreateUser = ({ setIsOpen }: Props) => {
           />
         </div>
         <LoginButton
-          text={isSubmitting ? 'Creating...' : 'Create a User'}
-          disabled={isSubmitting || !isValid}
+          text={isPending ? 'Creating...' : 'Create a User'}
+          disabled={isPending || !isValid}
         />
       </form>
     </CreateModal>
