@@ -3,10 +3,7 @@ import type { TToast } from '../shared/types/toast.type.ts'
 import { ERRORS } from '../constants/errors.ts'
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { SUCCESS } from '../constants/success.ts'
-
-type TCreate = {
-  error: string | null
-}
+import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 
 export const createUser = async (
   token: string,
@@ -16,20 +13,23 @@ export const createUser = async (
   const date = new Date().toString()
 
   try {
+    const { name, email, password, isReceiveNotifications } = user
+
     const response = await fetch(API_ENDPOINTS.USERS, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        isReceiveNotifications: user.isReceiveNotifications,
+        name,
+        email,
+        password,
+        isReceiveNotifications,
       }),
     })
 
-    const data: TCreate = await response.json()
+    const data: TToastResponse = await response.json()
 
     if (!response.ok && !('error' in data)) {
       return {

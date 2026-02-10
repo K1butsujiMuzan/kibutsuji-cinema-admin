@@ -27,7 +27,7 @@ const TableCheckbox = ({ className, id, name, checked, onChange }: Props) => {
       role={'checkbox'}
       aria-checked={checked}
       className={cn(
-        'relative flex items-center justify-center transition duration-300',
+        'relative flex items-center justify-center transition duration-300 w-full h-full',
         className,
         {
           'bg-gray-50 dark:bg-gray-950': !checked,

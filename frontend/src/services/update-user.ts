@@ -1,24 +1,37 @@
-import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
+import type { TUpdateUser } from '../shared/schemes/update-user.schema.ts'
 import type { TToast } from '../shared/types/toast.type.ts'
-import { SUCCESS } from '../constants/success.ts'
+import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
+import { SUCCESS } from '../constants/success.ts'
 
-export const deleteUsers = async (
+export const updateUser = async (
   token: string,
-  id: string[],
+  id: string,
+  user: TUpdateUser,
 ): Promise<TToast> => {
   const randomID = crypto?.randomUUID()
   const date = new Date().toString()
 
   try {
+    const { email, name, role, image, emailVerified, isReceiveNotifications } =
+      user
+
     const response = await fetch(API_ENDPOINTS.USERS, {
-      method: 'DELETE',
+      method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(id),
+      body: JSON.stringify({
+        id,
+        email,
+        name,
+        role,
+        image,
+        emailVerified,
+        isReceiveNotifications,
+      }),
     })
 
     const data: TToastResponse = await response.json()
@@ -43,7 +56,7 @@ export const deleteUsers = async (
 
     return {
       id: randomID || date,
-      title: SUCCESS.DELETE('User(s)'),
+      title: SUCCESS.CREATE('User'),
       message: '',
       isSuccess: true,
     }

@@ -5,18 +5,14 @@ import { MainLoader } from '../pages/LoginPage/LoginPage.tsx'
 import MainLayout from '../components/layouts/MainLayout/MainLayout.tsx'
 import { DashboardLoader } from '../pages/DashboardPage/DashboardPage.tsx'
 import DashboardPage from '../pages/DashboardPage'
-import AccountPage from '../pages/AccountPage'
-import AgeLimitsPage from '../pages/AgeLimitsPage'
 import AnimePage from '../pages/AnimePage'
 import EpisodesPage from '../pages/EpisodesPage'
 import GenresPage from '../pages/GenresPage'
-import SessionsPage from '../pages/SessionsPage'
-import StatusesPage from '../pages/StatusesPage'
-import TypesPage from '../pages/TypesPage'
 import UsersPage from '../pages/UsersPage'
-import VerificationsPage from '../pages/VerificationsPage'
-import { Suspense } from 'react'
-import PageLoader from '../components/ui/PageLoader/PageLoader.tsx'
+import RatingPage from '../pages/RatingPage'
+import LikesPage from '../pages/LikesPage'
+import CommentsPage from '../pages/CommentsPage'
+import ListsPage from '../pages/ListsPage'
 
 const router = createBrowserRouter([
   {
@@ -33,14 +29,6 @@ const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
-        path: PAGES.ACCOUNTS,
-        element: <AccountPage />,
-      },
-      {
-        path: PAGES.AGE_LIMITS,
-        element: <AgeLimitsPage />,
-      },
-      {
         path: PAGES.ANIME,
         element: <AnimePage />,
       },
@@ -53,28 +41,24 @@ const router = createBrowserRouter([
         element: <GenresPage />,
       },
       {
-        path: PAGES.SESSIONS,
-        element: <SessionsPage />,
+        path: PAGES.RATINGS,
+        element: <RatingPage />,
       },
       {
-        path: PAGES.STATUSES,
-        element: <StatusesPage />,
+        path: PAGES.LIKES,
+        element: <LikesPage />,
       },
       {
-        path: PAGES.TYPES,
-        element: <TypesPage />,
+        path: PAGES.COMMENTS,
+        element: <CommentsPage />,
+      },
+      {
+        path: PAGES.LISTS,
+        element: <ListsPage />,
       },
       {
         path: PAGES.USERS,
-        element: (
-          <Suspense fallback={<PageLoader />}>
-            <UsersPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: PAGES.VERIFICATIONS,
-        element: <VerificationsPage />,
+        element: <UsersPage />,
       },
     ],
   },

@@ -1,15 +1,17 @@
 import { cn } from '../../lib/utils.ts'
 import TableCheckbox from '../../components/ui/TableCheckbox/TableCheckbox.tsx'
 import type { IUsers } from '../../shared/types/users.type.ts'
+import EditButton from '../../components/ui/EditButton/EditButton.tsx'
 
 interface Props {
   isEven: boolean
   user: IUsers
   isChecked: boolean
   onChange: () => void
+  onEdit: () => void
 }
 
-const UsersTbody = ({ isEven, user, onChange, isChecked }: Props) => {
+const UsersTbody = ({ isEven, user, onChange, isChecked, onEdit }: Props) => {
   const {
     id,
     name,
@@ -34,13 +36,19 @@ const UsersTbody = ({ isEven, user, onChange, isChecked }: Props) => {
       key={id}
     >
       <td>
-        <TableCheckbox
-          className={'p-3'}
-          id={id}
-          name={'user'}
-          checked={isChecked}
-          onChange={onChange}
-        />
+        <span className={'w-10 h-10 block'}>
+          <EditButton label={`user: ${email}`} onClick={onEdit} />
+        </span>
+      </td>
+      <td>
+        <span className={'w-10 h-10 block'}>
+          <TableCheckbox
+            id={id}
+            name={'user'}
+            checked={isChecked}
+            onChange={onChange}
+          />
+        </span>
       </td>
       <td className={'p-2'}>{id}</td>
       <td className={'p-2'}>{new Date(createdAt).toLocaleDateString()}</td>

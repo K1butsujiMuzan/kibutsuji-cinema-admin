@@ -26,10 +26,10 @@ const CreateUser = ({ setIsOpen }: Props) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TCreateUser) => createUser(getToken(), data),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       addToast(data)
       if (data.isSuccess) {
-        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
         setIsOpen(false)
       }
     },
@@ -67,7 +67,7 @@ const CreateUser = ({ setIsOpen }: Props) => {
               <LoginInput
                 {...field}
                 isValid={!!errors.name?.message}
-                labelText={'name'}
+                labelText={'Name'}
                 id={'name'}
               />
             )}
@@ -79,7 +79,7 @@ const CreateUser = ({ setIsOpen }: Props) => {
               <LoginInput
                 {...field}
                 isValid={!!errors.email?.message}
-                labelText={'email'}
+                labelText={'Email'}
                 id={'email'}
                 type={'email'}
               />

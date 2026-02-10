@@ -1,17 +1,15 @@
 import type { FC, SVGProps } from 'react'
 import { PAGES } from '../../../configs/pages.config.ts'
 import {
-  SidebarAccountIcon,
-  SidebarAgeIcon,
   SidebarAnimeIcon,
+  SidebarCommentIcon,
   SidebarEpisodeIcon,
   SidebarGenreIcon,
+  SidebarLikeIcon,
+  SidebarListIcon,
   SidebarMainIcon,
-  SidebarSessionIcon,
-  SidebarStatusIcon,
-  SidebarTypeIcon,
+  SidebarRatingIcon,
   SidebarUserIcon,
-  SidebarVerificationIcon,
 } from './SidebarIcons.tsx'
 
 interface ISidebar {
@@ -25,16 +23,6 @@ export const sidebar: ISidebar[] = [
     href: PAGES.DASHBOARD,
     name: 'Main',
     icon: SidebarMainIcon,
-  },
-  {
-    href: PAGES.ACCOUNTS,
-    name: 'Accounts',
-    icon: SidebarAccountIcon,
-  },
-  {
-    href: PAGES.AGE_LIMITS,
-    name: 'Age limits',
-    icon: SidebarAgeIcon,
   },
   {
     href: PAGES.ANIME,
@@ -52,28 +40,28 @@ export const sidebar: ISidebar[] = [
     icon: SidebarGenreIcon,
   },
   {
-    href: PAGES.SESSIONS,
-    name: 'Sessions',
-    icon: SidebarSessionIcon,
+    href: PAGES.RATINGS,
+    name: 'Ratings',
+    icon: SidebarRatingIcon,
   },
   {
-    href: PAGES.STATUSES,
-    name: 'Statuses',
-    icon: SidebarStatusIcon,
+    href: PAGES.LIKES,
+    name: 'Likes',
+    icon: SidebarLikeIcon,
   },
   {
-    href: PAGES.TYPES,
-    name: 'Types',
-    icon: SidebarTypeIcon,
+    href: PAGES.COMMENTS,
+    name: 'Comments',
+    icon: SidebarCommentIcon,
+  },
+  {
+    href: PAGES.LISTS,
+    name: 'Lists',
+    icon: SidebarListIcon,
   },
   {
     href: PAGES.USERS,
     name: 'Users',
     icon: SidebarUserIcon,
-  },
-  {
-    href: PAGES.VERIFICATIONS,
-    name: 'Verifications',
-    icon: SidebarVerificationIcon,
   },
 ]

@@ -1,27 +1,37 @@
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import type { IUsers } from '../shared/types/users.type.ts'
+import { PAGE_LIMIT } from '../constants/page-limit.ts'
 
 type IGetUsers = {
   users: IUsers[]
+  count: number
 }
 
-export const getUsers = async (token: string): Promise<IUsers[] | []> => {
+export const getUsers = async (token: string, page = 1): Promise<IGetUsers> => {
   try {
-    const response = await fetch(API_ENDPOINTS.USERS, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const response = await fetch(
+      `${API_ENDPOINTS.USERS}?page=${page}&limit=${PAGE_LIMIT}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       },
-    })
+    )
     if (!response.ok) {
-      return []
+      return {
+        users: [],
+        count: 0,
+      }
     }
 
-    const data: IGetUsers = await response.json()
-
-    return data.users
+    return await response.json()
   } catch (error) {
     console.log(error)
-    return []
+    return {
+      users: [],
+      count: 0,
+    }
   }
 }

@@ -6,39 +6,54 @@ import { useAddToast } from '../../stores/useToastsStore.ts'
 import Thead from '../../components/ui/Thead/Thead.tsx'
 import EmptyTable from '../../components/ui/EmptyTable/EmptyTable.tsx'
 import UsersTbody from './UsersTbody.tsx'
-import AddButton from '../../components/ui/AddButton/AddButton.tsx'
-import DeleteButton from '../../components/ui/DeleteButton/DeleteButton.tsx'
 import CreateUser from './CreateUser.tsx'
 import { getToken } from '../../lib/get-token.ts'
 import {
+  keepPreviousData,
   useMutation,
+  useQuery,
   useQueryClient,
-  useSuspenseQuery,
 } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import type { IUsers } from '../../shared/types/users.type.ts'
+import UpdateUser from './UpdateUser.tsx'
+import ControlBox from '../../components/ui/ControlBox/ControlBox.tsx'
+import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
+import PageChanger from '../../components/ui/PageChanger/PageChanger.tsx'
 
 const UsersPage = () => {
   const [checkboxes, setCheckboxes] = useState<string[]>([])
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false)
+  const [editUser, setEditUser] = useState<IUsers | null>(null)
+  const [page, setPage] = useState<number>(1)
+
   const addToast = useAddToast()
 
   const queryClient = useQueryClient()
 
-  const { data } = useSuspenseQuery({
-    queryFn: () => getUsers(getToken()),
-    queryKey: [QUERY_KEYS.USERS],
+  const { data = { users: [], count: 0 }, isPending } = useQuery({
+    queryFn: () => getUsers(getToken(), page),
+    queryKey: [QUERY_KEYS.USERS, page],
+    placeholderData: keepPreviousData,
   })
 
-  const { mutate, isPending } = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: (ids: string[]) => deleteUsers(getToken(), ids),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       addToast(data)
       if (data.isSuccess) {
-        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
         setCheckboxes([])
       }
     },
   })
+
+  if (isPending) {
+    return <PageLoader />
+  }
+
+  const { users, count } = data
 
   const onHandleCheck = (id: string) => {
     const isChecked: boolean = checkboxes.includes(id)
@@ -50,57 +65,75 @@ const UsersPage = () => {
   }
 
   const toggleAll = () => {
-    if (checkboxes.length === data.length) {
+    if (checkboxes.length === users.length) {
       setCheckboxes([])
     } else {
-      const allUsers: string[] = data.map((user) => user.id)
+      const allUsers: string[] = users.map((user) => user.id)
       setCheckboxes([...allUsers])
     }
   }
 
+  const onHandleEdit = (user: IUsers) => {
+    setEditUser(user)
+    setIsUpdateModalOpen(true)
+  }
+
+  const onChangePage = (isIncrement: boolean): void => {
+    setPage((prevState) => (isIncrement ? prevState + 1 : prevState - 1))
+  }
+
   return (
     <>
-      <div className={'flex flex-col p-4'}>
-        <div className={'flex gap-2 items-center'}>
-          <h1 className={'text-32 font-bold'}>Users</h1>
-          <AddButton
-            label={'user'}
-            onClick={() => setIsCreateModalOpen(true)}
+      <div className={'flex flex-col p-4 justify-between h-full gap-2'}>
+        <div className={'flex flex-col gap-2'}>
+          <ControlBox
+            title={'Users'}
+            onAdd={() => setIsCreateModalOpen(true)}
+            onDelete={() => deleteMutation.mutate(checkboxes)}
+            isPending={deleteMutation.isPending}
+            isChecked={checkboxes.length > 0}
+            addLabel={'user'}
+            deleteLabel={'user(s)'}
           />
-          {checkboxes.length > 0 && (
-            <DeleteButton
-              label={'user(s)'}
-              onClick={() => mutate(checkboxes)}
-              disabled={isPending}
-            />
-          )}
+          <div className={'overflow-x-auto'}>
+            <table className={'text-left text-nowrap border border-collapse'}>
+              <Thead
+                columns={userColumns}
+                isChecked={
+                  users.length > 0 && users.length === checkboxes.length
+                }
+                onChange={toggleAll}
+              />
+              <tbody className={'divide-y text-sm'}>
+                {!!users.length &&
+                  users.map((item, index) => (
+                    <UsersTbody
+                      onEdit={() => onHandleEdit(item)}
+                      user={item}
+                      key={item.id}
+                      isEven={index % 2 === 0}
+                      isChecked={checkboxes.includes(item.id)}
+                      onChange={() => onHandleCheck(item.id)}
+                    />
+                  ))}
+              </tbody>
+            </table>
+          </div>
+          {!users.length && <EmptyTable />}
         </div>
-        <div className={'overflow-x-auto'}>
-          <table
-            className={'text-left text-nowrap border w-full border-collapse'}
-          >
-            <Thead
-              columns={userColumns}
-              isChecked={data.length > 0 && data.length === checkboxes.length}
-              onChange={toggleAll}
-            />
-            <tbody className={'divide-y text-sm'}>
-              {!!data.length &&
-                data.map((item, index) => (
-                  <UsersTbody
-                    user={item}
-                    key={item.id}
-                    isEven={index % 2 === 0}
-                    isChecked={checkboxes.includes(item.id)}
-                    onChange={() => onHandleCheck(item.id)}
-                  />
-                ))}
-            </tbody>
-          </table>
-        </div>
-        {!data.length && <EmptyTable />}
+        {count > 10 && (
+          <PageChanger
+            page={page}
+            count={count}
+            onBack={() => onChangePage(false)}
+            onForward={() => onChangePage(true)}
+          />
+        )}
       </div>
       {isCreateModalOpen && <CreateUser setIsOpen={setIsCreateModalOpen} />}
+      {isUpdateModalOpen && !!editUser && (
+        <UpdateUser user={editUser} setIsOpen={setIsUpdateModalOpen} />
+      )}
     </>
   )
 }

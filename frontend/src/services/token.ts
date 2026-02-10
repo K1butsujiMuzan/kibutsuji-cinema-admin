@@ -1,15 +1,13 @@
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { ERRORS } from '../constants/errors.ts'
-
-interface ITokenResponse {
-  error: string | null
-}
+import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 
 export const checkToken = async (token: string): Promise<boolean> => {
   try {
     const response = await fetch(API_ENDPOINTS.TOKEN, {
       headers: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
       method: 'GET',
     })
@@ -18,7 +16,7 @@ export const checkToken = async (token: string): Promise<boolean> => {
       return false
     }
 
-    const data: ITokenResponse = await response.json()
+    const data: TToastResponse = await response.json()
 
     if (data.error) return false
 
