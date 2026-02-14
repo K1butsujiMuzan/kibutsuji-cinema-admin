@@ -1,31 +1,38 @@
+import type { TAnime } from '../../shared/types/anime.type.ts'
 import { cn } from '../../lib/utils.ts'
-import TableCheckbox from '../../components/ui/TableCheckbox/TableCheckbox.tsx'
-import type { IUsers } from '../../shared/types/users.type.ts'
 import EditButton from '../../components/ui/EditButton/EditButton.tsx'
+import TableCheckbox from '../../components/ui/TableCheckbox/TableCheckbox.tsx'
 import TableBaseCell from '../../components/ui/TableCells/TableBaseCell.tsx'
-import TableBooleanCell from '../../components/ui/TableCells/TableBooleanCell.tsx'
 import TableNullableCell from '../../components/ui/TableCells/TableNullableCell.tsx'
 
 interface Props {
   isEven: boolean
-  user: IUsers
+  anime: TAnime
   isChecked: boolean
   onChange: () => void
   onEdit: () => void
 }
 
-const UsersTbody = ({ isEven, user, onChange, isChecked, onEdit }: Props) => {
+const AnimeTBody = ({ isEven, anime, isChecked, onChange, onEdit }: Props) => {
   const {
     id,
-    name,
-    isReceiveNotifications,
-    emailVerified,
-    email,
-    image,
+    title,
     createdAt,
-    role,
+    image,
+    type,
     updatedAt,
-  } = user
+    originalTitle,
+    ageLimit,
+    episodesLength,
+    episodesCount,
+    episodesReleased,
+    releaseDate,
+    slug,
+    genres,
+    status,
+    views,
+    description,
+  } = anime
 
   return (
     <tr
@@ -39,7 +46,7 @@ const UsersTbody = ({ isEven, user, onChange, isChecked, onEdit }: Props) => {
     >
       <td>
         <span className={'w-10 h-10 block'}>
-          <EditButton label={`user: ${email}`} onClick={onEdit} />
+          <EditButton label={`anime: ${slug}`} onClick={onEdit} />
         </span>
       </td>
       <td>
@@ -53,16 +60,24 @@ const UsersTbody = ({ isEven, user, onChange, isChecked, onEdit }: Props) => {
         </span>
       </td>
       <TableBaseCell name={id} />
+      <TableBaseCell name={ageLimit} />
       <TableBaseCell name={new Date(createdAt).toLocaleDateString()} />
-      <TableBaseCell name={email} />
-      <TableBooleanCell value={emailVerified} />
+      <TableNullableCell value={description} />
+      <TableBaseCell name={episodesCount.toString()} />
+      <TableBaseCell name={episodesLength.toString()} />
+      <TableBaseCell name={episodesReleased.toString()} />
       <TableNullableCell value={image} />
-      <TableBooleanCell value={isReceiveNotifications} />
-      <TableBaseCell name={name} />
-      <TableBaseCell name={role} />
+      <TableBaseCell name={originalTitle} />
+      <TableBaseCell name={new Date(releaseDate).toLocaleDateString()} />
+      <TableBaseCell name={slug} />
+      <TableBaseCell name={status} />
+      <TableBaseCell name={title} />
+      <TableBaseCell name={type} />
       <TableBaseCell name={new Date(updatedAt).toLocaleDateString()} />
+      <TableBaseCell name={views.toString()} />
+      <TableBaseCell name={genres.map((item) => item.id).join(' ')} />
     </tr>
   )
 }
 
-export default UsersTbody
+export default AnimeTBody

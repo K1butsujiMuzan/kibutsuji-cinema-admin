@@ -10,13 +10,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import LoginCheckbox from '../../components/ui/LoginCheckbox/LoginCheckbox.tsx'
-import Select from '../Select/Select.tsx'
+import Select from '../../components/ui/Select/Select.tsx'
 import { userRoles } from './user-page.data.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAddToast } from '../../stores/useToastsStore.ts'
-import { updateUser } from '../../services/update-user.ts'
-import { getToken } from '../../lib/get-token.ts'
+import { updateData } from '../../services/update-data.ts'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -38,11 +38,15 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
   const queryClient = useQueryClient()
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TUpdateUser) => updateUser(getToken(), id, data),
+    mutationFn: (data: TUpdateUser) =>
+      updateData(id, data, API_ENDPOINTS.USERS),
     onSuccess: async (data) => {
       addToast(data)
       if (data.isSuccess) {
-        await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        await queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.USERS],
+          exact: false,
+        })
         setIsOpen(false)
       }
     },

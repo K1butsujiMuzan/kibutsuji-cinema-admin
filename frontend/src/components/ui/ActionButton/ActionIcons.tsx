@@ -76,8 +76,8 @@ export const ActionArrowRightIcon = () => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M7.06768 0L5.4001 1.68644L15.3136 12.0157L14.2565 13.1174L14.2618 13.1114L5.45342 22.2881L7.09697 24C9.53151 21.4637 16.3282 14.3826 18.6001 12.0157C16.9128 10.2567 18.5583 11.9709 7.06768 0Z"
         fill="white"
       />

@@ -4,20 +4,26 @@ import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 import { SUCCESS } from '../constants/success.ts'
+import type { TDataAnime } from '../shared/schemes/data-anime.schema.ts'
+import { getToastId } from '../lib/get-toast-id.ts'
+import { getToken } from '../lib/get-token.ts'
+import { SERVICE_MESSAGE_LABELS } from '../constants/service-message-labels.ts'
 
-export const updateUser = async (
-  token: string,
+type TEndpointType = {
+  [API_ENDPOINTS.USERS]: TUpdateUser
+  [API_ENDPOINTS.ANIME]: TDataAnime
+}
+
+export const updateData = async <T extends keyof TEndpointType>(
   id: string,
-  user: TUpdateUser,
+  data: TEndpointType[T],
+  endpoint: T,
 ): Promise<TToast> => {
-  const randomID = crypto?.randomUUID()
-  const date = new Date().toString()
+  const toastID = getToastId()
+  const token = getToken()
 
   try {
-    const { email, name, role, image, emailVerified, isReceiveNotifications } =
-      user
-
-    const response = await fetch(API_ENDPOINTS.USERS, {
+    const response = await fetch(endpoint as string, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -25,45 +31,40 @@ export const updateUser = async (
       },
       body: JSON.stringify({
         id,
-        email,
-        name,
-        role,
-        image,
-        emailVerified,
-        isReceiveNotifications,
+        ...data,
       }),
     })
 
-    const data: TToastResponse = await response.json()
+    const serverData: TToastResponse = await response.json()
 
-    if (!response.ok && !('error' in data)) {
+    if (!response.ok && !('error' in serverData)) {
       return {
-        id: randomID || date,
+        id: toastID,
         title: ERRORS.SOMETHING_WRONG,
         message: '',
         isSuccess: false,
       }
     }
 
-    if (data.error) {
+    if (serverData.error) {
       return {
-        id: randomID || date,
-        title: data.error,
+        id: toastID,
+        title: serverData.error,
         message: '',
         isSuccess: false,
       }
     }
 
     return {
-      id: randomID || date,
-      title: SUCCESS.CREATE('User'),
+      id: toastID,
+      title: SUCCESS.UPDATE(SERVICE_MESSAGE_LABELS[endpoint]),
       message: '',
       isSuccess: true,
     }
   } catch (error) {
     console.log(error)
     return {
-      id: randomID || date,
+      id: toastID,
       title: ERRORS.SOMETHING_WRONG,
       message: '',
       isSuccess: false,

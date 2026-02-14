@@ -1,7 +1,7 @@
-import { getUsers } from '../../services/get-users.ts'
+import { getData } from '../../services/get-data.ts'
 import { userColumns } from './user-page.data.ts'
 import { useState } from 'react'
-import { deleteUsers } from '../../services/delete-users.ts'
+import { deleteData } from '../../services/delete-data.ts'
 import { useAddToast } from '../../stores/useToastsStore.ts'
 import Thead from '../../components/ui/Thead/Thead.tsx'
 import EmptyTable from '../../components/ui/EmptyTable/EmptyTable.tsx'
@@ -20,6 +20,7 @@ import UpdateUser from './UpdateUser.tsx'
 import ControlBox from '../../components/ui/ControlBox/ControlBox.tsx'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageChanger from '../../components/ui/PageChanger/PageChanger.tsx'
+import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 
 const UsersPage = () => {
   const [checkboxes, setCheckboxes] = useState<string[]>([])
@@ -32,28 +33,36 @@ const UsersPage = () => {
 
   const queryClient = useQueryClient()
 
-  const { data = { users: [], count: 0 }, isPending } = useQuery({
-    queryFn: () => getUsers(getToken(), page),
+  const usersQuery = useQuery({
+    queryFn: () => getData(getToken(), page, API_ENDPOINTS.USERS),
     queryKey: [QUERY_KEYS.USERS, page],
     placeholderData: keepPreviousData,
   })
 
+  const { isPending, isFetching, data } = usersQuery
+  const queryData = (data as
+    | { users: IUsers[]; count: number }
+    | undefined) ?? { users: [], count: 0 }
+  const { users, count } = queryData
+
   const deleteMutation = useMutation({
-    mutationFn: (ids: string[]) => deleteUsers(getToken(), ids),
+    mutationFn: (ids: string[]) =>
+      deleteData(getToken(), ids, API_ENDPOINTS.USERS, 'User(s)'),
     onSuccess: async (data) => {
       addToast(data)
       if (data.isSuccess) {
-        await queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        await queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.USERS],
+          exact: false,
+        })
         setCheckboxes([])
       }
     },
   })
 
-  if (isPending) {
+  if (isPending || !users) {
     return <PageLoader />
   }
-
-  const { users, count } = data
 
   const onHandleCheck = (id: string) => {
     const isChecked: boolean = checkboxes.includes(id)
@@ -123,6 +132,7 @@ const UsersPage = () => {
         </div>
         {count > 10 && (
           <PageChanger
+            disabled={isFetching}
             page={page}
             count={count}
             onBack={() => onChangePage(false)}

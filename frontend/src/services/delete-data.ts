@@ -1,18 +1,19 @@
-import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import type { TToast } from '../shared/types/toast.type.ts'
 import { SUCCESS } from '../constants/success.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 
-export const deleteUsers = async (
+export const deleteData = async (
   token: string,
   id: string[],
+  endpoint: string,
+  title: string,
 ): Promise<TToast> => {
   const randomID = crypto?.randomUUID()
   const date = new Date().toString()
 
   try {
-    const response = await fetch(API_ENDPOINTS.USERS, {
+    const response = await fetch(endpoint, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -43,7 +44,7 @@ export const deleteUsers = async (
 
     return {
       id: randomID || date,
-      title: SUCCESS.DELETE('User(s)'),
+      title: SUCCESS.DELETE(title),
       message: '',
       isSuccess: true,
     }

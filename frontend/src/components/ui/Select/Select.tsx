@@ -27,7 +27,7 @@ const Select = ({ values, id, ...props }: Props) => {
       </select>
       <svg
         className={
-          'absolute right-[5%] top-[calc(50%-0.5rem)] peer-open:rotate-180 transition duration-300'
+          'absolute right-[5%] top-[calc(50%-0.5rem)] peer-open:rotate-180 transition duration-300 pointer-events-none'
         }
         role={'img'}
         aria-hidden={true}

@@ -1,16 +1,26 @@
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import type { IUsers } from '../shared/types/users.type.ts'
 import { PAGE_LIMIT } from '../constants/page-limit.ts'
+import type { TAnime } from '../shared/types/anime.type.ts'
 
-type IGetUsers = {
-  users: IUsers[]
+type TEndpointType = {
+  [API_ENDPOINTS.USERS]: IUsers
+  [API_ENDPOINTS.ANIME]: TAnime
+}
+
+type TGetData<T> = {
+  data: T[]
   count: number
 }
 
-export const getUsers = async (token: string, page = 1): Promise<IGetUsers> => {
+export async function getData<T extends keyof TEndpointType>(
+  token: string,
+  page: number,
+  endpoint: T,
+): Promise<TGetData<TEndpointType[T]>> {
   try {
     const response = await fetch(
-      `${API_ENDPOINTS.USERS}?page=${page}&limit=${PAGE_LIMIT}`,
+      `${endpoint}?page=${page}&limit=${PAGE_LIMIT}`,
       {
         method: 'GET',
         headers: {
@@ -21,7 +31,7 @@ export const getUsers = async (token: string, page = 1): Promise<IGetUsers> => {
     )
     if (!response.ok) {
       return {
-        users: [],
+        data: [],
         count: 0,
       }
     }
@@ -30,7 +40,7 @@ export const getUsers = async (token: string, page = 1): Promise<IGetUsers> => {
   } catch (error) {
     console.log(error)
     return {
-      users: [],
+      data: [],
       count: 0,
     }
   }
