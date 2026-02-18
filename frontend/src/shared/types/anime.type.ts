@@ -8,7 +8,7 @@ export type TAnime = {
   slug: string
   title: string
   image: string | null | undefined
-  originalTitle: string
+  originalTitle: string | null | undefined
   description: string | null | undefined
   ageLimit: TAnimeAgeLimit
   releaseDate: string

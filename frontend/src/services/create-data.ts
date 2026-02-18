@@ -8,10 +8,12 @@ import { SERVICE_MESSAGE_LABELS } from '../constants/service-message-labels.ts'
 import type { TDataAnime } from '../shared/schemes/data-anime.schema.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
 import { getToken } from '../lib/get-token.ts'
+import type { TDataEpisode } from '../shared/schemes/data-episode.schema.ts'
 
 type TEndpointType = {
   [API_ENDPOINTS.USERS]: TCreateUser
   [API_ENDPOINTS.ANIME]: TDataAnime
+  [API_ENDPOINTS.EPISODES]: TDataEpisode
 }
 
 export const createData = async <T extends keyof TEndpointType>(

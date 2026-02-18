@@ -20,7 +20,7 @@ const ControlBox = ({
   isChecked,
 }: Props) => {
   return (
-    <div className={'flex gap-2 items-center'}>
+    <div className={'flex gap-2 items-center flex-wrap'}>
       <h1 className={'text-32 font-bold'}>{title}</h1>
       <ActionButton type={'add'} label={addLabel} onClick={onAdd} />
       {isChecked && (

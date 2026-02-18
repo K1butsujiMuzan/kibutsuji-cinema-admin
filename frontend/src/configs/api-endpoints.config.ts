@@ -6,4 +6,5 @@ export const API_ENDPOINTS = {
   TOKEN: `${BASE_URL}/token-check`,
   USERS: `${BASE_URL}/users`,
   ANIME: `${BASE_URL}/anime`,
+  EPISODES: `${BASE_URL}/episodes`,
 } as const

@@ -2,18 +2,12 @@ import { getData } from '../../services/get-data.ts'
 import { userColumns } from './user-page.data.ts'
 import { useState } from 'react'
 import { deleteData } from '../../services/delete-data.ts'
-import { useAddToast } from '../../stores/useToastsStore.ts'
 import Thead from '../../components/ui/Thead/Thead.tsx'
 import EmptyTable from '../../components/ui/EmptyTable/EmptyTable.tsx'
 import UsersTbody from './UsersTbody.tsx'
 import CreateUser from './CreateUser.tsx'
 import { getToken } from '../../lib/get-token.ts'
-import {
-  keepPreviousData,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
 import type { IUsers } from '../../shared/types/users.type.ts'
 import UpdateUser from './UpdateUser.tsx'
@@ -21,6 +15,7 @@ import ControlBox from '../../components/ui/ControlBox/ControlBox.tsx'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageChanger from '../../components/ui/PageChanger/PageChanger.tsx'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
+import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
 
 const UsersPage = () => {
   const [checkboxes, setCheckboxes] = useState<string[]>([])
@@ -29,9 +24,7 @@ const UsersPage = () => {
   const [editUser, setEditUser] = useState<IUsers | null>(null)
   const [page, setPage] = useState<number>(1)
 
-  const addToast = useAddToast()
-
-  const queryClient = useQueryClient()
+  const onSuccess = useQuerySuccess(QUERY_KEYS.USERS, undefined, setCheckboxes)
 
   const usersQuery = useQuery({
     queryFn: () => getData(getToken(), page, API_ENDPOINTS.USERS),
@@ -48,16 +41,7 @@ const UsersPage = () => {
   const deleteMutation = useMutation({
     mutationFn: (ids: string[]) =>
       deleteData(getToken(), ids, API_ENDPOINTS.USERS, 'User(s)'),
-    onSuccess: async (data) => {
-      addToast(data)
-      if (data.isSuccess) {
-        await queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.USERS],
-          exact: false,
-        })
-        setCheckboxes([])
-      }
-    },
+    onSuccess,
   })
 
   if (isPending || !users) {
@@ -87,8 +71,13 @@ const UsersPage = () => {
     setIsUpdateModalOpen(true)
   }
 
+  const onHandleCreate = () => {
+    setIsCreateModalOpen(true)
+  }
+
   const onChangePage = (isIncrement: boolean): void => {
     setPage((prevState) => (isIncrement ? prevState + 1 : prevState - 1))
+    setCheckboxes([])
   }
 
   return (
@@ -97,7 +86,7 @@ const UsersPage = () => {
         <div className={'flex flex-col gap-2'}>
           <ControlBox
             title={'Users'}
-            onAdd={() => setIsCreateModalOpen(true)}
+            onAdd={onHandleCreate}
             onDelete={() => deleteMutation.mutate(checkboxes)}
             isPending={deleteMutation.isPending}
             isChecked={checkboxes.length > 0}

@@ -16,10 +16,11 @@ const LogoutButton = () => {
       }
       type="button"
       onClick={logout}
+      aria-label={'logout'}
     >
       <svg
-        role={'img'}
         aria-hidden={true}
+        role={'img'}
         width="24"
         height="24"
         viewBox="0 0 24 24"

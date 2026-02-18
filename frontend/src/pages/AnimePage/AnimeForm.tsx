@@ -1,7 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import type { TAnime } from '../../shared/types/anime.type.ts'
-import { useAddToast } from '../../stores/useToastsStore.ts'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
@@ -15,22 +13,29 @@ import {
   DataAnimeSchema,
   type TDataAnime,
 } from '../../shared/schemes/data-anime.schema.ts'
-import { animeAgeLimits, animeStatuses, animeTypes } from './anime-page.data.ts'
+import {
+  animeAgeLimits,
+  animeStatuses,
+  animeTypes,
+  type TAnimeFormData,
+} from './anime-page.data.ts'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
+import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
+import { createData } from '../../services/create-data.ts'
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
-  anime: TAnime
+  anime: TAnimeFormData
+  operationType: 'create' | 'update'
 }
 
-const UpdateAnime = ({ setIsOpen, anime }: Props) => {
+const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
   const {
     id,
     genres,
     status,
     episodesLength,
     episodesCount,
-    episodesReleased,
     releaseDate,
     slug,
     type,
@@ -41,21 +46,16 @@ const UpdateAnime = ({ setIsOpen, anime }: Props) => {
     description,
   } = anime
 
-  const addToast = useAddToast()
-  const queryClient = useQueryClient()
+  const onSuccess = useQuerySuccess(QUERY_KEYS.ANIME, setIsOpen)
 
-  const { mutate, isPending } = useMutation({
+  const createMutation = useMutation({
+    mutationFn: (data: TDataAnime) => createData(data, API_ENDPOINTS.ANIME),
+    onSuccess: onSuccess,
+  })
+
+  const updateMutation = useMutation({
     mutationFn: (data: TDataAnime) => updateData(id, data, API_ENDPOINTS.ANIME),
-    onSuccess: async (data) => {
-      addToast(data)
-      if (data.isSuccess) {
-        await queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.ANIME],
-          exact: false,
-        })
-        setIsOpen(false)
-      }
-    },
+    onSuccess: onSuccess,
   })
 
   const {
@@ -69,27 +69,34 @@ const UpdateAnime = ({ setIsOpen, anime }: Props) => {
       status,
       episodesLength,
       episodesCount,
-      episodesReleased,
       slug,
       type,
       originalTitle,
       ageLimit,
       title,
-      releaseDate: releaseDate.split('T')[0],
-      description: description || '',
-      image: image || '',
-      genres: genres.map((item) => item.id).join(' '),
+      releaseDate,
+      description,
+      image,
+      genres,
     },
   })
 
   const onFormSubmit: SubmitHandler<TDataAnime> = (data) => {
     const formatedDate = new Date(data.releaseDate).toISOString()
     const newData: TDataAnime = { ...data, releaseDate: formatedDate }
-    mutate(newData)
+    if (operationType === 'create') {
+      createMutation.mutate(newData)
+    } else {
+      updateMutation.mutate(newData)
+    }
   }
 
   return (
-    <CreateModal id={'update-user'} label={'Update user'} setIsOpen={setIsOpen}>
+    <CreateModal
+      id={operationType === 'create' ? 'create-anime' : 'update-anime'}
+      label={operationType === 'create' ? 'Create anime' : 'Update anime'}
+      setIsOpen={setIsOpen}
+    >
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className={'w-full flex flex-col gap-5'}
@@ -166,44 +173,27 @@ const UpdateAnime = ({ setIsOpen, anime }: Props) => {
                   type={'number'}
                   min={0}
                   onChange={(event) => field.onChange(+event.target.value)}
-                  isValid={!!errors.episodesReleased?.message}
-                  labelText={'Episodes released'}
-                  id={'episodes-released'}
-                />
-              )}
-              name={'episodesReleased'}
-            />
-          </div>
-          <div className={'flex w-full gap-2'}>
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <LoginInput
-                  {...field}
-                  type={'number'}
-                  min={0}
-                  onChange={(event) => field.onChange(+event.target.value)}
                   isValid={!!errors.episodesLength?.message}
-                  labelText={'Episodes length'}
+                  labelText={'Episodes length (mins)'}
                   id={'episodes-length'}
                 />
               )}
               name={'episodesLength'}
             />
-            <Controller
-              control={control}
-              render={({ field }) => (
-                <LoginInput
-                  {...field}
-                  type={'date'}
-                  isValid={!!errors.releaseDate?.message}
-                  labelText={'Release date'}
-                  id={'release-date'}
-                />
-              )}
-              name={'releaseDate'}
-            />
           </div>
+          <Controller
+            control={control}
+            render={({ field }) => (
+              <LoginInput
+                {...field}
+                type={'date'}
+                isValid={!!errors.releaseDate?.message}
+                labelText={'Release date'}
+                id={'release-date'}
+              />
+            )}
+            name={'releaseDate'}
+          />
           <Controller
             control={control}
             render={({ field }) => (
@@ -257,12 +247,25 @@ const UpdateAnime = ({ setIsOpen, anime }: Props) => {
           </small>
         </div>
         <LoginButton
-          text={isPending ? 'Updating...' : 'Update an Anime'}
-          disabled={!isValid || !isDirty || isPending}
+          text={
+            operationType === 'create'
+              ? createMutation.isPending
+                ? 'Creating...'
+                : 'Create an Anime'
+              : updateMutation.isPending
+                ? 'Updating...'
+                : 'Update an Anime'
+          }
+          disabled={
+            createMutation.isPending ||
+            updateMutation.isPending ||
+            !isValid ||
+            (!isDirty && operationType === 'update')
+          }
         />
       </form>
     </CreateModal>
   )
 }
 
-export default UpdateAnime
+export default AnimeForm

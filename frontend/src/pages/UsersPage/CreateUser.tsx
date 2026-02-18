@@ -11,31 +11,21 @@ import {
   type TCreateUser,
 } from '../../shared/schemes/create-user.schema.ts'
 import { createData } from '../../services/create-data.ts'
-import { useAddToast } from '../../stores/useToastsStore.ts'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
+import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const CreateUser = ({ setIsOpen }: Props) => {
-  const addToast = useAddToast()
-  const queryClient = useQueryClient()
+  const onSuccess = useQuerySuccess(QUERY_KEYS.USERS, setIsOpen)
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TCreateUser) => createData(data, API_ENDPOINTS.USERS),
-    onSuccess: async (data) => {
-      addToast(data)
-      if (data.isSuccess) {
-        await queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.USERS],
-          exact: false,
-        })
-        setIsOpen(false)
-      }
-    },
+    onSuccess,
   })
 
   const {

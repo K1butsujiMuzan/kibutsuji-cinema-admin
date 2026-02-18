@@ -53,7 +53,7 @@ const AnimeTBody = ({ isEven, anime, isChecked, onChange, onEdit }: Props) => {
         <span className={'w-10 h-10 block'}>
           <TableCheckbox
             id={id}
-            name={'user'}
+            name={'anime'}
             checked={isChecked}
             onChange={onChange}
           />
@@ -64,10 +64,10 @@ const AnimeTBody = ({ isEven, anime, isChecked, onChange, onEdit }: Props) => {
       <TableBaseCell name={new Date(createdAt).toLocaleDateString()} />
       <TableNullableCell value={description} />
       <TableBaseCell name={episodesCount.toString()} />
-      <TableBaseCell name={episodesLength.toString()} />
+      <TableBaseCell name={`${episodesLength.toString()} min`} />
       <TableBaseCell name={episodesReleased.toString()} />
       <TableNullableCell value={image} />
-      <TableBaseCell name={originalTitle} />
+      <TableNullableCell value={originalTitle} />
       <TableBaseCell name={new Date(releaseDate).toLocaleDateString()} />
       <TableBaseCell name={slug} />
       <TableBaseCell name={status} />

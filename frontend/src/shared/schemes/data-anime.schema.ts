@@ -5,7 +5,6 @@ export const DataAnimeSchema = z.object({
   description: z.string(),
   episodesCount: z.number().nonnegative().max(100000),
   episodesLength: z.number().nonnegative().max(10000),
-  episodesReleased: z.number().nonnegative().max(100000),
   image: z.string(),
   originalTitle: z.string(),
   releaseDate: z.string(),

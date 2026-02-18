@@ -1,3 +1,7 @@
+import type { TAnimeStatus } from '../../shared/types/anime-status.type.ts'
+import type { TAnimeType } from '../../shared/types/anime-type.type.ts'
+import type { TAnimeAgeLimit } from '../../shared/types/anime-age-limit.type.ts'
+
 export const animeColumns: string[] = [
   'id',
   'ageLimit',
@@ -28,4 +32,21 @@ export const animeTypes: string[] = [
   'ONA',
   'CLIP',
 ]
+
 export const animeStatuses: string[] = ['ONGOING', 'COMPLETED', 'ANNOUNCEMENT']
+
+export type TAnimeFormData = {
+  id: string
+  title: string
+  description: string
+  ageLimit: TAnimeAgeLimit
+  status: TAnimeStatus
+  type: TAnimeType
+  episodesCount: number
+  episodesLength: number
+  releaseDate: string
+  image: string
+  originalTitle: string
+  slug: string
+  genres: string
+}
