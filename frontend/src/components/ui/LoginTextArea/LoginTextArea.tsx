@@ -5,14 +5,14 @@ interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   labelText: string
   id: string
   className?: string
-  isValid?: boolean
+  hasError?: boolean
 }
 
 const LoginTextArea = ({
   labelText,
   id,
   className,
-  isValid,
+  hasError,
   ...props
 }: Props) => {
   return (
@@ -21,14 +21,14 @@ const LoginTextArea = ({
         'w-full text-18 leading-6.5 font-medium pt-6 border-b-2 border-current has-focus:border-pink-400 not-has-placeholder-shown:border-pink-400 transition duration-300',
         className,
         {
-          'border-pink-400': isValid,
-          '': !isValid,
+          'border-pink-400': hasError,
+          '': !hasError,
         },
       )}
     >
       <div className={'relative'}>
         <textarea
-          aria-invalid={isValid}
+          aria-invalid={hasError}
           {...props}
           className={
             'peer outline-none w-full py-1 px-0.5 resize-none overflow-auto max-h-50 field-sizing-content block'
@@ -41,7 +41,7 @@ const LoginTextArea = ({
           className={cn(
             'absolute left-0.5 pointer-events-none top-0 peer-focus:-translate-y-full peer-focus:scale-65 peer-not-placeholder-shown:-translate-y-full origin-left peer-not-placeholder-shown:scale-65 transition duration-300',
             {
-              'text-pink-400': isValid,
+              'text-pink-400': hasError,
             },
           )}
         >

@@ -1,5 +1,6 @@
 import { toggleTheme, useIsDark } from '../../../stores/useThemeStore.ts'
 import { DarkIcon, LightIcon } from './ThemeIcons.tsx'
+import { memo } from 'react'
 
 const ThemeSwitcher = () => {
   const isDark = useIsDark()
@@ -18,4 +19,4 @@ const ThemeSwitcher = () => {
   )
 }
 
-export default ThemeSwitcher
+export default memo(ThemeSwitcher)

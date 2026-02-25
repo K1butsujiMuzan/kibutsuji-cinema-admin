@@ -1,93 +1,50 @@
-import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query'
-import { getToken } from '../../lib/get-token.ts'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
-import { getData } from '../../services/get-data.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
-import ControlBox from '../../components/ui/ControlBox/ControlBox.tsx'
-import Thead from '../../components/ui/Thead/Thead.tsx'
-import EmptyTable from '../../components/ui/EmptyTable/EmptyTable.tsx'
-import PageChanger from '../../components/ui/PageChanger/PageChanger.tsx'
-import { animeColumns, type TAnimeFormData } from './anime-page.data.ts'
-import AnimeTBody from './AnimeTBody.tsx'
+import {
+  animeColumns,
+  initialAnimeData,
+  type TAnimeFormData,
+} from './anime-page.data.ts'
 import type { TAnime } from '../../shared/types/anime.type.ts'
-import { deleteData } from '../../services/delete-data.ts'
 import AnimeForm from './AnimeForm.tsx'
-import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
-
-type TAnimeInformation = {
-  anime: TAnimeFormData
-  type: 'create' | 'update'
-}
-
-const initialFormData: TAnimeInformation = {
-  anime: {
-    id: '',
-    slug: '',
-    type: 'TVSERIES',
-    ageLimit: 'AGE_6',
-    description: '',
-    episodesCount: 0,
-    episodesLength: 0,
-    image: '',
-    genres: '',
-    releaseDate: new Date().toISOString().split('T')[0],
-    originalTitle: '',
-    title: '',
-    status: 'ANNOUNCEMENT',
-  },
-  type: 'create',
-}
+import Tbody from '../../components/ui/Tbody/Tbody.tsx'
+import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
+import type { TFormInformation } from '../../shared/types/form-information.type.ts'
+import { usePageMethods } from '../../hooks/usePageMethods.ts'
 
 const AnimePage = () => {
-  const [checkboxes, setCheckboxes] = useState<string[]>([])
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [information, setInformation] =
-    useState<TAnimeInformation>(initialFormData)
-  const [page, setPage] = useState<number>(1)
+    useState<TFormInformation<TAnimeFormData>>(initialAnimeData)
 
-  const onSuccess = useQuerySuccess(QUERY_KEYS.ANIME, undefined, setCheckboxes)
+  const onHandleModalClose = useCallback(() => {
+    setIsModalOpen(false)
+  }, [])
 
-  const animeQuery = useQuery({
-    queryFn: () => getData(getToken(), page, API_ENDPOINTS.ANIME),
-    queryKey: [QUERY_KEYS.ANIME, page],
-    placeholderData: keepPreviousData,
-  })
+  const onHandleCreate = useCallback(() => {
+    setInformation(initialAnimeData)
+    setIsModalOpen(true)
+  }, [])
 
-  const { isPending, isFetching, data } = animeQuery
-  const queryData = (data as
-    | { anime: TAnime[]; count: number }
-    | undefined) ?? { anime: [], count: 0 }
-  const { anime, count } = queryData
+  const {
+    count,
+    clearCheckBoxes,
+    serverData,
+    onChangePage,
+    onHandleDelete,
+    isFetching,
+    isPending,
+    checkboxes,
+    toggleAll,
+    onHandleCheck,
+    page,
+    isDeletePending,
+  } = usePageMethods(QUERY_KEYS.ANIME, API_ENDPOINTS.ANIME)
 
-  const deleteMutation = useMutation({
-    mutationFn: (ids: string[]) => {
-      return deleteData(getToken(), ids, API_ENDPOINTS.ANIME, 'Anime')
-    },
-    onSuccess,
-  })
-
-  if (isPending || !anime) {
+  if (isPending) {
     return <PageLoader />
-  }
-
-  const onHandleCheck = (id: string) => {
-    const isChecked: boolean = checkboxes.includes(id)
-    if (isChecked) {
-      setCheckboxes((prevState) => prevState.filter((item) => item !== id))
-    } else {
-      setCheckboxes((prevState) => [...prevState, id])
-    }
-  }
-
-  const toggleAll = () => {
-    if (anime.length > 0 && anime.length === checkboxes.length) {
-      setCheckboxes([])
-    } else {
-      const allAnime: string[] = anime.map((item) => item.id)
-      setCheckboxes([...allAnime])
-    }
   }
 
   const onHandleEdit = (anime: TAnime) => {
@@ -107,7 +64,7 @@ const AnimePage = () => {
       episodesCount,
     } = anime
     setInformation({
-      anime: {
+      data: {
         id,
         type,
         status,
@@ -116,7 +73,7 @@ const AnimePage = () => {
         slug,
         episodesLength,
         episodesCount,
-        genres: genres.map((item) => item.id).join(' '),
+        genreNames: genres.map((item) => item.name).join(' '),
         originalTitle: originalTitle || '',
         releaseDate: releaseDate.split('T')[0],
         description: description || '',
@@ -127,71 +84,66 @@ const AnimePage = () => {
     setIsModalOpen(true)
   }
 
-  const onHandleCreate = () => {
-    setInformation(initialFormData)
-    setIsModalOpen(true)
-  }
-
-  const onChangePage = (isIncrement: boolean): void => {
-    setPage((prevState) => (isIncrement ? prevState + 1 : prevState - 1))
-    setCheckboxes([])
-  }
-
   return (
     <>
-      <div className={'flex flex-col p-4 justify-between h-full gap-2'}>
-        <div className={'flex flex-col gap-2'}>
-          <ControlBox
-            title={'Anime'}
-            onAdd={onHandleCreate}
-            onDelete={() => deleteMutation.mutate(checkboxes)}
-            isPending={deleteMutation.isPending}
-            isChecked={checkboxes.length > 0}
-            addLabel={'anime'}
-            deleteLabel={'anime'}
+      <PageWrapper
+        count={count}
+        page={page}
+        isFetching={isFetching}
+        isPending={isDeletePending}
+        onChangePage={onChangePage}
+        isEmptyData={!serverData.length}
+        isChecked={checkboxes.length > 0}
+        isAllChecked={serverData.length === checkboxes.length}
+        onHandleCreate={onHandleCreate}
+        onDelete={onHandleDelete}
+        title={'Anime'}
+        deleteLabel={'anime'}
+        addLabel={'anime'}
+        columns={animeColumns}
+        toggleAll={toggleAll}
+      >
+        {serverData.map((item, index) => (
+          <Tbody
+            key={item.id}
+            data={[
+              { value: item.id, type: 'text' },
+              { value: item.ageLimit, type: 'text' },
+              { value: item.createdAt, type: 'date' },
+              { value: item.description, type: 'nullable' },
+              { value: item.episodesCount, type: 'text' },
+              { value: item.episodesLength, type: 'text' },
+              { value: item.episodesReleased, type: 'text' },
+              { value: item.image, type: 'nullable' },
+              { value: item.originalTitle, type: 'nullable' },
+              { value: item.releaseDate, type: 'date' },
+              { value: item.slug, type: 'text' },
+              { value: item.status, type: 'text' },
+              { value: item.title, type: 'text' },
+              { value: item.type, type: 'text' },
+              { value: item.updatedAt, type: 'date' },
+              { value: item.views, type: 'text' },
+              {
+                value: item.genres.map((genre) => genre.name).join(' '),
+                type: 'text',
+              },
+            ]}
+            onEdit={() => onHandleEdit(item)}
+            isEven={index % 2 === 0}
+            isChecked={checkboxes.includes(item.id)}
+            onChange={() => onHandleCheck(item.id)}
+            name={'anime'}
+            id={item.id}
+            label={`anime: ${item.slug}`}
           />
-          {anime.length > 0 && (
-            <div className={'overflow-x-auto'}>
-              <table className={'text-left text-nowrap border border-collapse'}>
-                <Thead
-                  columns={animeColumns}
-                  isChecked={
-                    anime.length > 0 && anime.length === checkboxes.length
-                  }
-                  onChange={toggleAll}
-                />
-                <tbody className={'divide-y text-sm'}>
-                  {anime.map((item, index) => (
-                    <AnimeTBody
-                      onEdit={() => onHandleEdit(item)}
-                      anime={item}
-                      key={item.id}
-                      isEven={index % 2 === 0}
-                      isChecked={checkboxes.includes(item.id)}
-                      onChange={() => onHandleCheck(item.id)}
-                    />
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          {!anime.length && <EmptyTable />}
-        </div>
-        {count > 10 && (
-          <PageChanger
-            disabled={isFetching}
-            page={page}
-            count={count}
-            onBack={() => onChangePage(false)}
-            onForward={() => onChangePage(true)}
-          />
-        )}
-      </div>
+        ))}
+      </PageWrapper>
       {isModalOpen && (
         <AnimeForm
-          setIsOpen={setIsModalOpen}
+          clearCheckBoxes={clearCheckBoxes}
+          closeModal={onHandleModalClose}
           operationType={information.type}
-          anime={information.anime}
+          anime={information.data}
         />
       )}
     </>

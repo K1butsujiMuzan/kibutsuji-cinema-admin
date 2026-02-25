@@ -1,7 +1,7 @@
 import type { SelectHTMLAttributes } from 'react'
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
-  values: string[]
+  values: readonly string[]
   id: string
 }
 

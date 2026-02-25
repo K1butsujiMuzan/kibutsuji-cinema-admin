@@ -1,3 +1,6 @@
+import type { TEpisode } from '../../shared/types/episode.type.ts'
+import type { TFormInformation } from '../../shared/types/form-information.type.ts'
+
 export const episodesColumns: string[] = [
   'id',
   'anime_id',
@@ -8,10 +11,15 @@ export const episodesColumns: string[] = [
   'views',
 ]
 
-export type TEpisodeFormData = {
-  id: string
-  animeId: string
-  episodeNumber: number
-  views: number
-  title: string
+export type TEpisodeFormData = Omit<TEpisode, 'createdAt' | 'updatedAt'>
+
+export const initialEpisodeData: TFormInformation<TEpisodeFormData> = {
+  data: {
+    id: '',
+    animeId: '',
+    episodeNumber: 1,
+    views: 0,
+    title: '',
+  },
+  type: 'create',
 }

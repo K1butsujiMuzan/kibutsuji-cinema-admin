@@ -10,7 +10,13 @@ const Thead = ({ columns, isChecked, onChange }: Props) => {
   return (
     <thead>
       <tr className={'divide-x border-b transition duration-300'}>
-        <th className={'text-center'}>Edit</th>
+        <th
+          className={
+            'text-center bg-pink-150 dark:bg-gray-850 transition duration-300'
+          }
+        >
+          Edit
+        </th>
         <th>
           <span className={'w-10 h-10 block'}>
             <TableCheckbox
@@ -22,7 +28,12 @@ const Thead = ({ columns, isChecked, onChange }: Props) => {
           </span>
         </th>
         {columns.map((item) => (
-          <th className={'p-2 bg-pink-150 dark:bg-gray-850'} key={item}>
+          <th
+            className={
+              'p-2 bg-pink-150 dark:bg-gray-850 transition duration-300'
+            }
+            key={item}
+          >
             {item}
           </th>
         ))}

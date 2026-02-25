@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom'
-import { type Dispatch, type SetStateAction, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { type MouseEvent } from 'react'
 import { KEYCODES } from '../../../constants/keycodes.ts'
 import CloseModalButton from '../CloseModalButton/CloseModalButton.tsx'
@@ -8,15 +8,11 @@ interface Props {
   id: string
   children: React.ReactNode
   label: string
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  closeModal: () => void
 }
 
-const CreateModal = ({ id, children, label, setIsOpen }: Props) => {
+const CreateModal = ({ id, children, label, closeModal }: Props) => {
   const layerRef = useRef<null | HTMLDivElement>(null)
-
-  const closeModal = () => {
-    setIsOpen(false)
-  }
 
   useEffect(() => {
     const root = document.getElementById('root') as HTMLDivElement
@@ -36,7 +32,7 @@ const CreateModal = ({ id, children, label, setIsOpen }: Props) => {
       document.removeEventListener('keydown', closeOnEsc)
       document.body.classList.remove('modal-hidden')
     }
-  }, [])
+  }, [closeModal])
 
   const closeModalLayer = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {

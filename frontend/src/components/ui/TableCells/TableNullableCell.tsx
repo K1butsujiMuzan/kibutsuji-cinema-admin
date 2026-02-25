@@ -1,5 +1,5 @@
 interface Props {
-  value: string | null | undefined
+  value: string | null
 }
 
 const TableNullableCell = ({ value }: Props) => {

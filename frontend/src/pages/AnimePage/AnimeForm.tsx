@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
@@ -12,27 +11,33 @@ import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import {
   DataAnimeSchema,
   type TDataAnime,
+  type TDataSubmitAnime,
 } from '../../shared/schemes/data-anime.schema.ts'
-import {
-  animeAgeLimits,
-  animeStatuses,
-  animeTypes,
-  type TAnimeFormData,
-} from './anime-page.data.ts'
+import { type TAnimeFormData } from './anime-page.data.ts'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
-import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
+import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { createData } from '../../services/create-data.ts'
+import { MAX_INT } from '../../constants/max-int.ts'
+import { ANIME_TYPES } from '../../shared/types/anime-type.type.ts'
+import { ANIME_AGE_LIMITS } from '../../shared/types/anime-age-limit.type.ts'
+import { ANIME_STATUSES } from '../../shared/types/anime-status.type.ts'
 
 interface Props {
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  closeModal: () => void
+  clearCheckBoxes: () => void
   anime: TAnimeFormData
   operationType: 'create' | 'update'
 }
 
-const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
+const AnimeForm = ({
+  closeModal,
+  anime,
+  operationType,
+  clearCheckBoxes,
+}: Props) => {
   const {
     id,
-    genres,
+    genreNames,
     status,
     episodesLength,
     episodesCount,
@@ -46,15 +51,21 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
     description,
   } = anime
 
-  const onSuccess = useQuerySuccess(QUERY_KEYS.ANIME, setIsOpen)
+  const onSuccess = useQuerySuccess(
+    QUERY_KEYS.ANIME,
+    closeModal,
+    clearCheckBoxes,
+  )
 
   const createMutation = useMutation({
-    mutationFn: (data: TDataAnime) => createData(data, API_ENDPOINTS.ANIME),
+    mutationFn: (data: TDataSubmitAnime) =>
+      createData(data, API_ENDPOINTS.ANIME),
     onSuccess: onSuccess,
   })
 
   const updateMutation = useMutation({
-    mutationFn: (data: TDataAnime) => updateData(id, data, API_ENDPOINTS.ANIME),
+    mutationFn: (data: TDataSubmitAnime) =>
+      updateData(id, data, API_ENDPOINTS.ANIME),
     onSuccess: onSuccess,
   })
 
@@ -77,13 +88,19 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
       releaseDate,
       description,
       image,
-      genres,
+      genreNames,
     },
   })
 
   const onFormSubmit: SubmitHandler<TDataAnime> = (data) => {
     const formatedDate = new Date(data.releaseDate).toISOString()
-    const newData: TDataAnime = { ...data, releaseDate: formatedDate }
+    const formatedGenres =
+      data.genreNames.length > 0 ? data.genreNames.split(' ') : []
+    const newData: TDataSubmitAnime = {
+      ...data,
+      releaseDate: formatedDate,
+      genreNames: formatedGenres,
+    }
     if (operationType === 'create') {
       createMutation.mutate(newData)
     } else {
@@ -95,7 +112,7 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
     <CreateModal
       id={operationType === 'create' ? 'create-anime' : 'update-anime'}
       label={operationType === 'create' ? 'Create anime' : 'Update anime'}
-      setIsOpen={setIsOpen}
+      closeModal={closeModal}
     >
       <form
         onSubmit={handleSubmit(onFormSubmit)}
@@ -107,9 +124,10 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.title?.message}
+                hasError={!!errors.title?.message}
                 labelText={'Title'}
                 id={'title'}
+                autoComplete={'off'}
               />
             )}
             name={'title'}
@@ -119,9 +137,10 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             render={({ field }) => (
               <LoginTextArea
                 {...field}
-                isValid={!!errors.description?.message}
+                hasError={!!errors.description?.message}
                 labelText={'Description'}
                 id={'description'}
+                autoComplete={'off'}
               />
             )}
             name={'description'}
@@ -130,21 +149,21 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             <Controller
               control={control}
               render={({ field }) => (
-                <Select {...field} id={'age-limit'} values={animeAgeLimits} />
+                <Select {...field} id={'age-limit'} values={ANIME_AGE_LIMITS} />
               )}
               name={'ageLimit'}
             />
             <Controller
               control={control}
               render={({ field }) => (
-                <Select {...field} id={'status'} values={animeStatuses} />
+                <Select {...field} id={'status'} values={ANIME_STATUSES} />
               )}
               name={'status'}
             />
             <Controller
               control={control}
               render={({ field }) => (
-                <Select {...field} id={'type'} values={animeTypes} />
+                <Select {...field} id={'type'} values={ANIME_TYPES} />
               )}
               name={'type'}
             />
@@ -157,8 +176,9 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
                   {...field}
                   type={'number'}
                   min={0}
+                  max={MAX_INT}
                   onChange={(event) => field.onChange(+event.target.value)}
-                  isValid={!!errors.episodesCount?.message}
+                  hasError={!!errors.episodesCount?.message}
                   labelText={'Episodes count'}
                   id={'episodes-count'}
                 />
@@ -172,8 +192,9 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
                   {...field}
                   type={'number'}
                   min={0}
+                  max={MAX_INT}
                   onChange={(event) => field.onChange(+event.target.value)}
-                  isValid={!!errors.episodesLength?.message}
+                  hasError={!!errors.episodesLength?.message}
                   labelText={'Episodes length (mins)'}
                   id={'episodes-length'}
                 />
@@ -187,7 +208,7 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
               <LoginInput
                 {...field}
                 type={'date'}
-                isValid={!!errors.releaseDate?.message}
+                hasError={!!errors.releaseDate?.message}
                 labelText={'Release date'}
                 id={'release-date'}
               />
@@ -199,9 +220,10 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.image?.message}
+                hasError={!!errors.image?.message}
                 labelText={'Image'}
                 id={'image'}
+                autoComplete={'off'}
               />
             )}
             name={'image'}
@@ -211,9 +233,10 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.originalTitle?.message}
+                hasError={!!errors.originalTitle?.message}
                 labelText={'Original title'}
                 id={'original-title'}
+                autoComplete={'off'}
               />
             )}
             name={'originalTitle'}
@@ -223,9 +246,10 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.slug?.message}
+                hasError={!!errors.slug?.message}
                 labelText={'Slug'}
                 id={'slug'}
+                autoComplete={'off'}
               />
             )}
             name={'slug'}
@@ -235,15 +259,16 @@ const AnimeForm = ({ setIsOpen, anime, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.genres?.message}
-                labelText={'Genres'}
-                id={'genres'}
+                hasError={!!errors.genreNames?.message}
+                labelText={'Genre names'}
+                id={'genre-names'}
+                autoComplete={'off'}
               />
             )}
-            name={'genres'}
+            name={'genreNames'}
           />
           <small className={'text-xs leading-4 font-semibold py-1'}>
-            Enter genre IDs separated by spaces.
+            Enter genre names separated by spaces.
           </small>
         </div>
         <LoginButton

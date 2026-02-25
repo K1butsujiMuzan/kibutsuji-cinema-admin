@@ -7,4 +7,5 @@ export const API_ENDPOINTS = {
   USERS: `${BASE_URL}/users`,
   ANIME: `${BASE_URL}/anime`,
   EPISODES: `${BASE_URL}/episodes`,
+  GENRES: `${BASE_URL}/genres`,
 } as const

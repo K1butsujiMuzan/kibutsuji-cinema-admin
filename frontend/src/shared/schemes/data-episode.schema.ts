@@ -1,10 +1,11 @@
 import { z } from 'zod'
+import { MAX_INT } from '../../constants/max-int.ts'
 
 export const dataEpisodeSchema = z.object({
-  animeId: z.string().min(3),
-  episodeNumber: z.number().min(1),
-  title: z.string().min(3),
-  views: z.number().nonnegative().max(999_999_999),
+  animeId: z.string().trim().min(24),
+  episodeNumber: z.number().int().positive().max(MAX_INT),
+  title: z.string().trim().min(3),
+  views: z.number().int().nonnegative().max(MAX_INT),
 })
 
 export type TDataEpisode = z.infer<typeof dataEpisodeSchema>

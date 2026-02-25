@@ -9,5 +9,3 @@ export const userColumns: string[] = [
   'role',
   'updatedAt',
 ]
-
-export const userRoles: string[] = ['USER', 'MODERATOR', 'ADMIN']

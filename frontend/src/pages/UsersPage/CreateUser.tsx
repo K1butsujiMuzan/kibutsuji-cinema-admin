@@ -3,7 +3,6 @@ import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import LoginPassword from '../../components/ui/LoginPassword/LoginPassword.tsx'
 import LoginCheckbox from '../../components/ui/LoginCheckbox/LoginCheckbox.tsx'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
-import type { Dispatch, SetStateAction } from 'react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -14,14 +13,19 @@ import { createData } from '../../services/create-data.ts'
 import { useMutation } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
+import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 
 interface Props {
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  closeModal: () => void
+  clearCheckBoxes: () => void
 }
 
-const CreateUser = ({ setIsOpen }: Props) => {
-  const onSuccess = useQuerySuccess(QUERY_KEYS.USERS, setIsOpen)
+const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
+  const onSuccess = useQuerySuccess(
+    QUERY_KEYS.USERS,
+    closeModal,
+    clearCheckBoxes,
+  )
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TCreateUser) => createData(data, API_ENDPOINTS.USERS),
@@ -48,7 +52,11 @@ const CreateUser = ({ setIsOpen }: Props) => {
   }
 
   return (
-    <CreateModal id={'create-user'} label={'Create user'} setIsOpen={setIsOpen}>
+    <CreateModal
+      id={'create-user'}
+      label={'Create user'}
+      closeModal={closeModal}
+    >
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className={'w-full flex flex-col gap-5'}
@@ -59,9 +67,10 @@ const CreateUser = ({ setIsOpen }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.name?.message}
+                hasError={!!errors.name?.message}
                 labelText={'Name'}
                 id={'name'}
+                autoComplete={'off'}
               />
             )}
             name={'name'}
@@ -71,10 +80,11 @@ const CreateUser = ({ setIsOpen }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.email?.message}
+                hasError={!!errors.email?.message}
                 labelText={'Email'}
                 id={'email'}
                 type={'email'}
+                autoComplete={'off'}
               />
             )}
             name={'email'}
@@ -86,9 +96,10 @@ const CreateUser = ({ setIsOpen }: Props) => {
                 {...field}
                 maxLength={50}
                 isDirty={!!dirtyFields.password}
-                isValid={!!errors.password?.message}
+                hasError={!!errors.password?.message}
                 labelText={'Password'}
                 id={'password'}
+                autoComplete={'off'}
               />
             )}
             name={'password'}

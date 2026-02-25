@@ -49,10 +49,11 @@ const LoginForm = () => {
           render={({ field }) => (
             <LoginInput
               {...field}
-              isValid={!!errors.email?.message}
+              hasError={!!errors.email?.message}
               labelText={'Email'}
               id={'email'}
               type={'email'}
+              autoComplete={'email'}
             />
           )}
         />
@@ -63,7 +64,7 @@ const LoginForm = () => {
           render={({ field }) => (
             <LoginPassword
               {...field}
-              isValid={!!errors.password?.message}
+              hasError={!!errors.password?.message}
               isDirty={!!dirtyFields.password}
               labelText={'Password'}
               id={'password'}

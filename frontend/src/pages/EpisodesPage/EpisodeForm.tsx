@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
@@ -14,18 +13,29 @@ import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import { updateData } from '../../services/update-data.ts'
 import type { TEpisodeFormData } from './episodes-page.data.ts'
-import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
+import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
+import { MAX_INT } from '../../constants/max-int.ts'
 
 interface Props {
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  closeModal: () => void
+  clearCheckBoxes: () => void
   episode: TEpisodeFormData
   operationType: 'create' | 'update'
 }
 
-const EpisodeForm = ({ setIsOpen, episode, operationType }: Props) => {
+const EpisodeForm = ({
+  closeModal,
+  episode,
+  operationType,
+  clearCheckBoxes,
+}: Props) => {
   const { animeId, episodeNumber, title, views, id } = episode
 
-  const onSuccess = useQuerySuccess(QUERY_KEYS.EPISODES, setIsOpen)
+  const onSuccess = useQuerySuccess(
+    QUERY_KEYS.EPISODES,
+    closeModal,
+    clearCheckBoxes,
+  )
 
   const createMutation = useMutation({
     mutationFn: (data: TDataEpisode) =>
@@ -66,7 +76,7 @@ const EpisodeForm = ({ setIsOpen, episode, operationType }: Props) => {
     <CreateModal
       id={operationType === 'create' ? 'create-episode' : 'update-episode'}
       label={operationType === 'create' ? 'Create episode' : 'Update episode'}
-      setIsOpen={setIsOpen}
+      closeModal={closeModal}
     >
       <form
         onSubmit={handleSubmit(onFormSubmit)}
@@ -78,7 +88,8 @@ const EpisodeForm = ({ setIsOpen, episode, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.title?.message}
+                hasError={!!errors.title?.message}
+                autoComplete={'off'}
                 labelText={'Title'}
                 id={'title'}
               />
@@ -90,9 +101,10 @@ const EpisodeForm = ({ setIsOpen, episode, operationType }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.animeId?.message}
+                hasError={!!errors.animeId?.message}
                 labelText={'Anime id'}
                 id={'anime-id'}
+                autoComplete={'on'}
               />
             )}
             name={'animeId'}
@@ -104,8 +116,9 @@ const EpisodeForm = ({ setIsOpen, episode, operationType }: Props) => {
                 {...field}
                 type={'number'}
                 min={1}
+                max={MAX_INT}
                 onChange={(event) => field.onChange(+event.target.value)}
-                isValid={!!errors.episodeNumber?.message}
+                hasError={!!errors.episodeNumber?.message}
                 labelText={'Episode number'}
                 id={'episode-number'}
               />
@@ -119,8 +132,9 @@ const EpisodeForm = ({ setIsOpen, episode, operationType }: Props) => {
                 {...field}
                 type={'number'}
                 min={0}
+                max={MAX_INT}
                 onChange={(event) => field.onChange(+event.target.value)}
-                isValid={!!errors.views?.message}
+                hasError={!!errors.views?.message}
                 labelText={'Views'}
                 id={'views'}
               />

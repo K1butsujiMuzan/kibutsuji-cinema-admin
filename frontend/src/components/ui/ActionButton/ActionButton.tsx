@@ -4,6 +4,7 @@ import {
   ActionArrowRightIcon,
   ActionDeleteIcon,
 } from './ActionIcons.tsx'
+import { memo } from 'react'
 
 interface Props {
   label: string
@@ -38,4 +39,4 @@ const ActionButton = ({ label, onClick, disabled, type }: Props) => {
   )
 }
 
-export default ActionButton
+export default memo(ActionButton)

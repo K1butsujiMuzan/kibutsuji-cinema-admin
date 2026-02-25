@@ -1,9 +1,6 @@
-export type TGenres = {
-  id: number
+export type TGenre = {
+  id: string
   name: string
   createdAt: string
   updatedAt: string
-  anime: {
-    id: string
-  }
 }

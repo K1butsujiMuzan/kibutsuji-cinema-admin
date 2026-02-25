@@ -1,6 +1,5 @@
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import type { Dispatch, SetStateAction } from 'react'
-import type { IUsers } from '../../shared/types/users.type.ts'
+import type { TUser } from '../../shared/types/users.type.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import {
   type TUpdateUser,
@@ -11,19 +10,20 @@ import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import LoginCheckbox from '../../components/ui/LoginCheckbox/LoginCheckbox.tsx'
 import Select from '../../components/ui/Select/Select.tsx'
-import { userRoles } from './user-page.data.ts'
 import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
 import { QUERY_KEYS } from '../../constants/query-keys.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { useQuerySuccess } from '../../lib/useQuerySuccess.ts'
+import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
+import { ROLES } from '../../shared/types/roles.type.ts'
 
 interface Props {
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-  user: IUsers
+  closeModal: () => void
+  clearCheckBoxes: () => void
+  user: TUser
 }
 
-const UpdateUser = ({ setIsOpen, user }: Props) => {
+const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
   const {
     id,
     email,
@@ -34,7 +34,11 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
     image,
   } = user
 
-  const onSuccess = useQuerySuccess(QUERY_KEYS.USERS, setIsOpen)
+  const onSuccess = useQuerySuccess(
+    QUERY_KEYS.USERS,
+    closeModal,
+    clearCheckBoxes,
+  )
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TUpdateUser) =>
@@ -64,7 +68,11 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
   }
 
   return (
-    <CreateModal id={'update-user'} label={'Update user'} setIsOpen={setIsOpen}>
+    <CreateModal
+      id={'update-user'}
+      label={'Update user'}
+      closeModal={closeModal}
+    >
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className={'w-full flex flex-col gap-5'}
@@ -75,9 +83,10 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.name?.message}
+                hasError={!!errors.name?.message}
                 labelText={'name'}
                 id={'name'}
+                autoComplete={'off'}
               />
             )}
             name={'name'}
@@ -87,10 +96,11 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.email?.message}
+                hasError={!!errors.email?.message}
                 labelText={'Email'}
                 id={'email'}
                 type={'email'}
+                autoComplete={'off'}
               />
             )}
             name={'email'}
@@ -100,9 +110,10 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
             render={({ field }) => (
               <LoginInput
                 {...field}
-                isValid={!!errors.image?.message}
+                hasError={!!errors.image?.message}
                 labelText={'Image'}
                 id={'image'}
+                autoComplete={'off'}
               />
             )}
             name={'image'}
@@ -143,7 +154,7 @@ const UpdateUser = ({ setIsOpen, user }: Props) => {
             <Controller
               control={control}
               render={({ field }) => (
-                <Select {...field} id={'role'} values={userRoles} />
+                <Select {...field} id={'role'} values={ROLES} />
               )}
               name={'role'}
             />

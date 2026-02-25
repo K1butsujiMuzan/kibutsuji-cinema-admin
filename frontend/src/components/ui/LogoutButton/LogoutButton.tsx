@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { PAGES } from '../../../configs/pages.config'
+import { memo } from 'react'
 
 const LogoutButton = () => {
   const navigate = useNavigate()
@@ -43,4 +44,4 @@ const LogoutButton = () => {
   )
 }
 
-export default LogoutButton
+export default memo(LogoutButton)

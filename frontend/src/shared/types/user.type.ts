@@ -5,5 +5,5 @@ export interface IUser {
   email: string
   name: string
   role: TRole
-  image: string | null | undefined
+  image: string | null
 }

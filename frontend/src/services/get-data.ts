@@ -1,11 +1,16 @@
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
-import type { IUsers } from '../shared/types/users.type.ts'
+import type { TUser } from '../shared/types/users.type.ts'
 import { PAGE_LIMIT } from '../constants/page-limit.ts'
 import type { TAnime } from '../shared/types/anime.type.ts'
+import type { TEpisode } from '../shared/types/episode.type.ts'
+import type { TGenre } from '../shared/types/genres.type.ts'
+import { getToken } from '../lib/get-token.ts'
 
 type TEndpointType = {
-  [API_ENDPOINTS.USERS]: IUsers
+  [API_ENDPOINTS.USERS]: TUser
   [API_ENDPOINTS.ANIME]: TAnime
+  [API_ENDPOINTS.EPISODES]: TEpisode
+  [API_ENDPOINTS.GENRES]: TGenre
 }
 
 type TGetData<T> = {
@@ -14,10 +19,11 @@ type TGetData<T> = {
 }
 
 export async function getData<T extends keyof TEndpointType>(
-  token: string,
   page: number,
   endpoint: T,
 ): Promise<TGetData<TEndpointType[T]>> {
+  const token = getToken()
+
   try {
     const response = await fetch(
       `${endpoint}?page=${page}&limit=${PAGE_LIMIT}`,
