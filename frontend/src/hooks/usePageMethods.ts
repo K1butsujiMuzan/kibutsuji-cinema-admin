@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useQuerySuccess } from './useQuerySuccess.ts'
-import { QUERY_KEYS } from '../constants/query-keys.ts'
+import { QUERY_KEYS } from '../configs/query-keys.ts'
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query'
 import { getData } from '../services/get-data.ts'
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
@@ -9,15 +9,17 @@ import type { TGenre } from '../shared/types/genres.type.ts'
 import type { TEpisode } from '../shared/types/episode.type.ts'
 import type { TAnime } from '../shared/types/anime.type.ts'
 import type { TUser } from '../shared/types/users.type.ts'
+import type { TRating } from '../shared/types/ratings.type.ts'
 
-type TServerDataType = {
+type TServerData = {
   [QUERY_KEYS.ANIME]: TAnime[]
   [QUERY_KEYS.EPISODES]: TEpisode[]
   [QUERY_KEYS.GENRES]: TGenre[]
+  [QUERY_KEYS.RATINGS]: TRating[]
   [QUERY_KEYS.USERS]: TUser[]
 }
 
-export const usePageMethods = <T extends keyof TServerDataType>(
+export const usePageMethods = <T extends keyof TServerData>(
   queryKey: T,
   endPoint: (typeof API_ENDPOINTS)[keyof typeof API_ENDPOINTS],
 ) => {
@@ -47,7 +49,7 @@ export const usePageMethods = <T extends keyof TServerDataType>(
   const { isPending, isFetching, data } = query
 
   const queryData = data as
-    | ({ [K in T]: TServerDataType[T] } & { count: number })
+    | ({ [K in T]: TServerData[T] } & { count: number })
     | undefined
 
   const serverData = queryData?.[queryKey] ?? []

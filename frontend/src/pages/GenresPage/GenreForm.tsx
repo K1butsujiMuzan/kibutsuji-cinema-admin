@@ -1,6 +1,6 @@
 import type { TGenreFormData } from './genres-page.data.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
-import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
 import { useMutation } from '@tanstack/react-query'
 import { createData } from '../../services/create-data.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
@@ -14,6 +14,10 @@ import {
   dataGenreSchema,
   type TDataGenre,
 } from '../../shared/schemes/data-genre.schema.ts'
+import {
+  LOWER_LABELS,
+  UPPER_LABELS,
+} from '../../constants/service-message-labels.ts'
 
 interface Props {
   closeModal: () => void
@@ -69,8 +73,16 @@ const GenreForm = ({
 
   return (
     <CreateModal
-      id={operationType === 'create' ? 'create-genre' : 'update-genre'}
-      label={operationType === 'create' ? 'Create genre' : 'Update genre'}
+      id={
+        operationType === 'create'
+          ? `create-${LOWER_LABELS.GENRES}`
+          : `update-${LOWER_LABELS.GENRES}`
+      }
+      label={
+        operationType === 'create'
+          ? `Create ${LOWER_LABELS.GENRES}`
+          : `Update ${LOWER_LABELS.GENRES}`
+      }
       closeModal={closeModal}
     >
       <form
@@ -97,10 +109,10 @@ const GenreForm = ({
             operationType === 'create'
               ? createMutation.isPending
                 ? 'Creating...'
-                : 'Create a Genre'
+                : `Create a ${UPPER_LABELS.GENRES}`
               : updateMutation.isPending
                 ? 'Updating...'
-                : 'Update a Genre'
+                : `Update a ${UPPER_LABELS.GENRES}`
           }
           disabled={
             createMutation.isPending ||

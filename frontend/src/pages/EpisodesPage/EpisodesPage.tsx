@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import type { TEpisode } from '../../shared/types/episode.type.ts'
 import {
@@ -13,6 +13,11 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
+import {
+  LOWER_LABELS,
+  MANY_LOWER_LABELS,
+  MANY_UPPER_LABELS,
+} from '../../constants/service-message-labels.ts'
 
 const EpisodesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -75,9 +80,9 @@ const EpisodesPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={'Episodes'}
-        deleteLabel={'episode(s)'}
-        addLabel={'episode'}
+        title={MANY_UPPER_LABELS.EPISODES}
+        deleteLabel={MANY_LOWER_LABELS.EPISODES}
+        addLabel={LOWER_LABELS.EPISODES}
         columns={episodesColumns}
         toggleAll={toggleAll}
       >
@@ -98,8 +103,8 @@ const EpisodesPage = () => {
             isChecked={checkboxes.includes(item.id)}
             onChange={() => onHandleCheck(item.id)}
             id={item.id}
-            name={'episode'}
-            label={`episode: ${item.id}`}
+            name={LOWER_LABELS.EPISODES}
+            label={`${LOWER_LABELS.EPISODES}: ${item.id}`}
           />
         ))}
       </PageWrapper>

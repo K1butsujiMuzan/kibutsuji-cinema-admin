@@ -3,4 +3,5 @@ export const QUERY_KEYS = {
   ANIME: 'anime',
   EPISODES: 'episodes',
   GENRES: 'genres',
+  RATINGS: 'ratings',
 } as const

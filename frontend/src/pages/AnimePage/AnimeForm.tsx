@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
-import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
@@ -17,10 +17,14 @@ import { type TAnimeFormData } from './anime-page.data.ts'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { createData } from '../../services/create-data.ts'
-import { MAX_INT } from '../../constants/max-int.ts'
+import { MAX_INT } from '../../constants/max-values.ts'
 import { ANIME_TYPES } from '../../shared/types/anime-type.type.ts'
 import { ANIME_AGE_LIMITS } from '../../shared/types/anime-age-limit.type.ts'
 import { ANIME_STATUSES } from '../../shared/types/anime-status.type.ts'
+import {
+  LOWER_LABELS,
+  UPPER_LABELS,
+} from '../../constants/service-message-labels.ts'
 
 interface Props {
   closeModal: () => void
@@ -110,8 +114,16 @@ const AnimeForm = ({
 
   return (
     <CreateModal
-      id={operationType === 'create' ? 'create-anime' : 'update-anime'}
-      label={operationType === 'create' ? 'Create anime' : 'Update anime'}
+      id={
+        operationType === 'create'
+          ? `create-${LOWER_LABELS.ANIME}`
+          : `update-${LOWER_LABELS.ANIME}`
+      }
+      label={
+        operationType === 'create'
+          ? `Create ${LOWER_LABELS.ANIME}`
+          : `Update ${LOWER_LABELS.ANIME}`
+      }
       closeModal={closeModal}
     >
       <form
@@ -276,10 +288,10 @@ const AnimeForm = ({
             operationType === 'create'
               ? createMutation.isPending
                 ? 'Creating...'
-                : 'Create an Anime'
+                : `Create an ${UPPER_LABELS.ANIME}`
               : updateMutation.isPending
                 ? 'Updating...'
-                : 'Update an Anime'
+                : `Update an ${UPPER_LABELS.ANIME}`
           }
           disabled={
             createMutation.isPending ||

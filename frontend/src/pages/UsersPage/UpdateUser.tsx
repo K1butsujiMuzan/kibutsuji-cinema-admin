@@ -12,10 +12,14 @@ import LoginCheckbox from '../../components/ui/LoginCheckbox/LoginCheckbox.tsx'
 import Select from '../../components/ui/Select/Select.tsx'
 import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
-import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { ROLES } from '../../shared/types/roles.type.ts'
+import {
+  LOWER_LABELS,
+  UPPER_LABELS,
+} from '../../constants/service-message-labels.ts'
 
 interface Props {
   closeModal: () => void
@@ -69,8 +73,8 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
 
   return (
     <CreateModal
-      id={'update-user'}
-      label={'Update user'}
+      id={`update-${LOWER_LABELS.USERS}`}
+      label={`Update ${LOWER_LABELS.USERS}`}
       closeModal={closeModal}
     >
       <form
@@ -161,7 +165,7 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
           </div>
         </div>
         <LoginButton
-          text={isPending ? 'Updating...' : 'Update a User'}
+          text={isPending ? 'Updating...' : `Update a ${UPPER_LABELS.USERS}`}
           disabled={!isValid || !isDirty || isPending}
         />
       </form>

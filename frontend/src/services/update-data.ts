@@ -7,15 +7,17 @@ import { SUCCESS } from '../constants/success.ts'
 import type { TDataSubmitAnime } from '../shared/schemes/data-anime.schema.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
 import { getToken } from '../lib/get-token.ts'
-import { SERVICE_MESSAGE_LABELS } from '../constants/service-message-labels.ts'
+import { SERVICE_UPPER_LABELS } from '../constants/service-message-labels.ts'
 import type { TDataEpisode } from '../shared/schemes/data-episode.schema.ts'
 import type { TDataGenre } from '../shared/schemes/data-genre.schema.ts'
+import type { TDataRating } from '../shared/schemes/data-rating.schema.ts'
 
 type TEndpointType = {
   [API_ENDPOINTS.USERS]: TUpdateUser
   [API_ENDPOINTS.ANIME]: TDataSubmitAnime
   [API_ENDPOINTS.EPISODES]: TDataEpisode
   [API_ENDPOINTS.GENRES]: TDataGenre
+  [API_ENDPOINTS.RATINGS]: TDataRating
 }
 
 export const updateData = async <T extends keyof TEndpointType>(
@@ -61,7 +63,7 @@ export const updateData = async <T extends keyof TEndpointType>(
 
     return {
       id: toastID,
-      title: SUCCESS.UPDATE(SERVICE_MESSAGE_LABELS[endpoint]),
+      title: SUCCESS.UPDATE(SERVICE_UPPER_LABELS[endpoint]),
       message: '',
       isSuccess: true,
     }

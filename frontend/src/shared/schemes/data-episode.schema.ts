@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { MAX_INT } from '../../constants/max-int.ts'
+import { MAX_INT } from '../../constants/max-values.ts'
 
 export const dataEpisodeSchema = z.object({
   animeId: z.string().trim().min(24),

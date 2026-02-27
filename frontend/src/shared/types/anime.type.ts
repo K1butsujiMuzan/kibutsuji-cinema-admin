@@ -11,6 +11,7 @@ export type TAnime = {
   originalTitle: string | null
   description: string | null
   ageLimit: TAnimeAgeLimit
+  rating: number
   releaseDate: string
   episodesReleased: number
   episodesCount: number

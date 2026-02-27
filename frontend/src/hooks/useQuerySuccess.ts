@@ -1,7 +1,7 @@
 import { useAddToast } from '../stores/useToastsStore.ts'
 import type { TToast } from '../shared/types/toast.type.ts'
 import { useQueryClient } from '@tanstack/react-query'
-import type { QUERY_KEYS } from '../constants/query-keys.ts'
+import type { QUERY_KEYS } from '../configs/query-keys.ts'
 
 export const useQuerySuccess = (
   queryKey: (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS],

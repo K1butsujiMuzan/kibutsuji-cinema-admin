@@ -8,4 +8,5 @@ export const API_ENDPOINTS = {
   ANIME: `${BASE_URL}/anime`,
   EPISODES: `${BASE_URL}/episodes`,
   GENRES: `${BASE_URL}/genres`,
+  RATINGS: `${BASE_URL}/ratings`,
 } as const

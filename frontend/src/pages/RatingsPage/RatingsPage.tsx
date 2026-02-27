@@ -1,35 +1,35 @@
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
-import {
-  genresColumns,
-  initialGenreData,
-  type TGenreFormData,
-} from './genres-page.data.ts'
 import { useCallback, useState } from 'react'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import type { TGenre } from '../../shared/types/genres.type.ts'
-import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
-import GenreForm from './GenreForm.tsx'
-import Tbody from '../../components/ui/Tbody/Tbody.tsx'
-import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
+import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
+import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
+import Tbody from '../../components/ui/Tbody/Tbody.tsx'
+import {
+  initialRatingData,
+  ratingsColumns,
+  type TRatingFormData,
+} from './ratings-page.data.ts'
+import type { TRating } from '../../shared/types/ratings.type.ts'
+import RatingForm from './RatingForm.tsx'
 import {
   LOWER_LABELS,
   MANY_LOWER_LABELS,
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
 
-const GenresPage = () => {
+const RatingsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [information, setInformation] =
-    useState<TFormInformation<TGenreFormData>>(initialGenreData)
+    useState<TFormInformation<TRatingFormData>>(initialRatingData)
 
   const onHandleModalClose = useCallback(() => {
     setIsModalOpen(false)
   }, [])
 
   const onHandleCreate = useCallback(() => {
-    setInformation(initialGenreData)
+    setInformation(initialRatingData)
     setIsModalOpen(true)
   }, [])
 
@@ -46,18 +46,20 @@ const GenresPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.GENRES, API_ENDPOINTS.GENRES)
+  } = usePageMethods(QUERY_KEYS.RATINGS, API_ENDPOINTS.RATINGS)
 
   if (isPending) {
     return <PageLoader />
   }
 
-  const onHandleEdit = (genre: TGenre) => {
-    const { id, name } = genre
+  const onHandleEdit = (animeRating: TRating) => {
+    const { id, animeId, rating, userId } = animeRating
     setInformation({
       data: {
         id,
-        name,
+        rating,
+        userId,
+        animeId,
       },
       type: 'update',
     })
@@ -77,10 +79,10 @@ const GenresPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.GENRES}
-        deleteLabel={MANY_LOWER_LABELS.GENRES}
-        addLabel={LOWER_LABELS.GENRES}
-        columns={genresColumns}
+        title={MANY_UPPER_LABELS.RATINGS}
+        deleteLabel={MANY_LOWER_LABELS.RATINGS}
+        addLabel={LOWER_LABELS.RATINGS}
+        columns={ratingsColumns}
         toggleAll={toggleAll}
       >
         {serverData.map((item, index) => (
@@ -88,30 +90,32 @@ const GenresPage = () => {
             key={item.id}
             data={[
               { value: item.id, type: 'text' },
+              { value: item.animeId, type: 'text' },
               { value: item.createdAt, type: 'date' },
-              { value: item.name, type: 'text' },
+              { value: item.rating, type: 'text' },
               { value: item.updatedAt, type: 'date' },
+              { value: item.userId, type: 'text' },
             ]}
             onEdit={() => onHandleEdit(item)}
             isEven={index % 2 === 0}
             isChecked={checkboxes.includes(item.id)}
             onChange={() => onHandleCheck(item.id)}
-            label={`${LOWER_LABELS.GENRES}: ${item.name}`}
             id={item.id}
-            name={LOWER_LABELS.GENRES}
+            name={LOWER_LABELS.RATINGS}
+            label={`${LOWER_LABELS.RATINGS}: ${item.id}`}
           />
         ))}
       </PageWrapper>
       {isModalOpen && (
-        <GenreForm
+        <RatingForm
           clearCheckBoxes={clearCheckBoxes}
           closeModal={onHandleModalClose}
           operationType={information.type}
-          genre={information.data}
+          animeRating={information.data}
         />
       )}
     </>
   )
 }
 
-export default GenresPage
+export default RatingsPage

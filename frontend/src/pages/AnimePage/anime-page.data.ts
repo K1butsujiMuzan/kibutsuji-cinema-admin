@@ -22,6 +22,7 @@ export const animeColumns: string[] = [
   'episodes_released',
   'image',
   'original_title',
+  'rating',
   'release_date',
   'slug',
   'status',

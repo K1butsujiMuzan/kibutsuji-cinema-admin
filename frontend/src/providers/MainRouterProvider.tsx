@@ -7,7 +7,7 @@ import AnimePage from '../pages/AnimePage'
 import EpisodesPage from '../pages/EpisodesPage'
 import GenresPage from '../pages/GenresPage'
 import UsersPage from '../pages/UsersPage'
-import RatingPage from '../pages/RatingPage'
+import RatingsPage from '../pages/RatingsPage'
 import LikesPage from '../pages/LikesPage'
 import CommentsPage from '../pages/CommentsPage'
 import ListsPage from '../pages/ListsPage'
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       },
       {
         path: PAGES.RATINGS,
-        element: <RatingPage />,
+        element: <RatingsPage />,
         loader: DashboardLoader,
       },
       {

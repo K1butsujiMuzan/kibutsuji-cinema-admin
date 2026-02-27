@@ -4,13 +4,7 @@ import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { getToken } from '../lib/get-token.ts'
-
-const DELETE_LABELS = {
-  [API_ENDPOINTS.ANIME]: 'Anime',
-  [API_ENDPOINTS.EPISODES]: 'Episode(s)',
-  [API_ENDPOINTS.GENRES]: 'Genre(s)',
-  [API_ENDPOINTS.USERS]: 'User(s)',
-} as const
+import { SERVICE_MANY_UPPER_LABELS } from '../constants/service-message-labels.ts'
 
 export const deleteData = async (
   id: string[],
@@ -52,7 +46,7 @@ export const deleteData = async (
 
     return {
       id: randomID || date,
-      title: SUCCESS.DELETE(DELETE_LABELS[endpoint]),
+      title: SUCCESS.DELETE(SERVICE_MANY_UPPER_LABELS[endpoint]),
       message: '',
       isSuccess: true,
     }

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import {
   animeColumns,
@@ -13,6 +13,11 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
+import {
+  LOWER_LABELS,
+  MANY_LOWER_LABELS,
+  MANY_UPPER_LABELS,
+} from '../../constants/service-message-labels.ts'
 
 const AnimePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -97,9 +102,9 @@ const AnimePage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={'Anime'}
-        deleteLabel={'anime'}
-        addLabel={'anime'}
+        title={MANY_UPPER_LABELS.ANIME}
+        deleteLabel={MANY_LOWER_LABELS.ANIME}
+        addLabel={LOWER_LABELS.ANIME}
         columns={animeColumns}
         toggleAll={toggleAll}
       >
@@ -116,6 +121,7 @@ const AnimePage = () => {
               { value: item.episodesReleased, type: 'text' },
               { value: item.image, type: 'nullable' },
               { value: item.originalTitle, type: 'nullable' },
+              { value: item.rating, type: 'text' },
               { value: item.releaseDate, type: 'date' },
               { value: item.slug, type: 'text' },
               { value: item.status, type: 'text' },
@@ -132,9 +138,9 @@ const AnimePage = () => {
             isEven={index % 2 === 0}
             isChecked={checkboxes.includes(item.id)}
             onChange={() => onHandleCheck(item.id)}
-            name={'anime'}
+            name={LOWER_LABELS.ANIME}
             id={item.id}
-            label={`anime: ${item.slug}`}
+            label={`${LOWER_LABELS.ANIME}: ${item.slug}`}
           />
         ))}
       </PageWrapper>

@@ -11,9 +11,13 @@ import {
 } from '../../shared/schemes/create-user.schema.ts'
 import { createData } from '../../services/create-data.ts'
 import { useMutation } from '@tanstack/react-query'
-import { QUERY_KEYS } from '../../constants/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
+import {
+  LOWER_LABELS,
+  UPPER_LABELS,
+} from '../../constants/service-message-labels.ts'
 
 interface Props {
   closeModal: () => void
@@ -53,8 +57,8 @@ const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
 
   return (
     <CreateModal
-      id={'create-user'}
-      label={'Create user'}
+      id={`create-${LOWER_LABELS.USERS}`}
+      label={`Create ${LOWER_LABELS.USERS}`}
       closeModal={closeModal}
     >
       <form
@@ -122,7 +126,7 @@ const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
           />
         </div>
         <LoginButton
-          text={isPending ? 'Creating...' : 'Create a User'}
+          text={isPending ? 'Creating...' : `Create a ${UPPER_LABELS.USERS}`}
           disabled={isPending || !isValid}
         />
       </form>

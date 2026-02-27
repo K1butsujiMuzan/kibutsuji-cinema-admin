@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { MAX_INT } from '../../constants/max-int.ts'
-import { SLUG_REGEXP } from '../../constants/slug-regexp.ts'
+import { MAX_INT } from '../../constants/max-values.ts'
+import { SLUG_REGEXP } from '../../constants/regexp.ts'
 import { ANIME_TYPES } from '../types/anime-type.type.ts'
 import { ANIME_AGE_LIMITS } from '../types/anime-age-limit.type.ts'
 import { ANIME_STATUSES } from '../types/anime-status.type.ts'
