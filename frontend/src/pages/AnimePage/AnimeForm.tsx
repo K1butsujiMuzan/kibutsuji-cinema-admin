@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'

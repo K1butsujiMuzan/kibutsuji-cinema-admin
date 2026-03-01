@@ -1,4 +1,4 @@
-import type { TEpisode } from '../../shared/types/episode.type.ts'
+import type { TEpisode } from '../../shared/types/episodes.type.ts'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 
 export const episodesColumns: string[] = [

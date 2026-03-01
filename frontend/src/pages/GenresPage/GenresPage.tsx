@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import {
   genresColumns,
   initialGenreData,

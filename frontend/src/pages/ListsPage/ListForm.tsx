@@ -1,54 +1,54 @@
-import type { TRatingFormData } from './ratings-page.data.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
+import type { TListFormData } from './lists-page.data.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
-import {
-  dataRatingSchema,
-  type TDataRating,
-} from '../../shared/schemes/data-rating.schema.ts'
 import { createData } from '../../services/create-data.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
-import { MAX_RATING } from '../../constants/max-values.ts'
-import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
+import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
+import {
+  dataListSchema,
+  type TDataList,
+} from '../../shared/schemes/data-list.schema.ts'
+import Select from '../../components/ui/Select/Select.tsx'
+import { LIST_TYPES } from '../../shared/types/list.type.ts'
 
 interface Props {
   closeModal: () => void
   clearCheckBoxes: () => void
-  animeRating: TRatingFormData
+  animeList: TListFormData
   operationType: 'create' | 'update'
 }
 
-const RatingForm = ({
+const ListForm = ({
   closeModal,
-  animeRating,
+  animeList,
   operationType,
   clearCheckBoxes,
 }: Props) => {
-  const { animeId, rating, userId, id } = animeRating
+  const { animeId, list, userId, id } = animeList
 
   const onSuccess = useQuerySuccess(
-    QUERY_KEYS.RATINGS,
+    QUERY_KEYS.LISTS,
     closeModal,
     clearCheckBoxes,
   )
 
   const createMutation = useMutation({
-    mutationFn: (data: TDataRating) => createData(data, API_ENDPOINTS.RATINGS),
+    mutationFn: (data: TDataList) => createData(data, API_ENDPOINTS.LISTS),
     onSuccess,
   })
 
   const updateMutation = useMutation({
-    mutationFn: (data: TDataRating) =>
-      updateData(id, data, API_ENDPOINTS.RATINGS),
+    mutationFn: (data: TDataList) => updateData(id, data, API_ENDPOINTS.LISTS),
     onSuccess,
   })
 
@@ -56,17 +56,17 @@ const RatingForm = ({
     control,
     handleSubmit,
     formState: { isValid, errors, isDirty },
-  } = useForm<TDataRating>({
-    resolver: zodResolver(dataRatingSchema),
+  } = useForm<TDataList>({
+    resolver: zodResolver(dataListSchema),
     mode: 'onChange',
     defaultValues: {
       animeId,
-      rating,
+      list,
       userId,
     },
   })
 
-  const onFormSubmit: SubmitHandler<TDataRating> = async (data) => {
+  const onFormSubmit: SubmitHandler<TDataList> = async (data) => {
     if (operationType === 'create') {
       createMutation.mutate(data)
     } else {
@@ -78,13 +78,13 @@ const RatingForm = ({
     <CreateModal
       id={
         operationType === 'create'
-          ? `create-${LOWER_LABELS.RATINGS}`
-          : `update-${LOWER_LABELS.RATINGS}`
+          ? `create-${LOWER_LABELS.LISTS}`
+          : `update-${LOWER_LABELS.LISTS}`
       }
       label={
         operationType === 'create'
-          ? `Create ${LOWER_LABELS.RATINGS}`
-          : `Update ${LOWER_LABELS.RATINGS}`
+          ? `Create ${LOWER_LABELS.LISTS}`
+          : `Update ${LOWER_LABELS.LISTS}`
       }
       closeModal={closeModal}
     >
@@ -122,18 +122,9 @@ const RatingForm = ({
           <Controller
             control={control}
             render={({ field }) => (
-              <LoginInput
-                {...field}
-                type={'number'}
-                min={1}
-                max={MAX_RATING}
-                onChange={(event) => field.onChange(+event.target.value)}
-                hasError={!!errors.rating?.message}
-                labelText={'Rating'}
-                id={'rating'}
-              />
+              <Select {...field} id={'list'} values={LIST_TYPES} />
             )}
-            name={'rating'}
+            name={'list'}
           />
         </div>
         <LoginButton
@@ -141,10 +132,10 @@ const RatingForm = ({
             operationType === 'create'
               ? createMutation.isPending
                 ? 'Creating...'
-                : `Create a ${UPPER_LABELS.RATINGS}`
+                : `Create a ${UPPER_LABELS.LISTS}`
               : updateMutation.isPending
                 ? 'Updating...'
-                : `Update a ${UPPER_LABELS.RATINGS}`
+                : `Update a ${UPPER_LABELS.LISTS}`
           }
           disabled={
             createMutation.isPending ||
@@ -158,4 +149,4 @@ const RatingForm = ({
   )
 }
 
-export default RatingForm
+export default ListForm

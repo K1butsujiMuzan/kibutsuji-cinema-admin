@@ -11,7 +11,7 @@ import {
 } from '../../shared/schemes/create-user.schema.ts'
 import { createData } from '../../services/create-data.ts'
 import { useMutation } from '@tanstack/react-query'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import {

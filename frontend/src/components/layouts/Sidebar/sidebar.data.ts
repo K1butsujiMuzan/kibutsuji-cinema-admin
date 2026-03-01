@@ -30,6 +30,11 @@ export const sidebar: ISidebar[] = [
     icon: SidebarAnimeIcon,
   },
   {
+    href: PAGES.COMMENTS,
+    name: 'Comments',
+    icon: SidebarCommentIcon,
+  },
+  {
     href: PAGES.EPISODES,
     name: 'Episodes',
     icon: SidebarEpisodeIcon,
@@ -40,9 +45,9 @@ export const sidebar: ISidebar[] = [
     icon: SidebarGenreIcon,
   },
   {
-    href: PAGES.RATINGS,
-    name: 'Ratings',
-    icon: SidebarRatingIcon,
+    href: PAGES.LISTS,
+    name: 'Lists',
+    icon: SidebarListIcon,
   },
   {
     href: PAGES.LIKES,
@@ -50,14 +55,9 @@ export const sidebar: ISidebar[] = [
     icon: SidebarLikeIcon,
   },
   {
-    href: PAGES.COMMENTS,
-    name: 'Comments',
-    icon: SidebarCommentIcon,
-  },
-  {
-    href: PAGES.LISTS,
-    name: 'Lists',
-    icon: SidebarListIcon,
+    href: PAGES.RATINGS,
+    name: 'Ratings',
+    icon: SidebarRatingIcon,
   },
   {
     href: PAGES.USERS,

@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
-import type { TEpisode } from '../../shared/types/episode.type.ts'
+import type { TEpisode } from '../../shared/types/episodes.type.ts'
 import {
   episodesColumns,
   initialEpisodeData,

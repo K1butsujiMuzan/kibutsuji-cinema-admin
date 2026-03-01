@@ -1,28 +1,15 @@
-import type { TUpdateUser } from '../shared/schemes/update-user.schema.ts'
 import type { TToast } from '../shared/types/toast.type.ts'
-import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 import { SUCCESS } from '../constants/success.ts'
-import type { TDataSubmitAnime } from '../shared/schemes/data-anime.schema.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
 import { getToken } from '../lib/get-token.ts'
 import { SERVICE_UPPER_LABELS } from '../constants/service-message-labels.ts'
-import type { TDataEpisode } from '../shared/schemes/data-episode.schema.ts'
-import type { TDataGenre } from '../shared/schemes/data-genre.schema.ts'
-import type { TDataRating } from '../shared/schemes/data-rating.schema.ts'
+import type { TUpdateEndpoint } from '../configs/api-endpoints.config.ts'
 
-type TEndpointType = {
-  [API_ENDPOINTS.USERS]: TUpdateUser
-  [API_ENDPOINTS.ANIME]: TDataSubmitAnime
-  [API_ENDPOINTS.EPISODES]: TDataEpisode
-  [API_ENDPOINTS.GENRES]: TDataGenre
-  [API_ENDPOINTS.RATINGS]: TDataRating
-}
-
-export const updateData = async <T extends keyof TEndpointType>(
+export const updateData = async <T extends keyof TUpdateEndpoint>(
   id: string,
-  data: TEndpointType[T],
+  data: TUpdateEndpoint[T],
   endpoint: T,
 ): Promise<TToast> => {
   const toastID = getToastId()

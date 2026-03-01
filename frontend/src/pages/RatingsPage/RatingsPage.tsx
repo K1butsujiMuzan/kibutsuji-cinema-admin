@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'

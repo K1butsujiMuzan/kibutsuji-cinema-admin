@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { createData } from '../../services/create-data.ts'
 import {

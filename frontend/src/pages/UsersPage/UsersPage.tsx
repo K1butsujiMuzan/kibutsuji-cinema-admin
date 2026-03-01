@@ -1,7 +1,7 @@
 import { userColumns } from './user-page.data.ts'
 import { useCallback, useState } from 'react'
 import CreateUser from './CreateUser.tsx'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import type { TUser } from '../../shared/types/users.type.ts'
 import UpdateUser from './UpdateUser.tsx'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'

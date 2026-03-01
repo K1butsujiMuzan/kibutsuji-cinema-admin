@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import {
   animeColumns,
