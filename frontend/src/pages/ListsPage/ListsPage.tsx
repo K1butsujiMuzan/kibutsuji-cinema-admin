@@ -1,5 +1,4 @@
-import { useCallback, useState } from 'react'
-import type { TFormInformation } from '../../shared/types/form-information.type.ts'
+import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
@@ -11,27 +10,21 @@ import {
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
-import {
-  initialListData,
-  listsColumns,
-  type TListFormData,
-} from './lists-page.data.ts'
 import type { TList } from '../../shared/types/lists.type.ts'
-import ListForm from './ListForm.tsx'
+import { listsColumns } from './lists-page.data.ts'
+import CreateList from './CreateList.tsx'
+import UpdateList from './UpdateList.tsx'
 
 const ListsPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [information, setInformation] =
-    useState<TFormInformation<TListFormData>>(initialListData)
-
-  const onHandleModalClose = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
-
-  const onHandleCreate = useCallback(() => {
-    setInformation(initialListData)
-    setIsModalOpen(true)
-  }, [])
+  const {
+    information,
+    onHandleCreate,
+    onHandleCreateModalClose,
+    onHandleUpdateModalClose,
+    isCreateModalOpen,
+    onHandleEdit,
+    isUpdateModalOpen,
+  } = useCreateAndUpdatePageMethods<TList>()
 
   const {
     count,
@@ -50,20 +43,6 @@ const ListsPage = () => {
 
   if (isPending) {
     return <PageLoader />
-  }
-
-  const onHandleEdit = (animeList: TList) => {
-    const { id, animeId, list, userId } = animeList
-    setInformation({
-      data: {
-        id,
-        list,
-        userId,
-        animeId,
-      },
-      type: 'update',
-    })
-    setIsModalOpen(true)
   }
 
   return (
@@ -88,6 +67,7 @@ const ListsPage = () => {
         {serverData.map((item, index) => (
           <Tbody
             key={item.id}
+            onEdit={() => onHandleEdit(item)}
             data={[
               { value: item.id, type: 'text' },
               { value: item.animeId, type: 'text' },
@@ -96,7 +76,6 @@ const ListsPage = () => {
               { value: item.updatedAt, type: 'date' },
               { value: item.userId, type: 'text' },
             ]}
-            onEdit={() => onHandleEdit(item)}
             isEven={index % 2 === 0}
             isChecked={checkboxes.includes(item.id)}
             onChange={() => onHandleCheck(item.id)}
@@ -106,12 +85,17 @@ const ListsPage = () => {
           />
         ))}
       </PageWrapper>
-      {isModalOpen && (
-        <ListForm
+      {isCreateModalOpen && (
+        <CreateList
           clearCheckBoxes={clearCheckBoxes}
-          closeModal={onHandleModalClose}
-          operationType={information.type}
-          animeList={information.data}
+          closeModal={onHandleCreateModalClose}
+        />
+      )}
+      {isUpdateModalOpen && information && (
+        <UpdateList
+          clearCheckBoxes={clearCheckBoxes}
+          animeList={information}
+          closeModal={onHandleUpdateModalClose}
         />
       )}
     </>

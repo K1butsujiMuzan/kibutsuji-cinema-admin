@@ -4,7 +4,7 @@ import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import {
   type TUpdateUser,
   updateUserSchema,
-} from '../../shared/schemes/update-user.schema.ts'
+} from '../../shared/schemes/user.schema.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
@@ -88,7 +88,7 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
               <LoginInput
                 {...field}
                 hasError={!!errors.name?.message}
-                labelText={'name'}
+                labelText={'Name'}
                 id={'name'}
                 autoComplete={'off'}
               />

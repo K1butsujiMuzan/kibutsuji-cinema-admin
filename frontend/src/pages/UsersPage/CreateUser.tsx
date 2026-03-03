@@ -5,10 +5,6 @@ import LoginCheckbox from '../../components/ui/LoginCheckbox/LoginCheckbox.tsx'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  createUserSchema,
-  type TCreateUser,
-} from '../../shared/schemes/create-user.schema.ts'
 import { createData } from '../../services/create-data.ts'
 import { useMutation } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
@@ -18,6 +14,10 @@ import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import {
+  createUserSchema,
+  type TCreateUser,
+} from '../../shared/schemes/user.schema.ts'
 
 interface Props {
   closeModal: () => void

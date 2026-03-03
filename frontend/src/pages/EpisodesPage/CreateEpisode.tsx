@@ -1,93 +1,64 @@
-import { useMutation } from '@tanstack/react-query'
-import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
-import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { createData } from '../../services/create-data.ts'
-import {
-  dataEpisodeSchema,
-  type TDataEpisode,
-} from '../../shared/schemes/data-episode.schema.ts'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
-import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
-import { updateData } from '../../services/update-data.ts'
-import type { TEpisodeFormData } from './episodes-page.data.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
-import { MAX_INT } from '../../constants/max-values.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
+import { useMutation } from '@tanstack/react-query'
+import { createData } from '../../services/create-data.ts'
+import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
 import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
+import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
+import {
+  createEpisodeSchema,
+  type TCreateEpisode,
+} from '../../shared/schemes/episode.schema.ts'
+import { MAX_INT } from '../../constants/limits.ts'
 
 interface Props {
   closeModal: () => void
   clearCheckBoxes: () => void
-  episode: TEpisodeFormData
-  operationType: 'create' | 'update'
 }
 
-const EpisodeForm = ({
-  closeModal,
-  episode,
-  operationType,
-  clearCheckBoxes,
-}: Props) => {
-  const { animeId, episodeNumber, title, views, id } = episode
-
+const CreateEpisode = ({ closeModal, clearCheckBoxes }: Props) => {
   const onSuccess = useQuerySuccess(
     QUERY_KEYS.EPISODES,
     closeModal,
     clearCheckBoxes,
   )
 
-  const createMutation = useMutation({
-    mutationFn: (data: TDataEpisode) =>
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: TCreateEpisode) =>
       createData(data, API_ENDPOINTS.EPISODES),
-    onSuccess,
-  })
-
-  const updateMutation = useMutation({
-    mutationFn: (data: TDataEpisode) =>
-      updateData(id, data, API_ENDPOINTS.EPISODES),
     onSuccess,
   })
 
   const {
     control,
     handleSubmit,
-    formState: { isValid, errors, isDirty },
-  } = useForm<TDataEpisode>({
-    resolver: zodResolver(dataEpisodeSchema),
+    formState: { isValid, errors },
+  } = useForm<TCreateEpisode>({
+    resolver: zodResolver(createEpisodeSchema),
     mode: 'onChange',
     defaultValues: {
-      animeId,
-      views,
-      episodeNumber,
-      title,
+      title: '',
+      animeId: '',
+      episodeNumber: 1,
+      views: 0,
     },
   })
 
-  const onFormSubmit: SubmitHandler<TDataEpisode> = async (data) => {
-    if (operationType === 'create') {
-      createMutation.mutate(data)
-    } else {
-      updateMutation.mutate(data)
-    }
+  const onFormSubmit: SubmitHandler<TCreateEpisode> = async (data) => {
+    mutate(data)
   }
 
   return (
     <CreateModal
-      id={
-        operationType === 'create'
-          ? `create-${LOWER_LABELS.EPISODES}`
-          : `update-${LOWER_LABELS.EPISODES}`
-      }
-      label={
-        operationType === 'create'
-          ? `Create ${LOWER_LABELS.EPISODES}`
-          : `Update ${LOWER_LABELS.EPISODES}`
-      }
+      id={`create-${LOWER_LABELS.EPISODES}`}
+      label={`Create ${LOWER_LABELS.EPISODES}`}
       closeModal={closeModal}
     >
       <form
@@ -156,24 +127,13 @@ const EpisodeForm = ({
         </div>
         <LoginButton
           text={
-            operationType === 'create'
-              ? createMutation.isPending
-                ? 'Creating...'
-                : `Create an ${UPPER_LABELS.EPISODES}`
-              : updateMutation.isPending
-                ? 'Updating...'
-                : `Update an ${UPPER_LABELS.EPISODES}`
+            isPending ? 'Creating...' : `Create an ${UPPER_LABELS.EPISODES}`
           }
-          disabled={
-            createMutation.isPending ||
-            updateMutation.isPending ||
-            !isValid ||
-            (!isDirty && operationType === 'update')
-          }
+          disabled={isPending || !isValid}
         />
       </form>
     </CreateModal>
   )
 }
 
-export default EpisodeForm
+export default CreateEpisode

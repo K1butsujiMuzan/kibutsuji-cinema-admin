@@ -1,10 +1,8 @@
-import type { TListFormData } from './lists-page.data.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
 import { createData } from '../../services/create-data.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
@@ -15,77 +13,51 @@ import {
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import {
-  dataListSchema,
-  type TDataList,
-} from '../../shared/schemes/data-list.schema.ts'
-import Select from '../../components/ui/Select/Select.tsx'
+  createListSchema,
+  type TCreateList,
+} from '../../shared/schemes/list.schema.ts'
 import { LIST_TYPES } from '../../shared/types/list.type.ts'
+import Select from '../../components/ui/Select/Select.tsx'
 
 interface Props {
   closeModal: () => void
   clearCheckBoxes: () => void
-  animeList: TListFormData
-  operationType: 'create' | 'update'
 }
 
-const ListForm = ({
-  closeModal,
-  animeList,
-  operationType,
-  clearCheckBoxes,
-}: Props) => {
-  const { animeId, list, userId, id } = animeList
-
+const CreateList = ({ closeModal, clearCheckBoxes }: Props) => {
   const onSuccess = useQuerySuccess(
     QUERY_KEYS.LISTS,
     closeModal,
     clearCheckBoxes,
   )
 
-  const createMutation = useMutation({
-    mutationFn: (data: TDataList) => createData(data, API_ENDPOINTS.LISTS),
-    onSuccess,
-  })
-
-  const updateMutation = useMutation({
-    mutationFn: (data: TDataList) => updateData(id, data, API_ENDPOINTS.LISTS),
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: TCreateList) => createData(data, API_ENDPOINTS.LISTS),
     onSuccess,
   })
 
   const {
     control,
     handleSubmit,
-    formState: { isValid, errors, isDirty },
-  } = useForm<TDataList>({
-    resolver: zodResolver(dataListSchema),
+    formState: { isValid, errors },
+  } = useForm<TCreateList>({
+    resolver: zodResolver(createListSchema),
     mode: 'onChange',
     defaultValues: {
-      animeId,
-      list,
-      userId,
+      animeId: '',
+      list: LIST_TYPES[0],
+      userId: '',
     },
   })
 
-  const onFormSubmit: SubmitHandler<TDataList> = async (data) => {
-    if (operationType === 'create') {
-      createMutation.mutate(data)
-    } else {
-      updateMutation.mutate(data)
-    }
+  const onFormSubmit: SubmitHandler<TCreateList> = async (data) => {
+    mutate(data)
   }
 
   return (
     <CreateModal
-      id={
-        operationType === 'create'
-          ? `create-${LOWER_LABELS.LISTS}`
-          : `update-${LOWER_LABELS.LISTS}`
-      }
-      label={
-        operationType === 'create'
-          ? `Create ${LOWER_LABELS.LISTS}`
-          : `Update ${LOWER_LABELS.LISTS}`
-      }
+      id={`create-${LOWER_LABELS.LISTS}`}
+      label={`Create ${LOWER_LABELS.LISTS}`}
       closeModal={closeModal}
     >
       <form
@@ -128,25 +100,12 @@ const ListForm = ({
           />
         </div>
         <LoginButton
-          text={
-            operationType === 'create'
-              ? createMutation.isPending
-                ? 'Creating...'
-                : `Create a ${UPPER_LABELS.LISTS}`
-              : updateMutation.isPending
-                ? 'Updating...'
-                : `Update a ${UPPER_LABELS.LISTS}`
-          }
-          disabled={
-            createMutation.isPending ||
-            updateMutation.isPending ||
-            !isValid ||
-            (!isDirty && operationType === 'update')
-          }
+          text={isPending ? 'Creating...' : `Create a ${UPPER_LABELS.LISTS}`}
+          disabled={isPending || !isValid}
         />
       </form>
     </CreateModal>
   )
 }
 
-export default ListForm
+export default CreateList

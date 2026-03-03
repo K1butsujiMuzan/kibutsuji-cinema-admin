@@ -13,7 +13,7 @@ import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import {
   dataGenreSchema,
   type TDataGenre,
-} from '../../shared/schemes/data-genre.schema.ts'
+} from '../../shared/schemes/genre.schema.ts'
 import {
   LOWER_LABELS,
   UPPER_LABELS,

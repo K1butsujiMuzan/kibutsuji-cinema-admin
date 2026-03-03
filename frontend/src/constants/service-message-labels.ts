@@ -2,6 +2,7 @@ import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 
 export const UPPER_LABELS = {
   ANIME: 'Anime',
+  COMMENTS: 'Comment',
   EPISODES: 'Episode',
   GENRES: 'Genre',
   LISTS: 'List',
@@ -11,6 +12,7 @@ export const UPPER_LABELS = {
 
 export const SERVICE_MANY_UPPER_LABELS = {
   [API_ENDPOINTS.ANIME]: 'Anime',
+  [API_ENDPOINTS.COMMENTS]: 'Comment(s)',
   [API_ENDPOINTS.EPISODES]: 'Episode(s)',
   [API_ENDPOINTS.GENRES]: 'Genre(s)',
   [API_ENDPOINTS.LISTS]: 'List(s)',
@@ -20,6 +22,7 @@ export const SERVICE_MANY_UPPER_LABELS = {
 
 export const MANY_UPPER_LABELS = {
   ANIME: 'Anime',
+  COMMENTS: 'Comments',
   EPISODES: 'Episodes',
   GENRES: 'Genres',
   LISTS: 'Lists',
@@ -29,6 +32,7 @@ export const MANY_UPPER_LABELS = {
 
 export const LOWER_LABELS = {
   ANIME: 'anime',
+  COMMENTS: 'comment',
   EPISODES: 'episode',
   GENRES: 'genre',
   LISTS: 'list',
@@ -38,6 +42,7 @@ export const LOWER_LABELS = {
 
 export const MANY_LOWER_LABELS = {
   ANIME: 'anime',
+  COMMENTS: 'comment(s)',
   EPISODES: 'episode(s)',
   GENRES: 'genre(s)',
   LISTS: 'list(s)',
@@ -47,6 +52,7 @@ export const MANY_LOWER_LABELS = {
 
 export const SERVICE_UPPER_LABELS = {
   [API_ENDPOINTS.ANIME]: UPPER_LABELS.ANIME,
+  [API_ENDPOINTS.COMMENTS]: UPPER_LABELS.COMMENTS,
   [API_ENDPOINTS.EPISODES]: UPPER_LABELS.EPISODES,
   [API_ENDPOINTS.GENRES]: UPPER_LABELS.GENRES,
   [API_ENDPOINTS.LISTS]: UPPER_LABELS.LISTS,

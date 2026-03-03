@@ -1,5 +1,4 @@
 import { userColumns } from './user-page.data.ts'
-import { useCallback, useState } from 'react'
 import CreateUser from './CreateUser.tsx'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import type { TUser } from '../../shared/types/users.type.ts'
@@ -14,23 +13,18 @@ import {
   MANY_LOWER_LABELS,
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 
 const UsersPage = () => {
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false)
-  const [editUser, setEditUser] = useState<TUser | null>(null)
-
-  const onHandleCreateModalClose = useCallback(() => {
-    setIsCreateModalOpen(false)
-  }, [])
-
-  const onHandleUpdateModalClose = useCallback(() => {
-    setIsUpdateModalOpen(false)
-  }, [])
-
-  const onHandleCreate = () => {
-    setIsCreateModalOpen(true)
-  }
+  const {
+    information,
+    onHandleCreate,
+    onHandleCreateModalClose,
+    onHandleUpdateModalClose,
+    isCreateModalOpen,
+    onHandleEdit,
+    isUpdateModalOpen,
+  } = useCreateAndUpdatePageMethods<TUser>()
 
   const {
     count,
@@ -49,11 +43,6 @@ const UsersPage = () => {
 
   if (isPending) {
     return <PageLoader />
-  }
-
-  const onHandleEdit = (user: TUser) => {
-    setEditUser(user)
-    setIsUpdateModalOpen(true)
   }
 
   return (
@@ -105,10 +94,10 @@ const UsersPage = () => {
           closeModal={onHandleCreateModalClose}
         />
       )}
-      {isUpdateModalOpen && !!editUser && (
+      {isUpdateModalOpen && information && (
         <UpdateUser
           clearCheckBoxes={clearCheckBoxes}
-          user={editUser}
+          user={information}
           closeModal={onHandleUpdateModalClose}
         />
       )}

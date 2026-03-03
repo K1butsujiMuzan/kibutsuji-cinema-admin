@@ -1,37 +1,30 @@
-import { useCallback, useState } from 'react'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
+import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import type { TEpisode } from '../../shared/types/episodes.type.ts'
-import {
-  episodesColumns,
-  initialEpisodeData,
-  type TEpisodeFormData,
-} from './episodes-page.data.ts'
-import EpisodeForm from './EpisodeForm.tsx'
-import Tbody from '../../components/ui/Tbody/Tbody.tsx'
-import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
-import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
+import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
+import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
+import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import {
   LOWER_LABELS,
   MANY_LOWER_LABELS,
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { episodesColumns } from './episodes-page.data.ts'
+import Tbody from '../../components/ui/Tbody/Tbody.tsx'
+import CreateEpisode from './CreateEpisode.tsx'
+import UpdateEpisode from './UpdateEpisode.tsx'
 
 const EpisodesPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [information, setInformation] =
-    useState<TFormInformation<TEpisodeFormData>>(initialEpisodeData)
-
-  const onHandleModalClose = useCallback(() => {
-    setIsModalOpen(false)
-  }, [])
-
-  const onHandleCreate = useCallback(() => {
-    setInformation(initialEpisodeData)
-    setIsModalOpen(true)
-  }, [])
+  const {
+    information,
+    onHandleCreate,
+    onHandleCreateModalClose,
+    onHandleUpdateModalClose,
+    isCreateModalOpen,
+    onHandleEdit,
+    isUpdateModalOpen,
+  } = useCreateAndUpdatePageMethods<TEpisode>()
 
   const {
     count,
@@ -50,21 +43,6 @@ const EpisodesPage = () => {
 
   if (isPending) {
     return <PageLoader />
-  }
-
-  const onHandleEdit = (episode: TEpisode) => {
-    const { animeId, id, title, episodeNumber, views } = episode
-    setInformation({
-      data: {
-        id,
-        animeId,
-        title,
-        episodeNumber,
-        views,
-      },
-      type: 'update',
-    })
-    setIsModalOpen(true)
   }
 
   return (
@@ -89,6 +67,7 @@ const EpisodesPage = () => {
         {serverData.map((item, index) => (
           <Tbody
             key={item.id}
+            onEdit={() => onHandleEdit(item)}
             data={[
               { value: item.id, type: 'text' },
               { value: item.animeId, type: 'text' },
@@ -98,7 +77,6 @@ const EpisodesPage = () => {
               { value: item.updatedAt, type: 'date' },
               { value: item.views, type: 'text' },
             ]}
-            onEdit={() => onHandleEdit(item)}
             isEven={index % 2 === 0}
             isChecked={checkboxes.includes(item.id)}
             onChange={() => onHandleCheck(item.id)}
@@ -108,12 +86,17 @@ const EpisodesPage = () => {
           />
         ))}
       </PageWrapper>
-      {isModalOpen && (
-        <EpisodeForm
+      {isCreateModalOpen && (
+        <CreateEpisode
           clearCheckBoxes={clearCheckBoxes}
-          closeModal={onHandleModalClose}
-          operationType={information.type}
-          episode={information.data}
+          closeModal={onHandleCreateModalClose}
+        />
+      )}
+      {isUpdateModalOpen && information && (
+        <UpdateEpisode
+          clearCheckBoxes={clearCheckBoxes}
+          episode={information}
+          closeModal={onHandleUpdateModalClose}
         />
       )}
     </>

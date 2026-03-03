@@ -4,9 +4,11 @@ import type { TGenre } from '../shared/types/genres.type.ts'
 import type { TRating } from '../shared/types/ratings.type.ts'
 import type { TUser } from '../shared/types/users.type.ts'
 import type { TList } from '../shared/types/lists.type.ts'
+import type { TComment } from '../shared/types/comments.type.ts'
 
 export const QUERY_KEYS = {
   ANIME: 'anime',
+  COMMENT: 'comments',
   EPISODES: 'episodes',
   GENRES: 'genres',
   LISTS: 'lists',
@@ -14,8 +16,17 @@ export const QUERY_KEYS = {
   USERS: 'users',
 } as const
 
+export type TCreateUpdateFormData = {
+  [QUERY_KEYS.COMMENT]: TComment
+  [QUERY_KEYS.EPISODES]: TEpisode
+  [QUERY_KEYS.LISTS]: TList
+  [QUERY_KEYS.RATINGS]: TRating
+  [QUERY_KEYS.USERS]: TUser
+}
+
 export type TServerData = {
   [QUERY_KEYS.ANIME]: TAnime[]
+  [QUERY_KEYS.COMMENT]: TComment[]
   [QUERY_KEYS.EPISODES]: TEpisode[]
   [QUERY_KEYS.GENRES]: TGenre[]
   [QUERY_KEYS.LISTS]: TList[]

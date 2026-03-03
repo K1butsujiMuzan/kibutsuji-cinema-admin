@@ -1,91 +1,63 @@
-import type { TRatingFormData } from './ratings-page.data.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
-import {
-  dataRatingSchema,
-  type TDataRating,
-} from '../../shared/schemes/data-rating.schema.ts'
 import { createData } from '../../services/create-data.ts'
 import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
-import { MAX_RATING } from '../../constants/max-values.ts'
-import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
+import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
+import {
+  createRatingSchema,
+  type TCreateRating,
+} from '../../shared/schemes/rating.schema.ts'
+import { MAX_RATING } from '../../constants/limits.ts'
 
 interface Props {
   closeModal: () => void
   clearCheckBoxes: () => void
-  animeRating: TRatingFormData
-  operationType: 'create' | 'update'
 }
 
-const RatingForm = ({
-  closeModal,
-  animeRating,
-  operationType,
-  clearCheckBoxes,
-}: Props) => {
-  const { animeId, rating, userId, id } = animeRating
-
+const CreateRating = ({ closeModal, clearCheckBoxes }: Props) => {
   const onSuccess = useQuerySuccess(
     QUERY_KEYS.RATINGS,
     closeModal,
     clearCheckBoxes,
   )
 
-  const createMutation = useMutation({
-    mutationFn: (data: TDataRating) => createData(data, API_ENDPOINTS.RATINGS),
-    onSuccess,
-  })
-
-  const updateMutation = useMutation({
-    mutationFn: (data: TDataRating) =>
-      updateData(id, data, API_ENDPOINTS.RATINGS),
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: TCreateRating) =>
+      createData(data, API_ENDPOINTS.RATINGS),
     onSuccess,
   })
 
   const {
     control,
     handleSubmit,
-    formState: { isValid, errors, isDirty },
-  } = useForm<TDataRating>({
-    resolver: zodResolver(dataRatingSchema),
+    formState: { isValid, errors },
+  } = useForm<TCreateRating>({
+    resolver: zodResolver(createRatingSchema),
     mode: 'onChange',
     defaultValues: {
-      animeId,
-      rating,
-      userId,
+      animeId: '',
+      rating: 0,
+      userId: '',
     },
   })
 
-  const onFormSubmit: SubmitHandler<TDataRating> = async (data) => {
-    if (operationType === 'create') {
-      createMutation.mutate(data)
-    } else {
-      updateMutation.mutate(data)
-    }
+  const onFormSubmit: SubmitHandler<TCreateRating> = async (data) => {
+    mutate(data)
   }
 
   return (
     <CreateModal
-      id={
-        operationType === 'create'
-          ? `create-${LOWER_LABELS.RATINGS}`
-          : `update-${LOWER_LABELS.RATINGS}`
-      }
-      label={
-        operationType === 'create'
-          ? `Create ${LOWER_LABELS.RATINGS}`
-          : `Update ${LOWER_LABELS.RATINGS}`
-      }
+      id={`create-${LOWER_LABELS.RATINGS}`}
+      label={`Create ${LOWER_LABELS.RATINGS}`}
       closeModal={closeModal}
     >
       <form
@@ -137,25 +109,12 @@ const RatingForm = ({
           />
         </div>
         <LoginButton
-          text={
-            operationType === 'create'
-              ? createMutation.isPending
-                ? 'Creating...'
-                : `Create a ${UPPER_LABELS.RATINGS}`
-              : updateMutation.isPending
-                ? 'Updating...'
-                : `Update a ${UPPER_LABELS.RATINGS}`
-          }
-          disabled={
-            createMutation.isPending ||
-            updateMutation.isPending ||
-            !isValid ||
-            (!isDirty && operationType === 'update')
-          }
+          text={isPending ? 'Creating...' : `Create a ${UPPER_LABELS.RATINGS}`}
+          disabled={isPending || !isValid}
         />
       </form>
     </CreateModal>
   )
 }
 
-export default RatingForm
+export default CreateRating

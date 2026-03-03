@@ -1,11 +1,11 @@
 export const userColumns: string[] = [
   'id',
-  'createdAt',
+  'created_at',
   'email',
-  'emailVerified',
+  'email_verified',
   'image',
-  'isReceiveNotifications',
+  'is_receive_notifications',
   'name',
   'role',
-  'updatedAt',
+  'updated_at',
 ]

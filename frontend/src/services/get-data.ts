@@ -1,6 +1,6 @@
 import { type TGetEndpoint } from '../configs/api-endpoints.config.ts'
 import { getToken } from '../lib/get-token.ts'
-import { PAGE_LIMIT } from '../constants/max-values.ts'
+import { PAGE_LIMIT } from '../constants/limits.ts'
 
 type TGetData<T> = {
   data: T[]

@@ -12,12 +12,12 @@ import {
   DataAnimeSchema,
   type TDataAnime,
   type TDataSubmitAnime,
-} from '../../shared/schemes/data-anime.schema.ts'
+} from '../../shared/schemes/anime.schema.ts'
 import { type TAnimeFormData } from './anime-page.data.ts'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { createData } from '../../services/create-data.ts'
-import { MAX_INT } from '../../constants/max-values.ts'
+import { MAX_INT } from '../../constants/limits.ts'
 import { ANIME_TYPES } from '../../shared/types/anime-type.type.ts'
 import { ANIME_AGE_LIMITS } from '../../shared/types/anime-age-limit.type.ts'
 import { ANIME_STATUSES } from '../../shared/types/anime-status.type.ts'
