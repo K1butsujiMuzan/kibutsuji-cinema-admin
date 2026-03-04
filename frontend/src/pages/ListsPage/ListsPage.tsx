@@ -14,6 +14,7 @@ import type { TList } from '../../shared/types/lists.type.ts'
 import { listsColumns } from './lists-page.data.ts'
 import CreateList from './CreateList.tsx'
 import UpdateList from './UpdateList.tsx'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const ListsPage = () => {
   const {
@@ -39,7 +40,7 @@ const ListsPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.LISTS, API_ENDPOINTS.LISTS)
+  } = usePageMethods(QUERY_KEYS.LISTS, API_ENDPOINTS.LISTS, PAGE_TITLES.LISTS)
 
   if (isPending) {
     return <PageLoader />

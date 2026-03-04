@@ -14,6 +14,7 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import CreateComment from './CreateComment.tsx'
 import UpdateComment from './UpdateComment.tsx'
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const CommentsPage = () => {
   const {
@@ -39,7 +40,11 @@ const CommentsPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.COMMENT, API_ENDPOINTS.COMMENTS)
+  } = usePageMethods(
+    QUERY_KEYS.COMMENT,
+    API_ENDPOINTS.COMMENTS,
+    PAGE_TITLES.COMMENTS,
+  )
 
   if (isPending) {
     return <PageLoader />

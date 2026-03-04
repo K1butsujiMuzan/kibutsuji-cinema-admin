@@ -41,41 +41,43 @@ const PageWrapper = ({
   isAllChecked,
 }: Props) => {
   return (
-    <div className={'flex flex-col p-4 justify-between h-full gap-2'}>
-      <div className={'flex flex-col gap-2'}>
-        <ControlBox
-          title={title}
-          onAdd={onHandleCreate}
-          onDelete={onDelete}
-          isPending={isPending}
-          isChecked={isChecked}
-          addLabel={addLabel}
-          deleteLabel={deleteLabel}
-        />
-        {!isEmptyData && (
-          <div className={'overflow-x-auto'}>
-            <table className={'text-left text-nowrap border border-collapse'}>
-              <Thead
-                columns={columns}
-                isChecked={!isEmptyData && isAllChecked}
-                onChange={toggleAll}
-              />
-              <tbody className={'divide-y text-sm'}>{children}</tbody>
-            </table>
-          </div>
+    <>
+      <div className={'flex flex-col p-4 justify-between h-full gap-2'}>
+        <div className={'flex flex-col gap-2'}>
+          <ControlBox
+            title={title}
+            onAdd={onHandleCreate}
+            onDelete={onDelete}
+            isPending={isPending}
+            isChecked={isChecked}
+            addLabel={addLabel}
+            deleteLabel={deleteLabel}
+          />
+          {!isEmptyData && (
+            <div className={'overflow-x-auto'}>
+              <table className={'text-left text-nowrap border border-collapse'}>
+                <Thead
+                  columns={columns}
+                  isChecked={!isEmptyData && isAllChecked}
+                  onChange={toggleAll}
+                />
+                <tbody className={'divide-y text-sm'}>{children}</tbody>
+              </table>
+            </div>
+          )}
+          {isEmptyData && <EmptyTable />}
+        </div>
+        {count > 10 && (
+          <PageChanger
+            disabled={isFetching}
+            page={page}
+            count={count}
+            onBack={() => onChangePage(false)}
+            onForward={() => onChangePage(true)}
+          />
         )}
-        {isEmptyData && <EmptyTable />}
       </div>
-      {count > 10 && (
-        <PageChanger
-          disabled={isFetching}
-          page={page}
-          count={count}
-          onBack={() => onChangePage(false)}
-          onForward={() => onChangePage(true)}
-        />
-      )}
-    </div>
+    </>
   )
 }
 

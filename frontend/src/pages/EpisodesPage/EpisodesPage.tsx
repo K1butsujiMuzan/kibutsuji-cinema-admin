@@ -14,6 +14,7 @@ import { episodesColumns } from './episodes-page.data.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import CreateEpisode from './CreateEpisode.tsx'
 import UpdateEpisode from './UpdateEpisode.tsx'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const EpisodesPage = () => {
   const {
@@ -39,7 +40,11 @@ const EpisodesPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.EPISODES, API_ENDPOINTS.EPISODES)
+  } = usePageMethods(
+    QUERY_KEYS.EPISODES,
+    API_ENDPOINTS.EPISODES,
+    PAGE_TITLES.EPISODES,
+  )
 
   if (isPending) {
     return <PageLoader />

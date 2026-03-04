@@ -5,7 +5,7 @@ import { PAGES } from '../configs/pages.config.ts'
 export async function DashboardLoader() {
   const isAuthorize = await checkToken()
   if (!isAuthorize) {
-    return redirect(PAGES.MAIN)
+    return redirect(PAGES.LOGIN)
   }
   return null
 }

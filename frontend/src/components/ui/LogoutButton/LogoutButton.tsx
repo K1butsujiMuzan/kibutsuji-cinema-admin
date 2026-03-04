@@ -7,7 +7,7 @@ const LogoutButton = () => {
 
   const logout = () => {
     localStorage.removeItem('token')
-    navigate(PAGES.MAIN)
+    navigate(PAGES.LOGIN)
   }
 
   return (

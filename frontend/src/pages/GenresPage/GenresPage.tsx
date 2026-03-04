@@ -18,6 +18,7 @@ import {
   MANY_LOWER_LABELS,
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const GenresPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -46,7 +47,11 @@ const GenresPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.GENRES, API_ENDPOINTS.GENRES)
+  } = usePageMethods(
+    QUERY_KEYS.GENRES,
+    API_ENDPOINTS.GENRES,
+    PAGE_TITLES.GENRES,
+  )
 
   if (isPending) {
     return <PageLoader />

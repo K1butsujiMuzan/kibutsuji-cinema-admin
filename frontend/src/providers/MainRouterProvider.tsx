@@ -15,7 +15,7 @@ import { DashboardLoader, MainLoader } from '../lib/page-loaders.ts'
 
 const router = createBrowserRouter([
   {
-    path: PAGES.MAIN,
+    path: PAGES.LOGIN,
     element: <LoginPage />,
     loader: MainLoader,
   },

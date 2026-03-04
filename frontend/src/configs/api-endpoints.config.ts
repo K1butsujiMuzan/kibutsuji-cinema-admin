@@ -21,6 +21,8 @@ import type {
   TCreateEpisode,
   TUpdateEpisode,
 } from '../shared/schemes/episode.schema.ts'
+import type { TLike } from '../shared/types/likes.type.ts'
+import type { TCreateLike, TUpdateLike } from '../shared/schemes/like.schema.ts'
 
 export const BASE_URL: string =
   import.meta.env.VITE_BASE_URL || 'https://kibutsuji-cinema.vercel.app/api'
@@ -33,6 +35,7 @@ export const API_ENDPOINTS = {
   COMMENTS: `${BASE_URL}/comments`,
   EPISODES: `${BASE_URL}/episodes`,
   GENRES: `${BASE_URL}/genres`,
+  LIKES: `${BASE_URL}/likes`,
   LISTS: `${BASE_URL}/lists`,
   RATINGS: `${BASE_URL}/ratings`,
   USERS: `${BASE_URL}/users`,
@@ -43,6 +46,7 @@ export type TCreateEndpoint = {
   [API_ENDPOINTS.ANIME]: TDataSubmitAnime
   [API_ENDPOINTS.COMMENTS]: TCreateComment
   [API_ENDPOINTS.EPISODES]: TCreateEpisode
+  [API_ENDPOINTS.LIKES]: TCreateLike
   [API_ENDPOINTS.LISTS]: TCreateList
   [API_ENDPOINTS.GENRES]: TDataGenre
   [API_ENDPOINTS.RATINGS]: TCreateRating
@@ -53,6 +57,7 @@ export type TUpdateEndpoint = {
   [API_ENDPOINTS.ANIME]: TDataSubmitAnime
   [API_ENDPOINTS.COMMENTS]: TUpdateComment
   [API_ENDPOINTS.EPISODES]: TUpdateEpisode
+  [API_ENDPOINTS.LIKES]: TUpdateLike
   [API_ENDPOINTS.LISTS]: TUpdateList
   [API_ENDPOINTS.GENRES]: TDataGenre
   [API_ENDPOINTS.RATINGS]: TUpdateRating
@@ -63,6 +68,7 @@ export type TGetEndpoint = {
   [API_ENDPOINTS.ANIME]: TAnime
   [API_ENDPOINTS.COMMENTS]: TComment
   [API_ENDPOINTS.EPISODES]: TEpisode
+  [API_ENDPOINTS.LIKES]: TLike
   [API_ENDPOINTS.LISTS]: TList
   [API_ENDPOINTS.GENRES]: TGenre
   [API_ENDPOINTS.RATINGS]: TRating

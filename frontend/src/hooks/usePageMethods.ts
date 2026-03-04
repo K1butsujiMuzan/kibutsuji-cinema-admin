@@ -5,11 +5,16 @@ import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query'
 import { getData } from '../services/get-data.ts'
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { deleteData } from '../services/delete-data.ts'
+import { useTitle } from './useTitle.ts'
+import type { PAGE_TITLES } from '../configs/pages.config.ts'
 
 export const usePageMethods = <T extends keyof TServerData>(
   queryKey: T,
   endPoint: (typeof API_ENDPOINTS)[keyof typeof API_ENDPOINTS],
+  title: (typeof PAGE_TITLES)[keyof typeof PAGE_TITLES],
 ) => {
+  useTitle(title)
+
   const [checkboxes, setCheckboxes] = useState<string[]>([])
   const [page, setPage] = useState<number>(1)
 

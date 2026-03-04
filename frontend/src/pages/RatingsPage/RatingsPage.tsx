@@ -14,6 +14,7 @@ import { ratingsColumns } from './ratings-page.data.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import CreateRating from './CreateRating.tsx'
 import UpdateRating from './UpdateRating.tsx'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const RatingsPage = () => {
   const {
@@ -39,7 +40,11 @@ const RatingsPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.RATINGS, API_ENDPOINTS.RATINGS)
+  } = usePageMethods(
+    QUERY_KEYS.RATINGS,
+    API_ENDPOINTS.RATINGS,
+    PAGE_TITLES.RATINGS,
+  )
 
   if (isPending) {
     return <PageLoader />

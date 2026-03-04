@@ -14,6 +14,7 @@ import {
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const UsersPage = () => {
   const {
@@ -39,7 +40,7 @@ const UsersPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.USERS, API_ENDPOINTS.USERS)
+  } = usePageMethods(QUERY_KEYS.USERS, API_ENDPOINTS.USERS, PAGE_TITLES.USERS)
 
   if (isPending) {
     return <PageLoader />

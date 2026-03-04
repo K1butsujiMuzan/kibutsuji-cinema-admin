@@ -18,6 +18,7 @@ import {
   MANY_LOWER_LABELS,
   MANY_UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const AnimePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -46,7 +47,7 @@ const AnimePage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.ANIME, API_ENDPOINTS.ANIME)
+  } = usePageMethods(QUERY_KEYS.ANIME, API_ENDPOINTS.ANIME, PAGE_TITLES.ANIME)
 
   if (isPending) {
     return <PageLoader />

@@ -1,7 +1,11 @@
 import LoginForm from './LoginForm.tsx'
 import LoginHeader from '../../components/layouts/LoginHeader/LoginHeader.tsx'
+import { useTitle } from '../../hooks/useTitle.ts'
+import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const LoginPage = () => {
+  useTitle(PAGE_TITLES.LOGIN)
+
   return (
     <>
       <LoginHeader />
