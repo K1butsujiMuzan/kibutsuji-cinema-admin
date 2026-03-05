@@ -1,59 +1,71 @@
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
+import { TABLE_KEY } from '../configs/table-key.config.ts'
 
 export const UPPER_LABELS = {
-  ANIME: 'Anime',
-  COMMENTS: 'Comment',
-  EPISODES: 'Episode',
-  GENRES: 'Genre',
-  LIKES: 'Like',
-  LISTS: 'List',
-  RATINGS: 'Rating',
-  USERS: 'User',
+  [TABLE_KEY.ANIME]: 'Anime',
+  [TABLE_KEY.COMMENTS]: 'Comment',
+  [TABLE_KEY.EPISODES]: 'Episode',
+  [TABLE_KEY.GENRES]: 'Genre',
+  [TABLE_KEY.LIKES]: 'Like',
+  [TABLE_KEY.LISTS]: 'List',
+  [TABLE_KEY.RATINGS]: 'Rating',
+  [TABLE_KEY.USERS]: 'User',
 } as const
 
 export const SERVICE_MANY_UPPER_LABELS = {
-  [API_ENDPOINTS.ANIME]: 'Anime',
-  [API_ENDPOINTS.COMMENTS]: 'Comment(s)',
-  [API_ENDPOINTS.EPISODES]: 'Episode(s)',
-  [API_ENDPOINTS.GENRES]: 'Genre(s)',
-  [API_ENDPOINTS.LIKES]: 'Like(s)',
-  [API_ENDPOINTS.LISTS]: 'List(s)',
-  [API_ENDPOINTS.RATINGS]: 'Rating(s)',
-  [API_ENDPOINTS.USERS]: 'User(s)',
+  [TABLE_KEY.ANIME]: 'Anime',
+  [TABLE_KEY.COMMENTS]: 'Comment(s)',
+  [TABLE_KEY.EPISODES]: 'Episode(s)',
+  [TABLE_KEY.GENRES]: 'Genre(s)',
+  [TABLE_KEY.LIKES]: 'Like(s)',
+  [TABLE_KEY.LISTS]: 'List(s)',
+  [TABLE_KEY.RATINGS]: 'Rating(s)',
+  [TABLE_KEY.USERS]: 'User(s)',
 } as const
 
 export const MANY_UPPER_LABELS = {
-  ANIME: 'Anime',
-  COMMENTS: 'Comments',
-  EPISODES: 'Episodes',
-  GENRES: 'Genres',
-  LIKES: 'Likes',
-  LISTS: 'Lists',
-  RATINGS: 'Ratings',
-  USERS: 'Users',
+  [TABLE_KEY.ANIME]: 'Anime',
+  [TABLE_KEY.COMMENTS]: 'Comments',
+  [TABLE_KEY.EPISODES]: 'Episodes',
+  [TABLE_KEY.GENRES]: 'Genres',
+  [TABLE_KEY.LIKES]: 'Likes',
+  [TABLE_KEY.LISTS]: 'Lists',
+  [TABLE_KEY.RATINGS]: 'Ratings',
+  [TABLE_KEY.USERS]: 'Users',
 } as const
 
 export const LOWER_LABELS = {
-  ANIME: 'anime',
-  COMMENTS: 'comment',
-  EPISODES: 'episode',
-  GENRES: 'genre',
-  LIKES: 'like',
-  LISTS: 'list',
-  RATINGS: 'rating',
-  USERS: 'user',
+  [TABLE_KEY.ANIME]: 'anime',
+  [TABLE_KEY.COMMENTS]: 'comment',
+  [TABLE_KEY.EPISODES]: 'episode',
+  [TABLE_KEY.GENRES]: 'genre',
+  [TABLE_KEY.LIKES]: 'like',
+  [TABLE_KEY.LISTS]: 'list',
+  [TABLE_KEY.RATINGS]: 'rating',
+  [TABLE_KEY.USERS]: 'user',
 } as const
 
 export const MANY_LOWER_LABELS = {
-  ANIME: 'anime',
-  COMMENTS: 'comment(s)',
-  EPISODES: 'episode(s)',
-  GENRES: 'genre(s)',
-  LIKES: 'like(s)',
-  LISTS: 'list(s)',
-  RATINGS: 'rating(s)',
-  USERS: 'user(s)',
+  [TABLE_KEY.ANIME]: 'anime',
+  [TABLE_KEY.COMMENTS]: 'comment(s)',
+  [TABLE_KEY.EPISODES]: 'episode(s)',
+  [TABLE_KEY.GENRES]: 'genre(s)',
+  [TABLE_KEY.LIKES]: 'like(s)',
+  [TABLE_KEY.LISTS]: 'list(s)',
+  [TABLE_KEY.RATINGS]: 'rating(s)',
+  [TABLE_KEY.USERS]: 'user(s)',
 } as const
+
+export const SEARCH_LABELS = {
+  [TABLE_KEY.ANIME]: 'Title',
+  [TABLE_KEY.COMMENTS]: 'Text',
+  [TABLE_KEY.EPISODES]: 'Anime id',
+  [TABLE_KEY.GENRES]: 'Name',
+  [TABLE_KEY.LIKES]: 'Comment id',
+  [TABLE_KEY.LISTS]: 'User id',
+  [TABLE_KEY.RATINGS]: 'Anime id',
+  [TABLE_KEY.USERS]: 'Email',
+}
 
 export const SERVICE_UPPER_LABELS = {
   [API_ENDPOINTS.ANIME]: UPPER_LABELS.ANIME,

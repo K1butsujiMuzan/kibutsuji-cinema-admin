@@ -1,6 +1,4 @@
 import { useCallback, useState } from 'react'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import {
   animeColumns,
@@ -13,12 +11,9 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import {
-  LOWER_LABELS,
-  MANY_LOWER_LABELS,
-  MANY_UPPER_LABELS,
-} from '../../constants/service-message-labels.ts'
+import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 
 const AnimePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -47,7 +42,9 @@ const AnimePage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.ANIME, API_ENDPOINTS.ANIME, PAGE_TITLES.ANIME)
+    onSearchChange,
+    search,
+  } = usePageMethods(QUERY_KEYS.ANIME, 'ANIME', PAGE_TITLES.ANIME)
 
   if (isPending) {
     return <PageLoader />
@@ -103,11 +100,11 @@ const AnimePage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.ANIME}
-        deleteLabel={MANY_LOWER_LABELS.ANIME}
-        addLabel={LOWER_LABELS.ANIME}
         columns={animeColumns}
         toggleAll={toggleAll}
+        onSearch={onSearchChange}
+        search={search}
+        tableKey={'ANIME'}
       >
         {serverData.map((item, index) => (
           <Tbody
@@ -140,8 +137,8 @@ const AnimePage = () => {
             isChecked={checkboxes.includes(item.id)}
             onChange={() => onHandleCheck(item.id)}
             name={LOWER_LABELS.ANIME}
-            id={item.id}
             label={`${LOWER_LABELS.ANIME}: ${item.slug}`}
+            id={item.id}
           />
         ))}
       </PageWrapper>

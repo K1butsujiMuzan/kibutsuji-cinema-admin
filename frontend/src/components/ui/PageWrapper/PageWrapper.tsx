@@ -2,6 +2,13 @@ import PageChanger from '../PageChanger/PageChanger.tsx'
 import ControlBox from '../ControlBox/ControlBox.tsx'
 import Thead from '../Thead/Thead.tsx'
 import EmptyTable from '../EmptyTable/EmptyTable.tsx'
+import type { ChangeEvent } from 'react'
+import SearchInput from '../SearchInput/SearchInput.tsx'
+import {
+  MANY_UPPER_LABELS,
+  SEARCH_LABELS,
+} from '../../../constants/service-message-labels.ts'
+import type { TCrudEndpointKeys } from '../../../configs/table-key.config.ts'
 
 interface Props {
   children: Readonly<React.ReactNode>
@@ -9,17 +16,17 @@ interface Props {
   page: number
   isFetching: boolean
   isPending: boolean
-  onChangePage: (isIncrement: boolean) => void
   isEmptyData: boolean
   isChecked: boolean
   isAllChecked: boolean
+  onSearch: (event: ChangeEvent<HTMLInputElement>) => void
+  onChangePage: (isIncrement: boolean) => void
   onHandleCreate: () => void
   onDelete: () => void
-  addLabel: string
-  deleteLabel: string
-  title: string
-  columns: string[]
   toggleAll: () => void
+  columns: string[]
+  search: string
+  tableKey: TCrudEndpointKeys
 }
 
 const PageWrapper = ({
@@ -34,25 +41,31 @@ const PageWrapper = ({
   onHandleCreate,
   onDelete,
   isPending,
-  title,
-  deleteLabel,
-  addLabel,
   columns,
   isAllChecked,
+  onSearch,
+  search,
+  tableKey,
 }: Props) => {
   return (
     <>
       <div className={'flex flex-col p-4 justify-between h-full gap-2'}>
         <div className={'flex flex-col gap-2'}>
-          <ControlBox
-            title={title}
-            onAdd={onHandleCreate}
-            onDelete={onDelete}
-            isPending={isPending}
-            isChecked={isChecked}
-            addLabel={addLabel}
-            deleteLabel={deleteLabel}
-          />
+          <div className={'flex justify-between flex-wrap'}>
+            <ControlBox
+              onAdd={onHandleCreate}
+              onDelete={onDelete}
+              isPending={isPending}
+              isChecked={isChecked}
+              tableKey={tableKey}
+            />
+            <SearchInput
+              onChange={onSearch}
+              id={`${MANY_UPPER_LABELS[tableKey]} search`}
+              labelText={SEARCH_LABELS[tableKey]}
+              value={search}
+            />
+          </div>
           {!isEmptyData && (
             <div className={'overflow-x-auto'}>
               <table className={'text-left text-nowrap border border-collapse'}>

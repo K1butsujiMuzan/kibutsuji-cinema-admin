@@ -1,14 +1,9 @@
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
-import {
-  LOWER_LABELS,
-  MANY_LOWER_LABELS,
-  MANY_UPPER_LABELS,
-} from '../../constants/service-message-labels.ts'
+import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import type { TLike } from '../../shared/types/likes.type.ts'
 import { likesColumns } from './likes-page.data.ts'
@@ -40,7 +35,9 @@ const LikesPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.LIKES, API_ENDPOINTS.LIKES, PAGE_TITLES.LIKES)
+    onSearchChange,
+    search,
+  } = usePageMethods(QUERY_KEYS.LIKES, 'LIKES', PAGE_TITLES.LIKES)
 
   if (isPending) {
     return <PageLoader />
@@ -59,11 +56,11 @@ const LikesPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.LIKES}
-        deleteLabel={MANY_LOWER_LABELS.LIKES}
-        addLabel={LOWER_LABELS.LIKES}
         columns={likesColumns}
         toggleAll={toggleAll}
+        onSearch={onSearchChange}
+        search={search}
+        tableKey={'LIKES'}
       >
         {serverData.map((item, index) => (
           <Tbody

@@ -1,14 +1,9 @@
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
-import {
-  LOWER_LABELS,
-  MANY_LOWER_LABELS,
-  MANY_UPPER_LABELS,
-} from '../../constants/service-message-labels.ts'
+import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import type { TList } from '../../shared/types/lists.type.ts'
 import { listsColumns } from './lists-page.data.ts'
@@ -40,7 +35,9 @@ const ListsPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.LISTS, API_ENDPOINTS.LISTS, PAGE_TITLES.LISTS)
+    onSearchChange,
+    search,
+  } = usePageMethods(QUERY_KEYS.LISTS, 'LISTS', PAGE_TITLES.LISTS)
 
   if (isPending) {
     return <PageLoader />
@@ -59,11 +56,11 @@ const ListsPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.LISTS}
-        deleteLabel={MANY_LOWER_LABELS.LISTS}
-        addLabel={LOWER_LABELS.LISTS}
         columns={listsColumns}
         toggleAll={toggleAll}
+        onSearch={onSearchChange}
+        search={search}
+        tableKey={'LISTS'}
       >
         {serverData.map((item, index) => (
           <Tbody

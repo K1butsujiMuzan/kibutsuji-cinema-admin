@@ -4,7 +4,7 @@ import type { PAGE_TITLES } from '../configs/pages.config.ts'
 
 export const useTitle = (
   title: (typeof PAGE_TITLES)[keyof typeof PAGE_TITLES],
-) => {
+): null => {
   useEffect(() => {
     document.title = getPageTitle(title)
   }, [title])

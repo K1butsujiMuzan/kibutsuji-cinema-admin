@@ -2,14 +2,9 @@ import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePag
 import type { TEpisode } from '../../shared/types/episodes.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
-import {
-  LOWER_LABELS,
-  MANY_LOWER_LABELS,
-  MANY_UPPER_LABELS,
-} from '../../constants/service-message-labels.ts'
+import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import { episodesColumns } from './episodes-page.data.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import CreateEpisode from './CreateEpisode.tsx'
@@ -40,11 +35,9 @@ const EpisodesPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(
-    QUERY_KEYS.EPISODES,
-    API_ENDPOINTS.EPISODES,
-    PAGE_TITLES.EPISODES,
-  )
+    onSearchChange,
+    search,
+  } = usePageMethods(QUERY_KEYS.EPISODES, 'EPISODES', PAGE_TITLES.EPISODES)
 
   if (isPending) {
     return <PageLoader />
@@ -63,11 +56,11 @@ const EpisodesPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.EPISODES}
-        deleteLabel={MANY_LOWER_LABELS.EPISODES}
-        addLabel={LOWER_LABELS.EPISODES}
         columns={episodesColumns}
         toggleAll={toggleAll}
+        onSearch={onSearchChange}
+        search={search}
+        tableKey={'EPISODES'}
       >
         {serverData.map((item, index) => (
           <Tbody

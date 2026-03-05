@@ -5,7 +5,6 @@ import {
   type TGenreFormData,
 } from './genres-page.data.ts'
 import { useCallback, useState } from 'react'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import type { TGenre } from '../../shared/types/genres.type.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import GenreForm from './GenreForm.tsx'
@@ -13,11 +12,7 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import {
-  LOWER_LABELS,
-  MANY_LOWER_LABELS,
-  MANY_UPPER_LABELS,
-} from '../../constants/service-message-labels.ts'
+import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
 const GenresPage = () => {
@@ -47,11 +42,9 @@ const GenresPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(
-    QUERY_KEYS.GENRES,
-    API_ENDPOINTS.GENRES,
-    PAGE_TITLES.GENRES,
-  )
+    onSearchChange,
+    search,
+  } = usePageMethods(QUERY_KEYS.GENRES, 'GENRES', PAGE_TITLES.GENRES)
 
   if (isPending) {
     return <PageLoader />
@@ -82,11 +75,11 @@ const GenresPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.GENRES}
-        deleteLabel={MANY_LOWER_LABELS.GENRES}
-        addLabel={LOWER_LABELS.GENRES}
         columns={genresColumns}
         toggleAll={toggleAll}
+        onSearch={onSearchChange}
+        search={search}
+        tableKey={'GENRES'}
       >
         {serverData.map((item, index) => (
           <Tbody

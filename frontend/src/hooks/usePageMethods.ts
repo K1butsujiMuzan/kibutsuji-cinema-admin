@@ -1,26 +1,36 @@
-import { useCallback, useState } from 'react'
+import { type ChangeEvent, useCallback, useState } from 'react'
 import { useQuerySuccess } from './useQuerySuccess.ts'
-import { type TServerData } from '../configs/query-keys.config.ts'
+import { type TQueryKey } from '../configs/query-keys.config.ts'
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query'
 import { getData } from '../services/get-data.ts'
-import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { deleteData } from '../services/delete-data.ts'
 import { useTitle } from './useTitle.ts'
 import type { PAGE_TITLES } from '../configs/pages.config.ts'
+import { useDebounce } from './useDebounce.ts'
+import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
 
-export const usePageMethods = <T extends keyof TServerData>(
-  queryKey: T,
-  endPoint: (typeof API_ENDPOINTS)[keyof typeof API_ENDPOINTS],
+export const usePageMethods = <T extends TCrudEndpointKeys>(
+  queryKey: TQueryKey,
+  endpointKey: T,
   title: (typeof PAGE_TITLES)[keyof typeof PAGE_TITLES],
 ) => {
   useTitle(title)
-
   const [checkboxes, setCheckboxes] = useState<string[]>([])
   const [page, setPage] = useState<number>(1)
+  const [search, setSearch] = useState<string>('')
+
+  const debouncedValue = useDebounce(search)
 
   const clearCheckBoxes = useCallback(() => {
     setCheckboxes([])
   }, [])
+
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (checkboxes.length > 0) {
+      clearCheckBoxes()
+    }
+    setSearch(event.target.value)
+  }
 
   const onChangePage = useCallback(
     (isIncrement: boolean): void => {
@@ -33,23 +43,19 @@ export const usePageMethods = <T extends keyof TServerData>(
   const onSuccess = useQuerySuccess(queryKey, undefined, clearCheckBoxes)
 
   const query = useQuery({
-    queryFn: () => getData(page, endPoint),
-    queryKey: [queryKey, page],
+    queryFn: () => getData(page, endpointKey, debouncedValue),
+    queryKey: [queryKey, page, debouncedValue],
     placeholderData: keepPreviousData,
   })
 
   const { isPending, isFetching, data } = query
 
-  const queryData = data as
-    | ({ [K in T]: TServerData[T] } & { count: number })
-    | undefined
-
-  const serverData = queryData?.[queryKey] ?? []
-  const count = queryData?.count ?? 0
+  const serverData = data?.data ?? []
+  const count = data?.count ?? 0
 
   const deleteMutation = useMutation({
     mutationFn: (ids: string[]) => {
-      return deleteData(ids, endPoint)
+      return deleteData(ids, endpointKey)
     },
     onSuccess,
   })
@@ -89,5 +95,7 @@ export const usePageMethods = <T extends keyof TServerData>(
     isDeletePending: deleteMutation.isPending,
     onHandleCheck,
     toggleAll,
+    onSearchChange,
+    search,
   }
 }

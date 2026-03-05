@@ -4,15 +4,10 @@ import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import type { TUser } from '../../shared/types/users.type.ts'
 import UpdateUser from './UpdateUser.tsx'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import {
-  LOWER_LABELS,
-  MANY_LOWER_LABELS,
-  MANY_UPPER_LABELS,
-} from '../../constants/service-message-labels.ts'
+import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
 
@@ -40,7 +35,9 @@ const UsersPage = () => {
     onHandleCheck,
     page,
     isDeletePending,
-  } = usePageMethods(QUERY_KEYS.USERS, API_ENDPOINTS.USERS, PAGE_TITLES.USERS)
+    onSearchChange,
+    search,
+  } = usePageMethods(QUERY_KEYS.USERS, 'USERS', PAGE_TITLES.USERS)
 
   if (isPending) {
     return <PageLoader />
@@ -59,11 +56,11 @@ const UsersPage = () => {
         isAllChecked={serverData.length === checkboxes.length}
         onHandleCreate={onHandleCreate}
         onDelete={onHandleDelete}
-        title={MANY_UPPER_LABELS.USERS}
-        deleteLabel={MANY_LOWER_LABELS.USERS}
-        addLabel={LOWER_LABELS.USERS}
         columns={userColumns}
         toggleAll={toggleAll}
+        onSearch={onSearchChange}
+        search={search}
+        tableKey={'USERS'}
       >
         {serverData.map((item, index) => (
           <Tbody

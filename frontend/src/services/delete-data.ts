@@ -2,20 +2,21 @@ import type { TToast } from '../shared/types/toast.type.ts'
 import { SUCCESS } from '../constants/success.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
-import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { getToken } from '../lib/get-token.ts'
 import { SERVICE_MANY_UPPER_LABELS } from '../constants/service-message-labels.ts'
+import { getToastId } from '../lib/get-toast-id.ts'
+import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
+import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 
 export const deleteData = async (
   id: string[],
-  endpoint: (typeof API_ENDPOINTS)[keyof typeof API_ENDPOINTS],
+  endpointKey: TCrudEndpointKeys,
 ): Promise<TToast> => {
-  const randomID = crypto?.randomUUID()
-  const date = new Date().toString()
+  const toastID = getToastId()
   const token = getToken()
 
   try {
-    const response = await fetch(endpoint, {
+    const response = await fetch(CRUD_ENDPOINTS[endpointKey], {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -28,7 +29,7 @@ export const deleteData = async (
 
     if (!response.ok && !('error' in data)) {
       return {
-        id: randomID || date,
+        id: toastID,
         title: ERRORS.SOMETHING_WRONG,
         message: '',
         isSuccess: false,
@@ -37,7 +38,7 @@ export const deleteData = async (
 
     if (data.error) {
       return {
-        id: randomID || date,
+        id: toastID,
         title: data.error,
         message: '',
         isSuccess: false,
@@ -45,15 +46,15 @@ export const deleteData = async (
     }
 
     return {
-      id: randomID || date,
-      title: SUCCESS.DELETE(SERVICE_MANY_UPPER_LABELS[endpoint]),
+      id: toastID,
+      title: SUCCESS.DELETE(SERVICE_MANY_UPPER_LABELS[endpointKey]),
       message: '',
       isSuccess: true,
     }
   } catch (error) {
     console.log(error)
     return {
-      id: randomID || date,
+      id: toastID,
       title: ERRORS.SOMETHING_WRONG,
       message: '',
       isSuccess: false,

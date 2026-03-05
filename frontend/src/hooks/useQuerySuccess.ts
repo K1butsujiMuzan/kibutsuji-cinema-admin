@@ -1,10 +1,10 @@
 import { useAddToast } from '../stores/useToastsStore.ts'
 import type { TToast } from '../shared/types/toast.type.ts'
 import { useQueryClient } from '@tanstack/react-query'
-import type { QUERY_KEYS } from '../configs/query-keys.config.ts'
+import type { TQueryKey } from '../configs/query-keys.config.ts'
 
 export const useQuerySuccess = (
-  queryKey: (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS],
+  queryKey: TQueryKey,
   closeModal?: () => void,
   clearCheckBoxes?: () => void,
 ) => {
