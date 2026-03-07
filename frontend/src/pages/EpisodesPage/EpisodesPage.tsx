@@ -1,7 +1,5 @@
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
-import type { TEpisode } from '../../shared/types/episodes.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
@@ -10,6 +8,7 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import CreateEpisode from './CreateEpisode.tsx'
 import UpdateEpisode from './UpdateEpisode.tsx'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import type { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 const EpisodesPage = () => {
   const {
@@ -20,7 +19,7 @@ const EpisodesPage = () => {
     isCreateModalOpen,
     onHandleEdit,
     isUpdateModalOpen,
-  } = useCreateAndUpdatePageMethods<TEpisode>()
+  } = useCreateAndUpdatePageMethods<typeof TABLE_KEY.EPISODES>()
 
   const {
     count,
@@ -37,7 +36,7 @@ const EpisodesPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.EPISODES, 'EPISODES', PAGE_TITLES.EPISODES)
+  } = usePageMethods('EPISODES', PAGE_TITLES.EPISODES)
 
   if (isPending) {
     return <PageLoader />

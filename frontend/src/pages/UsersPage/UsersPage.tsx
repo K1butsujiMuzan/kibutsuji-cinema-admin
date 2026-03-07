@@ -1,7 +1,5 @@
 import { userColumns } from './user-page.data.ts'
 import CreateUser from './CreateUser.tsx'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import type { TUser } from '../../shared/types/users.type.ts'
 import UpdateUser from './UpdateUser.tsx'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
@@ -10,6 +8,7 @@ import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import type { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 const UsersPage = () => {
   const {
@@ -20,7 +19,7 @@ const UsersPage = () => {
     isCreateModalOpen,
     onHandleEdit,
     isUpdateModalOpen,
-  } = useCreateAndUpdatePageMethods<TUser>()
+  } = useCreateAndUpdatePageMethods<typeof TABLE_KEY.USERS>()
 
   const {
     count,
@@ -37,7 +36,7 @@ const UsersPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.USERS, 'USERS', PAGE_TITLES.USERS)
+  } = usePageMethods('USERS', PAGE_TITLES.USERS)
 
   if (isPending) {
     return <PageLoader />

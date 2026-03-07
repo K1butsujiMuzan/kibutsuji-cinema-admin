@@ -1,6 +1,4 @@
-import type { TComment } from '../../shared/types/comments.type.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
@@ -10,6 +8,7 @@ import CreateComment from './CreateComment.tsx'
 import UpdateComment from './UpdateComment.tsx'
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import type { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 const CommentsPage = () => {
   const {
@@ -20,7 +19,7 @@ const CommentsPage = () => {
     isCreateModalOpen,
     onHandleEdit,
     isUpdateModalOpen,
-  } = useCreateAndUpdatePageMethods<TComment>()
+  } = useCreateAndUpdatePageMethods<typeof TABLE_KEY.COMMENTS>()
 
   const {
     count,
@@ -37,7 +36,7 @@ const CommentsPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.COMMENT, 'COMMENTS', PAGE_TITLES.COMMENTS)
+  } = usePageMethods('COMMENTS', PAGE_TITLES.COMMENTS)
 
   if (isPending) {
     return <PageLoader />

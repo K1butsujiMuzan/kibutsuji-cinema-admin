@@ -10,13 +10,13 @@ import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 
 export const deleteData = async (
   id: string[],
-  endpointKey: TCrudEndpointKeys,
+  tableKey: TCrudEndpointKeys,
 ): Promise<TToast> => {
   const toastID = getToastId()
   const token = getToken()
 
   try {
-    const response = await fetch(CRUD_ENDPOINTS[endpointKey], {
+    const response = await fetch(CRUD_ENDPOINTS[tableKey], {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ export const deleteData = async (
 
     return {
       id: toastID,
-      title: SUCCESS.DELETE(SERVICE_MANY_UPPER_LABELS[endpointKey]),
+      title: SUCCESS.DELETE(SERVICE_MANY_UPPER_LABELS[tableKey]),
       message: '',
       isSuccess: true,
     }

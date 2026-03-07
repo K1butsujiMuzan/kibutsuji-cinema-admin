@@ -13,13 +13,13 @@ import Select from '../../components/ui/Select/Select.tsx'
 import { useMutation } from '@tanstack/react-query'
 import { updateData } from '../../services/update-data.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { ROLES } from '../../shared/types/roles.type.ts'
 import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -45,8 +45,7 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TUpdateUser) =>
-      updateData(id, data, API_ENDPOINTS.USERS),
+    mutationFn: (data: TUpdateUser) => updateData(id, data, TABLE_KEY.USERS),
     onSuccess,
   })
 

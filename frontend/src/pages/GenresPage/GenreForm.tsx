@@ -3,7 +3,6 @@ import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
 import { createData } from '../../services/create-data.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +17,7 @@ import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -41,13 +41,12 @@ const GenreForm = ({
   )
 
   const createMutation = useMutation({
-    mutationFn: (data: TDataGenre) => createData(data, API_ENDPOINTS.GENRES),
+    mutationFn: (data: TDataGenre) => createData(data, TABLE_KEY.GENRES),
     onSuccess,
   })
 
   const updateMutation = useMutation({
-    mutationFn: (data: TDataGenre) =>
-      updateData(id, data, API_ENDPOINTS.GENRES),
+    mutationFn: (data: TDataGenre) => updateData(id, data, TABLE_KEY.GENRES),
     onSuccess,
   })
 

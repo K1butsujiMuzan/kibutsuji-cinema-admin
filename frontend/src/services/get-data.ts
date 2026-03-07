@@ -1,10 +1,8 @@
-import {
-  CRUD_ENDPOINTS,
-  type TGetEndpoint,
-} from '../configs/api-endpoints.config.ts'
+import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { getToken } from '../lib/get-token.ts'
 import { PAGE_LIMIT } from '../constants/limits.ts'
 import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
+import type { TGetEndpoint } from '../shared/types/crud.type.ts'
 
 export async function getData<T extends TCrudEndpointKeys>(
   page: number,

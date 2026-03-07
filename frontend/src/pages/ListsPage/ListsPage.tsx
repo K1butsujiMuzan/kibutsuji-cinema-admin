@@ -1,15 +1,14 @@
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
-import type { TList } from '../../shared/types/lists.type.ts'
 import { listsColumns } from './lists-page.data.ts'
 import CreateList from './CreateList.tsx'
 import UpdateList from './UpdateList.tsx'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import type { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 const ListsPage = () => {
   const {
@@ -20,7 +19,7 @@ const ListsPage = () => {
     isCreateModalOpen,
     onHandleEdit,
     isUpdateModalOpen,
-  } = useCreateAndUpdatePageMethods<TList>()
+  } = useCreateAndUpdatePageMethods<typeof TABLE_KEY.LISTS>()
 
   const {
     count,
@@ -37,7 +36,7 @@ const ListsPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.LISTS, 'LISTS', PAGE_TITLES.LISTS)
+  } = usePageMethods('LISTS', PAGE_TITLES.LISTS)
 
   if (isPending) {
     return <PageLoader />

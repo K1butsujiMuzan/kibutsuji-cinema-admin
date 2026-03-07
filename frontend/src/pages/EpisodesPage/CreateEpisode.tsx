@@ -2,7 +2,6 @@ import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
 import { createData } from '../../services/create-data.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
@@ -17,6 +16,7 @@ import {
   type TCreateEpisode,
 } from '../../shared/schemes/episode.schema.ts'
 import { MAX_INT } from '../../constants/limits.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -31,8 +31,7 @@ const CreateEpisode = ({ closeModal, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TCreateEpisode) =>
-      createData(data, API_ENDPOINTS.EPISODES),
+    mutationFn: (data: TCreateEpisode) => createData(data, TABLE_KEY.EPISODES),
     onSuccess,
   })
 

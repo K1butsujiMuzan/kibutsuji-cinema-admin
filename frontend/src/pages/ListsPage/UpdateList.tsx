@@ -6,7 +6,6 @@ import {
   type TUpdateList,
   updateListSchema,
 } from '../../shared/schemes/list.schema.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +17,7 @@ import {
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import Select from '../../components/ui/Select/Select.tsx'
 import { LIST_TYPES } from '../../shared/types/list.type.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -35,8 +35,7 @@ const UpdateList = ({ closeModal, animeList, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TUpdateList) =>
-      updateData(id, data, API_ENDPOINTS.LISTS),
+    mutationFn: (data: TUpdateList) => updateData(id, data, TABLE_KEY.LISTS),
     onSuccess,
   })
 

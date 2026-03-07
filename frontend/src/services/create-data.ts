@@ -2,20 +2,22 @@ import type { TToast } from '../shared/types/toast.type.ts'
 import { ERRORS } from '../constants/errors.ts'
 import { SUCCESS } from '../constants/success.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
-import { type TCreateEndpoint } from '../configs/api-endpoints.config.ts'
-import { SERVICE_UPPER_LABELS } from '../constants/service-message-labels.ts'
+import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
+import { UPPER_LABELS } from '../constants/service-message-labels.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
 import { getToken } from '../lib/get-token.ts'
+import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
+import type { TCreateEndpoint } from '../shared/types/crud.type.ts'
 
-export const createData = async <T extends keyof TCreateEndpoint>(
+export const createData = async <T extends TCrudEndpointKeys>(
   data: TCreateEndpoint[T],
-  endpoint: T,
+  endpointKey: T,
 ): Promise<TToast> => {
   const toastID = getToastId()
   const token = getToken()
 
   try {
-    const response = await fetch(endpoint as string, {
+    const response = await fetch(CRUD_ENDPOINTS[endpointKey], {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,7 +48,7 @@ export const createData = async <T extends keyof TCreateEndpoint>(
 
     return {
       id: toastID,
-      title: SUCCESS.CREATE(SERVICE_UPPER_LABELS[endpoint]),
+      title: SUCCESS.CREATE(UPPER_LABELS[endpointKey]),
       message: '',
       isSuccess: true,
     }

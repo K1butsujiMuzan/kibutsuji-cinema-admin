@@ -1,15 +1,14 @@
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
 import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
-import type { TLike } from '../../shared/types/likes.type.ts'
 import { likesColumns } from './likes-page.data.ts'
 import CreateLike from './CreateLike.tsx'
 import UpdateLike from './UpdateLike.tsx'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import type { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 const LikesPage = () => {
   const {
@@ -20,7 +19,7 @@ const LikesPage = () => {
     isCreateModalOpen,
     onHandleEdit,
     isUpdateModalOpen,
-  } = useCreateAndUpdatePageMethods<TLike>()
+  } = useCreateAndUpdatePageMethods<typeof TABLE_KEY.LIKES>()
 
   const {
     count,
@@ -37,7 +36,7 @@ const LikesPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.LIKES, 'LIKES', PAGE_TITLES.LIKES)
+  } = usePageMethods('LIKES', PAGE_TITLES.LIKES)
 
   if (isPending) {
     return <PageLoader />

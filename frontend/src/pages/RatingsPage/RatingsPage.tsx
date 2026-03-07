@@ -1,6 +1,4 @@
 import { useCreateAndUpdatePageMethods } from '../../hooks/useCreateAndUpdatePageMethods.ts'
-import type { TRating } from '../../shared/types/ratings.type.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
@@ -10,6 +8,7 @@ import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import CreateRating from './CreateRating.tsx'
 import UpdateRating from './UpdateRating.tsx'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
+import type { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 const RatingsPage = () => {
   const {
@@ -20,7 +19,7 @@ const RatingsPage = () => {
     isCreateModalOpen,
     onHandleEdit,
     isUpdateModalOpen,
-  } = useCreateAndUpdatePageMethods<TRating>()
+  } = useCreateAndUpdatePageMethods<typeof TABLE_KEY.RATINGS>()
 
   const {
     count,
@@ -37,7 +36,7 @@ const RatingsPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.RATINGS, 'RATINGS', PAGE_TITLES.RATINGS)
+  } = usePageMethods('RATINGS', PAGE_TITLES.RATINGS)
 
   if (isPending) {
     return <PageLoader />

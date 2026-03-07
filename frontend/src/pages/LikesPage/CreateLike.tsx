@@ -6,7 +6,6 @@ import {
   type TCreateLike,
 } from '../../shared/schemes/like.schema.ts'
 import { createData } from '../../services/create-data.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LIKE_VALUES } from '../../shared/types/like-value.type.ts'
@@ -18,6 +17,7 @@ import {
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import Select from '../../components/ui/Select/Select.tsx'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -32,7 +32,7 @@ const CreateLike = ({ closeModal, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TCreateLike) => createData(data, API_ENDPOINTS.LIKES),
+    mutationFn: (data: TCreateLike) => createData(data, TABLE_KEY.LIKES),
     onSuccess,
   })
 

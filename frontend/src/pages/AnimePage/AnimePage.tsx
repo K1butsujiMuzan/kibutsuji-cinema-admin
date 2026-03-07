@@ -13,7 +13,6 @@ import type { TFormInformation } from '../../shared/types/form-information.type.
 import { usePageMethods } from '../../hooks/usePageMethods.ts'
 import { LOWER_LABELS } from '../../constants/service-message-labels.ts'
 import { PAGE_TITLES } from '../../configs/pages.config.ts'
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 
 const AnimePage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -44,7 +43,7 @@ const AnimePage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.ANIME, 'ANIME', PAGE_TITLES.ANIME)
+  } = usePageMethods('ANIME', PAGE_TITLES.ANIME)
 
   if (isPending) {
     return <PageLoader />

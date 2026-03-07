@@ -6,7 +6,6 @@ import {
   type TUpdateRating,
   updateRatingSchema,
 } from '../../shared/schemes/rating.schema.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +17,7 @@ import {
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import { MAX_RATING } from '../../constants/limits.ts'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -36,7 +36,7 @@ const UpdateRating = ({ closeModal, animeRating, clearCheckBoxes }: Props) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TUpdateRating) =>
-      updateData(id, data, API_ENDPOINTS.RATINGS),
+      updateData(id, data, TABLE_KEY.RATINGS),
     onSuccess,
   })
 

@@ -4,19 +4,21 @@ import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 import { SUCCESS } from '../constants/success.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
 import { getToken } from '../lib/get-token.ts'
-import { SERVICE_UPPER_LABELS } from '../constants/service-message-labels.ts'
-import type { TUpdateEndpoint } from '../configs/api-endpoints.config.ts'
+import { UPPER_LABELS } from '../constants/service-message-labels.ts'
+import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
+import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
+import type { TUpdateEndpoint } from '../shared/types/crud.type.ts'
 
-export const updateData = async <T extends keyof TUpdateEndpoint>(
+export const updateData = async <T extends TCrudEndpointKeys>(
   id: string,
   data: TUpdateEndpoint[T],
-  endpoint: T,
+  endpointKey: T,
 ): Promise<TToast> => {
   const toastID = getToastId()
   const token = getToken()
 
   try {
-    const response = await fetch(endpoint as string, {
+    const response = await fetch(CRUD_ENDPOINTS[endpointKey], {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -50,7 +52,7 @@ export const updateData = async <T extends keyof TUpdateEndpoint>(
 
     return {
       id: toastID,
-      title: SUCCESS.UPDATE(SERVICE_UPPER_LABELS[endpoint]),
+      title: SUCCESS.UPDATE(UPPER_LABELS[endpointKey]),
       message: '',
       isSuccess: true,
     }

@@ -1,4 +1,3 @@
-import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import {
   genresColumns,
   initialGenreData,
@@ -44,7 +43,7 @@ const GenresPage = () => {
     isDeletePending,
     onSearchChange,
     search,
-  } = usePageMethods(QUERY_KEYS.GENRES, 'GENRES', PAGE_TITLES.GENRES)
+  } = usePageMethods('GENRES', PAGE_TITLES.GENRES)
 
   if (isPending) {
     return <PageLoader />

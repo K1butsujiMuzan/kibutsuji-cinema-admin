@@ -6,7 +6,6 @@ import {
   type TUpdateEpisode,
   updateEpisodeSchema,
 } from '../../shared/schemes/episode.schema.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +17,7 @@ import {
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import { MAX_INT } from '../../constants/limits.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -36,7 +36,7 @@ const UpdateEpisode = ({ closeModal, episode, clearCheckBoxes }: Props) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TUpdateEpisode) =>
-      updateData(id, data, API_ENDPOINTS.EPISODES),
+      updateData(id, data, TABLE_KEY.EPISODES),
     onSuccess,
   })
 

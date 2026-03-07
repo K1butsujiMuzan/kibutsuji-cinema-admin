@@ -6,7 +6,6 @@ import {
   type TUpdateLike,
   updateLikeSchema,
 } from '../../shared/schemes/like.schema.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +17,7 @@ import {
 import Select from '../../components/ui/Select/Select.tsx'
 import { LIKE_VALUES } from '../../shared/types/like-value.type.ts'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -35,8 +35,7 @@ const UpdateLike = ({ closeModal, like, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TUpdateLike) =>
-      updateData(id, data, API_ENDPOINTS.LIKES),
+    mutationFn: (data: TUpdateLike) => updateData(id, data, TABLE_KEY.LIKES),
     onSuccess,
   })
 

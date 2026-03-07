@@ -6,7 +6,6 @@ import {
   type TUpdateComment,
   updateCommentSchema,
 } from '../../shared/schemes/comment.schema.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { updateData } from '../../services/update-data.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,6 +16,7 @@ import {
 } from '../../constants/service-message-labels.ts'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -28,14 +28,14 @@ const UpdateComment = ({ closeModal, comment, clearCheckBoxes }: Props) => {
   const { text, id } = comment
 
   const onSuccess = useQuerySuccess(
-    QUERY_KEYS.COMMENT,
+    QUERY_KEYS.COMMENTS,
     closeModal,
     clearCheckBoxes,
   )
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: TUpdateComment) =>
-      updateData(id, data, API_ENDPOINTS.COMMENTS),
+      updateData(id, data, TABLE_KEY.COMMENTS),
     onSuccess,
   })
 

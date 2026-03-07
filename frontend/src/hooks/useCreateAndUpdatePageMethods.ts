@@ -1,12 +1,17 @@
 import { useCallback, useState } from 'react'
-import type { TCreateUpdateFormData } from '../configs/query-keys.config.ts'
+import type {
+  TCreateUpdateEndpointKeys,
+  TCreateUpdateFormData,
+} from '../shared/types/crud.type.ts'
 
 export const useCreateAndUpdatePageMethods = <
-  T extends TCreateUpdateFormData[keyof TCreateUpdateFormData],
+  T extends TCreateUpdateEndpointKeys,
 >() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false)
-  const [information, setInformation] = useState<T | null>(null)
+  const [information, setInformation] = useState<
+    TCreateUpdateFormData[T] | null
+  >(null)
 
   const onHandleCreateModalClose = useCallback(() => {
     setIsCreateModalOpen(false)
@@ -20,7 +25,7 @@ export const useCreateAndUpdatePageMethods = <
     setIsCreateModalOpen(true)
   }, [])
 
-  const onHandleEdit = (data: T) => {
+  const onHandleEdit = (data: TCreateUpdateFormData[T]) => {
     setInformation(data)
     setIsUpdateModalOpen(true)
   }

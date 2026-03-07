@@ -1,6 +1,5 @@
 import { type ChangeEvent, useCallback, useState } from 'react'
 import { useQuerySuccess } from './useQuerySuccess.ts'
-import { type TQueryKey } from '../configs/query-keys.config.ts'
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query'
 import { getData } from '../services/get-data.ts'
 import { deleteData } from '../services/delete-data.ts'
@@ -8,10 +7,10 @@ import { useTitle } from './useTitle.ts'
 import type { PAGE_TITLES } from '../configs/pages.config.ts'
 import { useDebounce } from './useDebounce.ts'
 import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
+import { QUERY_KEYS } from '../configs/query-keys.config.ts'
 
 export const usePageMethods = <T extends TCrudEndpointKeys>(
-  queryKey: TQueryKey,
-  endpointKey: T,
+  tableKey: T,
   title: (typeof PAGE_TITLES)[keyof typeof PAGE_TITLES],
 ) => {
   useTitle(title)
@@ -40,11 +39,15 @@ export const usePageMethods = <T extends TCrudEndpointKeys>(
     [clearCheckBoxes],
   )
 
-  const onSuccess = useQuerySuccess(queryKey, undefined, clearCheckBoxes)
+  const onSuccess = useQuerySuccess(
+    QUERY_KEYS[tableKey],
+    undefined,
+    clearCheckBoxes,
+  )
 
   const query = useQuery({
-    queryFn: () => getData(page, endpointKey, debouncedValue),
-    queryKey: [queryKey, page, debouncedValue],
+    queryFn: () => getData(page, tableKey, debouncedValue),
+    queryKey: [QUERY_KEYS[tableKey], page, debouncedValue],
     placeholderData: keepPreviousData,
   })
 
@@ -55,7 +58,7 @@ export const usePageMethods = <T extends TCrudEndpointKeys>(
 
   const deleteMutation = useMutation({
     mutationFn: (ids: string[]) => {
-      return deleteData(ids, endpointKey)
+      return deleteData(ids, tableKey)
     },
     onSuccess,
   })

@@ -7,7 +7,6 @@ import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import Select from '../../components/ui/Select/Select.tsx'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import {
   DataAnimeSchema,
   type TDataAnime,
@@ -25,6 +24,7 @@ import {
   LOWER_LABELS,
   UPPER_LABELS,
 } from '../../constants/service-message-labels.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -62,14 +62,13 @@ const AnimeForm = ({
   )
 
   const createMutation = useMutation({
-    mutationFn: (data: TDataSubmitAnime) =>
-      createData(data, API_ENDPOINTS.ANIME),
+    mutationFn: (data: TDataSubmitAnime) => createData(data, TABLE_KEY.ANIME),
     onSuccess: onSuccess,
   })
 
   const updateMutation = useMutation({
     mutationFn: (data: TDataSubmitAnime) =>
-      updateData(id, data, API_ENDPOINTS.ANIME),
+      updateData(id, data, TABLE_KEY.ANIME),
     onSuccess: onSuccess,
   })
 

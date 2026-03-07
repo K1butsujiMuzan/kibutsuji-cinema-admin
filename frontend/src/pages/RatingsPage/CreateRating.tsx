@@ -2,7 +2,6 @@ import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
 import { createData } from '../../services/create-data.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
@@ -17,6 +16,7 @@ import {
   type TCreateRating,
 } from '../../shared/schemes/rating.schema.ts'
 import { MAX_RATING } from '../../constants/limits.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -31,8 +31,7 @@ const CreateRating = ({ closeModal, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TCreateRating) =>
-      createData(data, API_ENDPOINTS.RATINGS),
+    mutationFn: (data: TCreateRating) => createData(data, TABLE_KEY.RATINGS),
     onSuccess,
   })
 

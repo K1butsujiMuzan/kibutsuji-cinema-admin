@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createData } from '../../services/create-data.ts'
 import { useMutation } from '@tanstack/react-query'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import {
   LOWER_LABELS,
@@ -18,6 +17,7 @@ import {
   createUserSchema,
   type TCreateUser,
 } from '../../shared/schemes/user.schema.ts'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -32,7 +32,7 @@ const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TCreateUser) => createData(data, API_ENDPOINTS.USERS),
+    mutationFn: (data: TCreateUser) => createData(data, TABLE_KEY.USERS),
     onSuccess,
   })
 

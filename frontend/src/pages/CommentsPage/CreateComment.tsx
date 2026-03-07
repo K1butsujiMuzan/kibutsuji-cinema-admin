@@ -2,7 +2,6 @@ import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
 import { createData } from '../../services/create-data.ts'
-import { API_ENDPOINTS } from '../../configs/api-endpoints.config.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
@@ -17,6 +16,7 @@ import {
   type TCreateComment,
 } from '../../shared/schemes/comment.schema.ts'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
+import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
 interface Props {
   closeModal: () => void
@@ -25,14 +25,13 @@ interface Props {
 
 const CreateComment = ({ closeModal, clearCheckBoxes }: Props) => {
   const onSuccess = useQuerySuccess(
-    QUERY_KEYS.COMMENT,
+    QUERY_KEYS.COMMENTS,
     closeModal,
     clearCheckBoxes,
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TCreateComment) =>
-      createData(data, API_ENDPOINTS.COMMENTS),
+    mutationFn: (data: TCreateComment) => createData(data, TABLE_KEY.COMMENTS),
     onSuccess,
   })
 
