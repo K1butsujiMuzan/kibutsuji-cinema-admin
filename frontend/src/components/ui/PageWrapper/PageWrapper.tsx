@@ -9,6 +9,7 @@ import {
   SEARCH_LABELS,
 } from '../../../constants/service-message-labels.ts'
 import type { TCrudEndpointKeys } from '../../../configs/table-key.config.ts'
+import Loader from '../Loader/Loader.tsx'
 
 interface Props {
   children: Readonly<React.ReactNode>
@@ -67,15 +68,28 @@ const PageWrapper = ({
             />
           </div>
           {!isEmptyData && (
-            <div className={'overflow-x-auto'}>
-              <table className={'text-left text-nowrap border border-collapse'}>
-                <Thead
-                  columns={columns}
-                  isChecked={!isEmptyData && isAllChecked}
-                  onChange={toggleAll}
-                />
-                <tbody className={'divide-y text-sm'}>{children}</tbody>
-              </table>
+            <div className={'relative'}>
+              {isFetching && (
+                <div
+                  className={
+                    'absolute inset-0 bg-black/50 flex items-center justify-center z-50'
+                  }
+                >
+                  <Loader />
+                </div>
+              )}
+              <div className={'overflow-x-auto relative'}>
+                <table
+                  className={'text-left text-nowrap border border-collapse'}
+                >
+                  <Thead
+                    columns={columns}
+                    isChecked={!isEmptyData && isAllChecked}
+                    onChange={toggleAll}
+                  />
+                  <tbody className={'divide-y text-sm'}>{children}</tbody>
+                </table>
+              </div>
             </div>
           )}
           {isEmptyData && <EmptyTable />}

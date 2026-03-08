@@ -29,6 +29,7 @@ export const usePageMethods = <T extends TCrudEndpointKeys>(
       clearCheckBoxes()
     }
     setSearch(event.target.value)
+    setPage(1)
   }
 
   const onChangePage = useCallback(
