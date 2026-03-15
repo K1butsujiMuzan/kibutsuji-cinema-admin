@@ -19,7 +19,7 @@ const DashboardPage = () => {
         <Quantity />
       </Suspense>
       <div
-        className={'grid gap-2 grid-cols-[repeat(auto-fit,minmax(25rem,1fr))]'}
+        className={'grid gap-2 grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(25rem,1fr))]'}
       >
         <Suspense
           fallback={
