@@ -3,7 +3,7 @@ import type { TAnimeType } from './anime-type.type.ts'
 import type { TAnimeStatus } from './anime-status.type.ts'
 import type { TGenre } from './genres.type.ts'
 
-export type TAnime = {
+export type TAnimeWithGenres = {
   id: string
   slug: string
   title: string
@@ -23,3 +23,5 @@ export type TAnime = {
   updatedAt: string
   genres: TGenre[]
 }
+
+export type TAnime = Omit<TAnimeWithGenres, 'genres'>

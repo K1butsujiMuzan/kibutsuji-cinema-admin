@@ -5,9 +5,9 @@ import type { TToastResponse } from '../shared/types/toast-response.type.ts'
 import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { UPPER_LABELS } from '../constants/service-message-labels.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
-import { getToken } from '../lib/get-token.ts'
 import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
 import type { TCreateEndpoint } from '../shared/types/crud.type.ts'
+import { getToken } from '../stores/useUserStore.ts'
 
 export const createData = async <T extends TCrudEndpointKeys>(
   data: TCreateEndpoint[T],
@@ -53,7 +53,7 @@ export const createData = async <T extends TCrudEndpointKeys>(
       isSuccess: true,
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       id: toastID,
       title: ERRORS.SOMETHING_WRONG,

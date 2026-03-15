@@ -3,8 +3,8 @@ export const SidebarAnimeIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -46,8 +46,8 @@ export const SidebarRatingIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -86,8 +86,8 @@ export const SidebarUserIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -117,8 +117,8 @@ export const SidebarEpisodeIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -136,8 +136,8 @@ export const SidebarGenreIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -174,8 +174,8 @@ export const SidebarMainIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -193,8 +193,8 @@ export const SidebarLikeIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -214,8 +214,8 @@ export const SidebarCommentIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -242,8 +242,8 @@ export const SidebarListIcon = () => {
     <svg
       aria-hidden={true}
       role={'img'}
-      width="24"
-      height="24"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

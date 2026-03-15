@@ -2,11 +2,11 @@ import type { TToast } from '../shared/types/toast.type.ts'
 import { SUCCESS } from '../constants/success.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { TToastResponse } from '../shared/types/toast-response.type.ts'
-import { getToken } from '../lib/get-token.ts'
 import { SERVICE_MANY_UPPER_LABELS } from '../constants/service-message-labels.ts'
 import { getToastId } from '../lib/get-toast-id.ts'
 import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
 import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
+import { getToken } from '../stores/useUserStore.ts'
 
 export const deleteData = async (
   id: string[],
@@ -52,7 +52,7 @@ export const deleteData = async (
       isSuccess: true,
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       id: toastID,
       title: ERRORS.SOMETHING_WRONG,

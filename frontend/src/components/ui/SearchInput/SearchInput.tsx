@@ -18,7 +18,7 @@ const SearchInput = ({ labelText, id, onChange, value }: Props) => {
         value={value}
         type={'search'}
         className={
-          'outline-none py-1 px-0.5 border-b-2 border-current focus:border-pink-400 transition-[border] duration-300 w-full'
+          'outline-none py-1 px-0.5 border-b-2 border-current focus:border-pink-400 flex-1 placeholder-gray-700/80 dark:placeholder-gray-100/80 transition duration-300'
         }
         id={id}
         placeholder={labelText}

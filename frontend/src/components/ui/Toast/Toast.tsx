@@ -36,7 +36,7 @@ const Toast = ({ id, title, message, isSuccess }: TToast) => {
       aria-atomic={true}
       aria-live={isSuccess ? 'polite' : 'assertive'}
       className={cn(
-        'bg-pink-50 dark:bg-gray-750 p-3 flex items-start gap-3 rounded-xl overflow-hidden relative transition duration-300',
+        'text-gray-700 dark:text-gray-100 bg-pink-50 dark:bg-gray-750 p-3 flex items-start gap-3 rounded-xl overflow-hidden relative transition duration-300',
         'after:content-[""] after:block after:bg-pink-300 after:h-1 after:w-full after:absolute after:left-0 after:bottom-0 hide-toast-indicator',
         {
           'translate-x-[calc(100%+1rem)] opacity-0': !isShown,

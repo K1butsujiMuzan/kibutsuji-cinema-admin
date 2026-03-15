@@ -43,14 +43,14 @@ const CreateModal = ({ id, children, label, closeModal }: Props) => {
   return createPortal(
     <div
       className={
-        'fixed inset-0 z-20 backdrop-blur-xs flex items-center justify-center'
+        'fixed inset-0 z-50 backdrop-blur-xs flex items-center justify-center'
       }
       onClick={closeModalLayer}
       ref={layerRef}
     >
       <div
         className={
-          'bg-gray-50 dark:bg-gray-950 w-full max-w-150 rounded-2xl p-4 flex flex-col items-center relative max-h-full overflow-auto'
+          'bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-100 w-full max-w-150 rounded-2xl p-4 flex flex-col items-center relative max-h-full overflow-auto transition duration-300'
         }
         role={'dialog'}
         aria-modal={true}

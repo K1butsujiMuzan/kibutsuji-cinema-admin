@@ -12,6 +12,7 @@ import LikesPage from '../pages/LikesPage'
 import CommentsPage from '../pages/CommentsPage'
 import ListsPage from '../pages/ListsPage'
 import { DashboardLoader, MainLoader } from '../lib/page-loaders.ts'
+import NotFoundPage from '../pages/NotFoundPage'
 
 const router = createBrowserRouter([
   {
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <div>404</div>,
+    element: <NotFoundPage />,
   },
 ])
 

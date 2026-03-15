@@ -1,7 +1,7 @@
 import { PAGES } from '../../../configs/pages.config.ts'
 import { Link } from 'react-router-dom'
 
-const Logo = () => {
+export function Logo() {
   return (
     <Link
       to={PAGES.DASHBOARD}
@@ -51,5 +51,3 @@ const Logo = () => {
     </Link>
   )
 }
-
-export default Logo

@@ -1,8 +1,8 @@
 import { CRUD_ENDPOINTS } from '../configs/api-endpoints.config.ts'
-import { getToken } from '../lib/get-token.ts'
 import { PAGE_LIMIT } from '../constants/limits.ts'
 import type { TCrudEndpointKeys } from '../configs/table-key.config.ts'
 import type { TGetEndpoint } from '../shared/types/crud.type.ts'
+import { getToken } from '../stores/useUserStore.ts'
 
 export async function getData<T extends TCrudEndpointKeys>(
   page: number,
@@ -32,7 +32,7 @@ export async function getData<T extends TCrudEndpointKeys>(
 
     return await response.json()
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       data: [],
       count: 0,

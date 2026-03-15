@@ -5,7 +5,7 @@ import {
   initialAnimeData,
   type TAnimeFormData,
 } from './anime-page.data.ts'
-import type { TAnime } from '../../shared/types/anime.type.ts'
+import type { TAnimeWithGenres } from '../../shared/types/anime.type.ts'
 import AnimeForm from './AnimeForm.tsx'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
@@ -49,7 +49,7 @@ const AnimePage = () => {
     return <PageLoader />
   }
 
-  const onHandleEdit = (anime: TAnime) => {
+  const onHandleEdit = (anime: TAnimeWithGenres) => {
     const {
       id,
       type,

@@ -1,4 +1,4 @@
-import Logo from '../../ui/Logo/Logo.tsx'
+import { Logo } from '../../ui/Logo/Logo.tsx'
 
 const LoginHeader = () => {
   return (

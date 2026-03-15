@@ -1,19 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 import { PAGES } from '../../../configs/pages.config'
 import { memo } from 'react'
+import { appLogout } from '../../../stores/useUserStore.ts'
 
 const LogoutButton = () => {
   const navigate = useNavigate()
 
   const logout = () => {
-    localStorage.removeItem('token')
-    navigate(PAGES.LOGIN)
+    appLogout()
+    navigate(PAGES.LOGIN, { replace: true })
   }
 
   return (
     <button
       className={
-        'aspect-square p-1 md:p-2 rounded-md hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300'
+        'aspect-square p-2 rounded-full hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300'
       }
       type="button"
       onClick={logout}

@@ -9,7 +9,9 @@ const LoginPage = () => {
   return (
     <>
       <LoginHeader />
-      <main className={'py-10 md:pb-15 md:pt-35'}>
+      <main
+        className={'py-10 md:pb-15 md:pt-35 text-gray-700 dark:text-gray-100'}
+      >
         <div className={'px-10 w-full flex flex-col items-center gap-4'}>
           <h1
             className={

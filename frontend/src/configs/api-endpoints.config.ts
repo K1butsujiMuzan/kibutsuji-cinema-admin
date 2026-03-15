@@ -1,4 +1,5 @@
 import { TABLE_KEY } from './table-key.config.ts'
+import { DASHBOARD_QUERY_KEYS } from './query-keys.config.ts'
 
 export const BASE_URL: string =
   import.meta.env.VITE_BASE_URL || 'https://kibutsuji-cinema.vercel.app/api'
@@ -6,6 +7,10 @@ export const BASE_URL: string =
 export const API_ENDPOINTS = {
   LOGIN: `${BASE_URL}/login`,
   TOKEN: `${BASE_URL}/token-check`,
+
+  QUANTITY: `${BASE_URL}/dashboard/quantity`,
+  TOP_ANIME_VIEWS: `${BASE_URL}/dashboard/top-anime-views`,
+  TOP_ANIME_RATINGS: `${BASE_URL}/dashboard/top-anime-ratings`,
 
   [TABLE_KEY.ANIME]: `${BASE_URL}/anime`,
   [TABLE_KEY.COMMENTS]: `${BASE_URL}/comments`,
@@ -26,4 +31,10 @@ export const CRUD_ENDPOINTS = {
   [TABLE_KEY.LISTS]: API_ENDPOINTS.LISTS,
   [TABLE_KEY.RATINGS]: API_ENDPOINTS.RATINGS,
   [TABLE_KEY.USERS]: API_ENDPOINTS.USERS,
+} as const
+
+export const DASHBOARD_API_ENDPOINTS = {
+  [DASHBOARD_QUERY_KEYS.QUANTITY]: API_ENDPOINTS.QUANTITY,
+  [DASHBOARD_QUERY_KEYS.TOP_ANIME_VIEWS]: API_ENDPOINTS.TOP_ANIME_VIEWS,
+  [DASHBOARD_QUERY_KEYS.TOP_ANIME_RATINGS]: API_ENDPOINTS.TOP_ANIME_RATINGS,
 } as const

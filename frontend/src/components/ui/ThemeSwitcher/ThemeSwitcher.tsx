@@ -8,9 +8,9 @@ const ThemeSwitcher = () => {
   return (
     <button
       type="button"
-      onClick={toggleTheme()}
+      onClick={toggleTheme}
       className={
-        'aspect-square p-1 md:p-2 rounded-md hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300'
+        'aspect-square p-2 rounded-full hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300'
       }
       aria-label={`Current theme: ${isDark ? 'dark' : 'light'}. Click to change theme`}
     >

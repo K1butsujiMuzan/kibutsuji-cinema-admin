@@ -1,9 +1,9 @@
-import { checkToken } from '../services/token.ts'
+import { tokenCheck } from '../services/token-check.ts'
 import { redirect } from 'react-router-dom'
 import { PAGES } from '../configs/pages.config.ts'
 
 export async function DashboardLoader() {
-  const isAuthorize = await checkToken()
+  const isAuthorize = await tokenCheck()
   if (!isAuthorize) {
     return redirect(PAGES.LOGIN)
   }
@@ -11,7 +11,7 @@ export async function DashboardLoader() {
 }
 
 export async function MainLoader() {
-  const isAuthorize = await checkToken()
+  const isAuthorize = await tokenCheck()
   if (isAuthorize) {
     return redirect(PAGES.DASHBOARD)
   }

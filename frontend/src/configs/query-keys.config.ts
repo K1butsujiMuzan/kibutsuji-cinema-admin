@@ -11,4 +11,12 @@ export const QUERY_KEYS = {
   [TABLE_KEY.USERS]: 'users',
 } as const
 
+export const DASHBOARD_QUERY_KEYS = {
+  QUANTITY: 'quantity',
+  TOP_ANIME_VIEWS: 'top-anime-views',
+  TOP_ANIME_RATINGS: 'top-anime-ratings',
+} as const
+
 export type TQueryKey = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS]
+export type TDashboardQueryKey =
+  (typeof DASHBOARD_QUERY_KEYS)[keyof typeof DASHBOARD_QUERY_KEYS]

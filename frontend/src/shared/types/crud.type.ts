@@ -5,7 +5,7 @@ import type { TLike } from './likes.type.ts'
 import type { TList } from './lists.type.ts'
 import type { TRating } from './ratings.type.ts'
 import type { TUser } from './users.type.ts'
-import type { TAnime } from './anime.type.ts'
+import type { TAnimeWithGenres } from './anime.type.ts'
 import type { TGenre } from './genres.type.ts'
 import type { TCreateUser, TUpdateUser } from '../schemes/user.schema.ts'
 import type { TDataSubmitAnime } from '../schemes/anime.schema.ts'
@@ -23,7 +23,7 @@ import type { TDataGenre } from '../schemes/genre.schema.ts'
 import type { TCreateRating, TUpdateRating } from '../schemes/rating.schema.ts'
 
 export type TGetEndpoint = {
-  [TABLE_KEY.ANIME]: TAnime[]
+  [TABLE_KEY.ANIME]: TAnimeWithGenres[]
   [TABLE_KEY.COMMENTS]: TComment[]
   [TABLE_KEY.EPISODES]: TEpisode[]
   [TABLE_KEY.GENRES]: TGenre[]

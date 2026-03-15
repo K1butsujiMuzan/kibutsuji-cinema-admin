@@ -5,12 +5,16 @@ import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import { loginSchema, type TLogin } from '../../shared/schemes/login.schema.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { adminLogin } from '../../services/login.ts'
-import { useState } from 'react'
-import ErrorMessage from '../../components/ui/ErrorMessage/ErrorMessage.tsx'
 import { PAGES } from '../../configs/pages.config.ts'
 import { useNavigate } from 'react-router-dom'
+import { setToken } from '../../stores/useUserStore.ts'
+import { useAddToast } from '../../stores/useToastsStore.ts'
+import { getToastId } from '../../lib/get-toast-id.ts'
 
 const LoginForm = () => {
+  const addToast = useAddToast()
+  const navigate = useNavigate()
+
   const {
     control,
     handleSubmit,
@@ -23,17 +27,25 @@ const LoginForm = () => {
     },
     resolver: zodResolver(loginSchema),
   })
-  const [error, setError] = useState<string | null>(null)
-  const navigate = useNavigate()
 
   const onFormSubmit: SubmitHandler<TLogin> = async (data) => {
-    setError(null)
     const response = await adminLogin(data.email, data.password)
     if ('error' in response) {
-      setError(response.error)
+      addToast({
+        id: getToastId(),
+        title: response.error,
+        message: '',
+        isSuccess: false,
+      })
     } else {
-      localStorage.setItem('token', response.token)
-      navigate(PAGES.DASHBOARD)
+      addToast({
+        id: getToastId(),
+        title: 'Successful login',
+        message: '',
+        isSuccess: true,
+      })
+      setToken(response.token, response.user.email, response.user.role)
+      navigate(PAGES.DASHBOARD, { replace: true })
     }
   }
 
@@ -57,7 +69,6 @@ const LoginForm = () => {
             />
           )}
         />
-        {error && <ErrorMessage message={error} />}
         <Controller
           name={'password'}
           control={control}

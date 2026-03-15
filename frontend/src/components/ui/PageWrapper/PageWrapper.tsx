@@ -50,7 +50,7 @@ const PageWrapper = ({
 }: Props) => {
   return (
     <>
-      <div className={'flex flex-col p-4 justify-between h-full gap-2'}>
+      <div className={'flex flex-col justify-between h-full gap-2'}>
         <div className={'flex flex-col gap-2'}>
           <div className={'flex justify-between flex-wrap'}>
             <ControlBox
@@ -68,11 +68,11 @@ const PageWrapper = ({
             />
           </div>
           {!isEmptyData && (
-            <div className={'relative'}>
+            <div className={'relative max-w-fit'}>
               {isFetching && (
                 <div
                   className={
-                    'absolute inset-0 bg-black/50 flex items-center justify-center z-50'
+                    'absolute inset-0 bg-black/50 flex items-center justify-center z-20'
                   }
                 >
                   <Loader />

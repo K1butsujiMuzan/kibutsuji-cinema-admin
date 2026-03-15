@@ -23,7 +23,7 @@ const ControlBox = ({
 }: Props) => {
   return (
     <div className={'flex gap-2 items-center flex-wrap'}>
-      <h1 className={'text-32 font-bold'}>{MANY_UPPER_LABELS[tableKey]}</h1>
+      <h1 className={'text-32 font-semibold'}>{MANY_UPPER_LABELS[tableKey]}</h1>
       <ActionButton
         type={'add'}
         label={LOWER_LABELS[tableKey]}
