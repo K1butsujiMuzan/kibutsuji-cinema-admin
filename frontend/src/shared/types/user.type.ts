@@ -1,4 +1,4 @@
-import type { TRole } from './roles.type.ts'
+import type { TRole } from '../enums/roles.type.ts'
 
 export interface IUser {
   email: string

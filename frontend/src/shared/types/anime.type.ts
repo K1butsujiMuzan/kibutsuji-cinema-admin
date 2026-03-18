@@ -1,10 +1,12 @@
-import type { TAnimeAgeLimit } from './anime-age-limit.type.ts'
-import type { TAnimeType } from './anime-type.type.ts'
-import type { TAnimeStatus } from './anime-status.type.ts'
+import type { TAnimeAgeLimit } from '../enums/anime-age-limit.type.ts'
+import type { TAnimeType } from '../enums/anime-type.type.ts'
+import type { TAnimeStatus } from '../enums/anime-status.type.ts'
 import type { TGenre } from './genres.type.ts'
+import type { TAnimeAccess } from '../enums/anime-access.type.ts'
 
 export type TAnimeWithGenres = {
   id: string
+  access: TAnimeAccess
   slug: string
   title: string
   image: string | null

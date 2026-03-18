@@ -9,8 +9,11 @@ import {
   SidebarListIcon,
   SidebarMainIcon,
   SidebarRatingIcon,
+  SidebarSubscriptionIcon,
+  SidebarTransactionIcon,
   SidebarUserIcon,
 } from './SidebarIcons.tsx'
+import { MANY_UPPER_LABELS } from '../../../constants/service-message-labels.ts'
 
 interface ISidebar {
   href: string
@@ -26,42 +29,52 @@ export const sidebar: ISidebar[] = [
   },
   {
     href: PAGES.ANIME,
-    name: 'Anime',
+    name: MANY_UPPER_LABELS.ANIME,
     icon: SidebarAnimeIcon,
   },
   {
     href: PAGES.COMMENTS,
-    name: 'Comments',
+    name: MANY_UPPER_LABELS.COMMENTS,
     icon: SidebarCommentIcon,
   },
   {
     href: PAGES.EPISODES,
-    name: 'Episodes',
+    name: MANY_UPPER_LABELS.EPISODES,
     icon: SidebarEpisodeIcon,
   },
   {
     href: PAGES.GENRES,
-    name: 'Genres',
+    name: MANY_UPPER_LABELS.GENRES,
     icon: SidebarGenreIcon,
   },
   {
     href: PAGES.LISTS,
-    name: 'Lists',
+    name: MANY_UPPER_LABELS.LISTS,
     icon: SidebarListIcon,
   },
   {
     href: PAGES.LIKES,
-    name: 'Likes',
+    name: MANY_UPPER_LABELS.LIKES,
     icon: SidebarLikeIcon,
   },
   {
     href: PAGES.RATINGS,
-    name: 'Ratings',
+    name: MANY_UPPER_LABELS.RATINGS,
     icon: SidebarRatingIcon,
   },
   {
+    href: PAGES.SUBSCRIPTIONS,
+    name: MANY_UPPER_LABELS.SUBSCRIPTIONS,
+    icon: SidebarSubscriptionIcon,
+  },
+  {
+    href: PAGES.TRANSACTIONS,
+    name: MANY_UPPER_LABELS.TRANSACTIONS,
+    icon: SidebarTransactionIcon,
+  },
+  {
     href: PAGES.USERS,
-    name: 'Users',
+    name: MANY_UPPER_LABELS.USERS,
     icon: SidebarUserIcon,
   },
 ]

@@ -1,6 +1,6 @@
 import { ID_MIN_LENGTH } from '../../constants/limits.ts'
 import { z } from 'zod'
-import { LIKE_VALUES } from '../types/like-value.type.ts'
+import { LIKE_VALUES } from '../enums/like-value.type.ts'
 
 export const createLikeSchema = z.object({
   commentId: z.string().trim().min(ID_MIN_LENGTH),

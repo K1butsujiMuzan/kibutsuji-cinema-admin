@@ -21,6 +21,16 @@ import type { TCreateLike, TUpdateLike } from '../schemes/like.schema.ts'
 import type { TCreateList, TUpdateList } from '../schemes/list.schema.ts'
 import type { TDataGenre } from '../schemes/genre.schema.ts'
 import type { TCreateRating, TUpdateRating } from '../schemes/rating.schema.ts'
+import type { TSubscription } from './subscription.type.ts'
+import type {
+  TCreateSubscription,
+  TUpdateSubscription,
+} from '../schemes/subscription.schema.ts'
+import type { TTransaction } from './transactions.type.ts'
+import type {
+  TCreateTransaction,
+  TUpdateTransaction,
+} from '../schemes/transaction.schema.ts'
 
 export type TGetEndpoint = {
   [TABLE_KEY.ANIME]: TAnimeWithGenres[]
@@ -30,6 +40,8 @@ export type TGetEndpoint = {
   [TABLE_KEY.LIKES]: TLike[]
   [TABLE_KEY.LISTS]: TList[]
   [TABLE_KEY.RATINGS]: TRating[]
+  [TABLE_KEY.SUBSCRIPTIONS]: TSubscription[]
+  [TABLE_KEY.TRANSACTIONS]: TTransaction[]
   [TABLE_KEY.USERS]: TUser[]
 }
 
@@ -41,6 +53,8 @@ export type TCreateEndpoint = {
   [TABLE_KEY.LIKES]: TCreateLike
   [TABLE_KEY.LISTS]: TCreateList
   [TABLE_KEY.GENRES]: TDataGenre
+  [TABLE_KEY.SUBSCRIPTIONS]: TCreateSubscription
+  [TABLE_KEY.TRANSACTIONS]: TCreateTransaction
   [TABLE_KEY.RATINGS]: TCreateRating
 }
 
@@ -52,6 +66,8 @@ export type TUpdateEndpoint = {
   [TABLE_KEY.LIKES]: TUpdateLike
   [TABLE_KEY.LISTS]: TUpdateList
   [TABLE_KEY.GENRES]: TDataGenre
+  [TABLE_KEY.SUBSCRIPTIONS]: TUpdateSubscription
+  [TABLE_KEY.TRANSACTIONS]: TUpdateTransaction
   [TABLE_KEY.RATINGS]: TUpdateRating
 }
 
@@ -61,6 +77,8 @@ export type TCreateUpdateFormData = {
   [TABLE_KEY.LIKES]: TLike
   [TABLE_KEY.LISTS]: TList
   [TABLE_KEY.RATINGS]: TRating
+  [TABLE_KEY.SUBSCRIPTIONS]: TSubscription
+  [TABLE_KEY.TRANSACTIONS]: TTransaction
   [TABLE_KEY.USERS]: TUser
 }
 

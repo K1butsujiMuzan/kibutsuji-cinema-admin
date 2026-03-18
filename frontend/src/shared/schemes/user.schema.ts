@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ROLES } from '../types/roles.type.ts'
+import { ROLES } from '../enums/roles.type.ts'
 import { MIN_PASSWORD_LENGTH } from '../../constants/limits.ts'
 
 export const createUserSchema = z.object({

@@ -1,4 +1,4 @@
-import { ROLES, type TRole } from '../shared/types/roles.type.ts'
+import { ROLES, type TRole } from '../shared/enums/roles.type.ts'
 import { create, type StateCreator } from 'zustand'
 import { persist } from 'zustand/middleware'
 

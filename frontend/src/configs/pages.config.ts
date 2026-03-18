@@ -10,6 +10,8 @@ export const PAGES = {
   LIKES: '/likes',
   COMMENTS: '/comments',
   LISTS: '/lists',
+  SUBSCRIPTIONS: '/subscriptions',
+  TRANSACTIONS: '/transactions',
   USERS: '/users',
 } as const
 
@@ -24,5 +26,9 @@ export const PAGE_TITLES = {
   LIKES: MANY_UPPER_LABELS.LIKES,
   COMMENTS: MANY_UPPER_LABELS.COMMENTS,
   LISTS: MANY_UPPER_LABELS.LISTS,
+  SUBSCRIPTIONS: MANY_UPPER_LABELS.SUBSCRIPTIONS,
+  TRANSACTIONS: MANY_UPPER_LABELS.TRANSACTIONS,
   USERS: MANY_UPPER_LABELS.USERS,
 } as const
+
+export type TPageTitle = (typeof PAGE_TITLES)[keyof typeof PAGE_TITLES]

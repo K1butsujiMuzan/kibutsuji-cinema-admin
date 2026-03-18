@@ -16,7 +16,7 @@ const SidebarLink = ({ href, name, Icon, isOpen }: Props) => {
       to={href}
       className={({ isActive }) =>
         cn(
-          'flex items-center p-2.75 font-semibold rounded-md hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition-[background-color] duration-300',
+          'flex items-center p-2.75 font-semibold rounded-md hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition-[background-color,scale] duration-300',
           {
             'bg-pink-75 dark:bg-gray-650': isActive,
           },

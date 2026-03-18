@@ -8,6 +8,8 @@ export const QUERY_KEYS = {
   [TABLE_KEY.LIKES]: 'likes',
   [TABLE_KEY.LISTS]: 'lists',
   [TABLE_KEY.RATINGS]: 'ratings',
+  [TABLE_KEY.SUBSCRIPTIONS]: 'subscriptions',
+  [TABLE_KEY.TRANSACTIONS]: 'transactions',
   [TABLE_KEY.USERS]: 'users',
 } as const
 
