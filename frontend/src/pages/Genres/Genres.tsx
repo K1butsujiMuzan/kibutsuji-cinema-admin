@@ -4,7 +4,7 @@ import {
   type TGenreFormData,
 } from './genres.data.ts'
 import { useCallback, useState } from 'react'
-import type { TGenre } from '../../shared/types/genres.type.ts'
+import type { TGenre } from '../../shared/types/tables/genres.type.ts'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
 import GenreForm from './GenreForm.tsx'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'

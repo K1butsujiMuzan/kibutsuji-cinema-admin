@@ -1,4 +1,4 @@
-import type { TRole } from '../enums/roles.type.ts'
+import type { TRole } from '../../enums/roles.type.ts'
 
 export type TUser = {
   id: string

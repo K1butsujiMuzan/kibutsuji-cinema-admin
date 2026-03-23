@@ -1,4 +1,4 @@
-import type { TComment } from '../../shared/types/comments.type.ts'
+import type { TComment } from '../../shared/types/tables/comments.type.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'

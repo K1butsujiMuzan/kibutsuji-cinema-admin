@@ -1,4 +1,4 @@
-import type { TGenre } from '../../shared/types/genres.type.ts'
+import type { TGenre } from '../../shared/types/tables/genres.type.ts'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
 
 export const genresColumns: string[] = [

@@ -1,4 +1,4 @@
-import type { TTransaction } from '../../shared/types/transactions.type.ts'
+import type { TTransaction } from '../../shared/types/tables/transactions.type.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { useMutation } from '@tanstack/react-query'

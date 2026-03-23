@@ -15,7 +15,7 @@ import {
   ANIME_ACCESSES,
   type TAnimeAccess,
 } from '../../shared/enums/anime-access.type.ts'
-import { currentISODate } from '../../lib/date-formater.ts'
+import { currentDate } from '../../lib/date-formater.ts'
 
 export const animeColumns: string[] = [
   'id',
@@ -68,7 +68,7 @@ export const initialAnimeData: TFormInformation<TAnimeFormData> = {
     episodesLength: 0,
     image: '',
     genreNames: '',
-    releaseDate: currentISODate(),
+    releaseDate: currentDate(),
     originalTitle: '',
     title: '',
     status: ANIME_STATUSES[0],

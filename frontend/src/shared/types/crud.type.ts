@@ -1,12 +1,12 @@
 import { TABLE_KEY } from '../../configs/table-key.config.ts'
-import type { TComment } from './comments.type.ts'
-import type { TEpisode } from './episodes.type.ts'
-import type { TLike } from './likes.type.ts'
-import type { TList } from './lists.type.ts'
-import type { TRating } from './ratings.type.ts'
-import type { TUser } from './users.type.ts'
-import type { TAnimeWithGenres } from './anime.type.ts'
-import type { TGenre } from './genres.type.ts'
+import type { TComment } from './tables/comments.type.ts'
+import type { TEpisode } from './tables/episodes.type.ts'
+import type { TLike } from './tables/likes.type.ts'
+import type { TList } from './tables/lists.type.ts'
+import type { TRating } from './tables/ratings.type.ts'
+import type { TUser } from './tables/users.type.ts'
+import type { TAnimeWithGenres } from './tables/anime.type.ts'
+import type { TGenre } from './tables/genres.type.ts'
 import type { TCreateUser, TUpdateUser } from '../schemes/user.schema.ts'
 import type { TDataSubmitAnime } from '../schemes/anime.schema.ts'
 import type {
@@ -21,12 +21,12 @@ import type { TCreateLike, TUpdateLike } from '../schemes/like.schema.ts'
 import type { TCreateList, TUpdateList } from '../schemes/list.schema.ts'
 import type { TDataGenre } from '../schemes/genre.schema.ts'
 import type { TCreateRating, TUpdateRating } from '../schemes/rating.schema.ts'
-import type { TSubscription } from './subscription.type.ts'
+import type { TSubscription } from './tables/subscription.type.ts'
 import type {
   TCreateSubscription,
   TUpdateSubscription,
 } from '../schemes/subscription.schema.ts'
-import type { TTransaction } from './transactions.type.ts'
+import type { TTransaction } from './tables/transactions.type.ts'
 import type {
   TCreateTransaction,
   TUpdateTransaction,

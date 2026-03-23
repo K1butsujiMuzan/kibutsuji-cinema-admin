@@ -1,4 +1,4 @@
-import type { TEpisode } from '../../shared/types/episodes.type.ts'
+import type { TEpisode } from '../../shared/types/tables/episodes.type.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'

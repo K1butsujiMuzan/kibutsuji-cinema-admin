@@ -1,5 +1,6 @@
 import { TABLE_KEY } from './table-key.config.ts'
 import { DASHBOARD_QUERY_KEYS } from './query-keys.config.ts'
+import { EXCEL_REPORT_KEYS } from '../pages/Dashboard/reports/reports.data.ts'
 
 export const BASE_URL: string =
   import.meta.env.VITE_BASE_URL || 'https://kibutsuji-cinema.vercel.app/api'
@@ -11,6 +12,10 @@ export const API_ENDPOINTS = {
   QUANTITY: `${BASE_URL}/dashboard/quantity`,
   TOP_ANIME_VIEWS: `${BASE_URL}/dashboard/top-anime-views`,
   TOP_ANIME_RATINGS: `${BASE_URL}/dashboard/top-anime-ratings`,
+
+  ANIME_REPORT: `${BASE_URL}/reports/anime-report`,
+  SUBSCRIPTIONS_REPORT: `${BASE_URL}/reports/subscriptions-report`,
+  SUBSCRIPTION_AGREEMENT: `${BASE_URL}/reports/subscription-agreement`,
 
   [TABLE_KEY.ANIME]: `${BASE_URL}/anime`,
   [TABLE_KEY.COMMENTS]: `${BASE_URL}/comments`,
@@ -41,4 +46,9 @@ export const DASHBOARD_API_ENDPOINTS = {
   [DASHBOARD_QUERY_KEYS.QUANTITY]: API_ENDPOINTS.QUANTITY,
   [DASHBOARD_QUERY_KEYS.TOP_ANIME_VIEWS]: API_ENDPOINTS.TOP_ANIME_VIEWS,
   [DASHBOARD_QUERY_KEYS.TOP_ANIME_RATINGS]: API_ENDPOINTS.TOP_ANIME_RATINGS,
+} as const
+
+export const EXCEL_API_ENDPOINTS = {
+  [EXCEL_REPORT_KEYS.ANIME]: API_ENDPOINTS.ANIME_REPORT,
+  [EXCEL_REPORT_KEYS.SUBSCRIPTIONS]: API_ENDPOINTS.SUBSCRIPTIONS_REPORT,
 } as const

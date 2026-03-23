@@ -1,4 +1,4 @@
-import type { TRating } from '../../shared/types/ratings.type.ts'
+import type { TRating } from '../../shared/types/tables/ratings.type.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'

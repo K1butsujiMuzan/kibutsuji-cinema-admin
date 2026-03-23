@@ -4,5 +4,6 @@ export const PAGE_LIMIT: number = 10
 export const ID_MIN_LENGTH = 24
 export const MAX_DESCRIPTION_LENGTH = 5000
 export const MAX_COMMENT_LENGTH = 1000
+export const MAX_LIMIT_REPORT = 10000
 export const MIN_COMMENT_LENGTH = 10
 export const MIN_PASSWORD_LENGTH = 6

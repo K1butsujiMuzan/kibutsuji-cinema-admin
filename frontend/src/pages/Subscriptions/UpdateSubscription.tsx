@@ -1,4 +1,4 @@
-import type { TSubscription } from '../../shared/types/subscription.type.ts'
+import type { TSubscription } from '../../shared/types/tables/subscription.type.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'
@@ -19,7 +19,7 @@ import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import LoginInput from '../../components/ui/LoginInput/LoginInput.tsx'
 import Select from '../../components/ui/Select/Select.tsx'
 import { SUBSCRIPTION_TYPES } from '../../shared/enums/subscription-type.type.ts'
-import { dateFormater } from '../../lib/date-formater.ts'
+import { dateFormater, reformatDate } from '../../lib/date-formater.ts'
 
 interface Props {
   closeModal: () => void
@@ -60,7 +60,7 @@ const UpdateSubscription = ({
   })
 
   const onFormSubmit: SubmitHandler<TUpdateSubscription> = (data) => {
-    const formatedDate = new Date(data.endDate).toISOString()
+    const formatedDate = reformatDate(data.endDate)
     mutate({ ...data, endDate: formatedDate })
   }
 

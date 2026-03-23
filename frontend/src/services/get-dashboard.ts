@@ -6,7 +6,8 @@ import {
   type TDashboardQueryKey,
 } from '../configs/query-keys.config.ts'
 import { DASHBOARD_API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
-import type { TAnime } from '../shared/types/anime.type.ts'
+import type { TAnime } from '../shared/types/tables/anime.type.ts'
+import type { TResponseError } from '../shared/types/TResponseError.type.ts'
 
 type TReturnData = {
   [DASHBOARD_QUERY_KEYS.QUANTITY]: TQuantity[]
@@ -27,7 +28,7 @@ export const getDashboard = async <T extends TDashboardQueryKey>(
     },
   })
 
-  const data: TReturnData[T] | { error: string } = await response.json()
+  const data: TReturnData[T] | TResponseError = await response.json()
 
   if (typeof data === 'object' && 'error' in data) {
     throw new Error(data.error)

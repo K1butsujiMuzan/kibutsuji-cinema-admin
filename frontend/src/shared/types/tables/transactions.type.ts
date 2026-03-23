@@ -1,4 +1,4 @@
-import type { TSubscriptionType } from '../enums/subscription-type.type.ts'
+import type { TSubscriptionType } from '../../enums/subscription-type.type.ts'
 
 export type TTransaction = {
   id: string

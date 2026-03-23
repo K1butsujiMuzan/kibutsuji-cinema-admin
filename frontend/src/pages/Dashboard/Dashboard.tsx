@@ -7,6 +7,7 @@ import Loader from '../../components/ui/Loader/Loader.tsx'
 import UserWelcome from './UserWelcome.tsx'
 import TopAnimeRatings from './charts/TopAnimeRatings.tsx'
 import { getPageTitle } from '../../constants/page-information.ts'
+import ReportContainer from './reports/ReportContainer.tsx'
 
 const Dashboard = () => {
   return (
@@ -38,6 +39,7 @@ const Dashboard = () => {
             <TopAnimeRatings />
           </Suspense>
         </div>
+        <ReportContainer />
       </div>
     </>
   )

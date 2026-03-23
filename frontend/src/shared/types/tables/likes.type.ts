@@ -1,4 +1,4 @@
-import type { TLikeValue } from '../enums/like-value.type.ts'
+import type { TLikeValue } from '../../enums/like-value.type.ts'
 
 export type TLike = {
   id: string

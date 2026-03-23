@@ -1,4 +1,4 @@
-import type { TList } from '../../shared/types/lists.type.ts'
+import type { TList } from '../../shared/types/tables/lists.type.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useMutation } from '@tanstack/react-query'

@@ -18,7 +18,7 @@ import {
 } from '../../shared/schemes/subscription.schema.ts'
 import { SUBSCRIPTION_TYPES } from '../../shared/enums/subscription-type.type.ts'
 import Select from '../../components/ui/Select/Select.tsx'
-import { currentISODate } from '../../lib/date-formater.ts'
+import { currentDate, reformatDate } from '../../lib/date-formater.ts'
 
 interface Props {
   closeModal: () => void
@@ -47,13 +47,13 @@ const CreateSubscription = ({ closeModal, clearCheckBoxes }: Props) => {
     mode: 'onChange',
     defaultValues: {
       type: SUBSCRIPTION_TYPES[0],
-      endDate: currentISODate(),
+      endDate: currentDate(),
       userId: '',
     },
   })
 
   const onFormSubmit: SubmitHandler<TCreateSubscription> = async (data) => {
-    const formatedDate = new Date(data.endDate).toISOString()
+    const formatedDate = reformatDate(data.endDate)
     mutate({ ...data, endDate: formatedDate })
   }
 

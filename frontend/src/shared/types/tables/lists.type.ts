@@ -1,4 +1,4 @@
-import type { TListType } from '../enums/list-type.type.ts'
+import type { TListType } from '../../enums/list-type.type.ts'
 
 export type TList = {
   id: string

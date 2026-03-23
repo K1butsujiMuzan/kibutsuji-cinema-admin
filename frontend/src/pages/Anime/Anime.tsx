@@ -5,7 +5,7 @@ import {
   initialAnimeData,
   type TAnimeFormData,
 } from './anime.data.ts'
-import type { TAnimeWithGenres } from '../../shared/types/anime.type.ts'
+import type { TAnimeWithGenres } from '../../shared/types/tables/anime.type.ts'
 import AnimeForm from './AnimeForm.tsx'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'

@@ -1,4 +1,4 @@
-import type { TLike } from '../../shared/types/likes.type.ts'
+import type { TLike } from '../../shared/types/tables/likes.type.ts'
 import { QUERY_KEYS } from '../../configs/query-keys.config.ts'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { useMutation } from '@tanstack/react-query'

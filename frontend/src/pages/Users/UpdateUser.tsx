@@ -1,5 +1,5 @@
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
-import type { TUser } from '../../shared/types/users.type.ts'
+import type { TUser } from '../../shared/types/tables/users.type.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import {
   type TUpdateUser,

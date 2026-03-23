@@ -26,6 +26,7 @@ import {
 } from '../../constants/service-message-labels.ts'
 import { TABLE_KEY } from '../../configs/table-key.config.ts'
 import { ANIME_ACCESSES } from '../../shared/enums/anime-access.type.ts'
+import { reformatDate } from '../../lib/date-formater.ts'
 
 interface Props {
   closeModal: () => void
@@ -99,7 +100,7 @@ const AnimeForm = ({
   })
 
   const onFormSubmit: SubmitHandler<TDataAnime> = (data) => {
-    const formatedDate = new Date(data.releaseDate).toISOString()
+    const formatedDate = reformatDate(data.releaseDate)
     const formatedGenres =
       data.genreNames.length > 0 ? data.genreNames.split(' ') : []
     const newData: TDataSubmitAnime = {

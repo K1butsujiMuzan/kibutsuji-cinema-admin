@@ -10,19 +10,22 @@ export async function getData<T extends TCrudEndpointKeys>(
   search: string,
 ): Promise<{ data: TGetEndpoint[T]; count: number }> {
   const token = getToken()
-  const endpoint = CRUD_ENDPOINTS[endpointKey]
 
   try {
-    const response = await fetch(
-      `${endpoint}?page=${page}&limit=${PAGE_LIMIT}${search.length > 0 ? `&search=${search}` : ''}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+    const url = new URL(CRUD_ENDPOINTS[endpointKey])
+    url.searchParams.set('page', String(page))
+    url.searchParams.set('limit', String(PAGE_LIMIT))
+    if (search.length > 0) {
+      url.searchParams.set('search', search)
+    }
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-    )
+    })
     if (!response.ok) {
       return {
         data: [],

@@ -1,17 +1,14 @@
 import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { ERRORS } from '../constants/errors.ts'
 import type { IUser } from '../shared/types/user.type.ts'
-
-interface ILoginError {
-  error: string
-}
+import type { TResponseError } from '../shared/types/TResponseError.type.ts'
 
 interface ILoginSuccess {
   token: string
   user: IUser
 }
 
-type TLogin = ILoginError | ILoginSuccess
+type TLogin = TResponseError | ILoginSuccess
 
 export async function adminLogin(
   email: string,
