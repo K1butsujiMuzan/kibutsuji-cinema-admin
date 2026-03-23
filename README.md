@@ -1,19 +1,65 @@
-# README
+# Kibutsuji Admin Panel
 
-## About
+## Description
 
-This is the official Wails React-TS template.
+Kibutsuji Admin Panel is a desktop application built with Wails that provides an interface for managing anime content, user subscriptions, and platform statistics. The application combines a React frontend with a Go backend, packaged as a native desktop application.
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## Tech Stack
 
-## Live Development
+**Frontend:**
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- TanStack React Query
+- React Router DOM
+- React Hook Form
+- Zod
+- Zustand
+- Chart.js & React-ChartJS-2
+- React-PDF
+- XLSX
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+## Installation
 
-## Building
+### Prerequisites
 
-To build a redistributable, production mode package, use `wails build`.
+- Node.js (v18 or higher)
+- npm or yarn
+- Go (v1.21 or higher)
+- Wails CLI
+
+### Install Wails
+```bash
+go install github.com/wailsapp/wails/v2/cmd/wails@latest
+```
+
+### Clone the repository
+
+```bash
+git clone https://github.com/K1butsujiMuzan/kibutsuji-cinema-admin.git
+cd kibutsuji-cinema-admin
+```
+
+### Install frontend dependencies
+```bash
+cd frontend
+npm install 
+#or
+yarn install
+cd ..
+```
+
+### Development and Building
+```bash
+# Development
+wails dev
+# Production build
+wails build
+```
+
+## Environment Variables
+Create a .env file in the frontend directory:
+```bash
+VITE_BASE_URL=https://kibutsuji-cinema.vercel.app/api
+```
