@@ -1,7 +1,7 @@
 export const ToastSuccessIcon = () => {
   return (
     <svg
-      className={'text-green-400'}
+      className={'text-green-400 shrink-0'}
       role={'img'}
       aria-hidden={true}
       width="32"
@@ -21,7 +21,7 @@ export const ToastSuccessIcon = () => {
 export const ToastErrorIcon = () => {
   return (
     <svg
-      className={'text-red-400'}
+      className={'text-red-400 shrink-0'}
       role={'img'}
       aria-hidden={true}
       width="32"

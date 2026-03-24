@@ -57,7 +57,9 @@ const CreateModal = ({ id, children, label, closeModal }: Props) => {
         aria-labelledby={id}
       >
         <h2
-          className={'text-2xl leading-8 md:text-34 md:leading-11 font-medium'}
+          className={
+            'text-2xl leading-8 md:text-34 md:leading-11 font-medium text-center'
+          }
           id={id}
         >
           {label}
