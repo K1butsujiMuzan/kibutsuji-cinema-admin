@@ -62,6 +62,7 @@ const Anime = () => {
       originalTitle,
       releaseDate,
       image,
+      backgroundImage,
       description,
       slug,
       episodesLength,
@@ -83,6 +84,7 @@ const Anime = () => {
         releaseDate: dateFormater(releaseDate),
         description: description || '',
         image: image || '',
+        backgroundImage: backgroundImage || '',
       },
       type: 'update',
     })
@@ -115,6 +117,7 @@ const Anime = () => {
               { value: item.id, type: 'text' },
               { value: item.access, type: 'text' },
               { value: item.ageLimit, type: 'text' },
+              { value: item.backgroundImage, type: 'nullable' },
               { value: item.createdAt, type: 'date' },
               { value: item.description, type: 'nullable' },
               { value: item.episodesCount, type: 'text' },

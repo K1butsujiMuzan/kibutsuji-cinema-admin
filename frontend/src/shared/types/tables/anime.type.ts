@@ -10,6 +10,7 @@ export type TAnimeWithGenres = {
   slug: string
   title: string
   image: string | null
+  backgroundImage: string | null
   originalTitle: string | null
   description: string | null
   ageLimit: TAnimeAgeLimit

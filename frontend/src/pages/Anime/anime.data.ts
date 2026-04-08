@@ -20,7 +20,8 @@ import { currentDate } from '../../lib/date-formater.ts'
 export const animeColumns: string[] = [
   'id',
   'access',
-  'ageLimit',
+  'age_limit',
+  'background_image',
   'created_at',
   'description',
   'episodes_count',
@@ -51,6 +52,7 @@ export type TAnimeFormData = {
   episodesLength: number
   releaseDate: string
   image: string
+  backgroundImage: string
   originalTitle: string
   slug: string
   genreNames: string
@@ -67,6 +69,7 @@ export const initialAnimeData: TFormInformation<TAnimeFormData> = {
     episodesCount: 0,
     episodesLength: 0,
     image: '',
+    backgroundImage: '',
     genreNames: '',
     releaseDate: currentDate(),
     originalTitle: '',

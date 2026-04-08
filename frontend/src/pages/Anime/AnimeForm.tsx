@@ -54,6 +54,7 @@ const AnimeForm = ({
     originalTitle,
     ageLimit,
     title,
+    backgroundImage,
     image,
     description,
   } = anime
@@ -94,6 +95,7 @@ const AnimeForm = ({
       title,
       releaseDate,
       description,
+      backgroundImage,
       image,
       genreNames,
     },
@@ -249,6 +251,19 @@ const AnimeForm = ({
               />
             )}
             name={'image'}
+          />
+          <Controller
+            control={control}
+            render={({ field }) => (
+              <LoginInput
+                {...field}
+                hasError={!!errors.image?.message}
+                labelText={'Background image'}
+                id={'background-image'}
+                autoComplete={'off'}
+              />
+            )}
+            name={'backgroundImage'}
           />
           <Controller
             control={control}
