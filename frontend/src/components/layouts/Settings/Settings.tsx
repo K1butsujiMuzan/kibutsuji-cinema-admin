@@ -4,6 +4,7 @@ import MainLink from '../../ui/MainLink/MainLink.tsx'
 import { memo, useCallback, useState } from 'react'
 import ActionButton from '../../ui/ActionButton/ActionButton.tsx'
 import { cn } from '../../../lib/utils.ts'
+import HelpButton from '../../ui/Help/HelpButton.tsx'
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -33,6 +34,7 @@ const Settings = () => {
       <div inert={!isOpen} className={'flex gap-1'}>
         <MainLink />
         <ThemeSwitcher />
+        <HelpButton />
         <LogoutButton />
       </div>
     </div>

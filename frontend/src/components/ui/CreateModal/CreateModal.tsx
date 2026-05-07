@@ -3,15 +3,17 @@ import { useEffect, useRef } from 'react'
 import { type MouseEvent } from 'react'
 import { KEYCODES } from '../../../constants/keycodes.ts'
 import CloseModalButton from '../CloseModalButton/CloseModalButton.tsx'
+import { cn } from '../../../lib/utils.ts'
 
 interface Props {
   id: string
   children: React.ReactNode
   label: string
   closeModal: () => void
+  className?: string
 }
 
-const CreateModal = ({ id, children, label, closeModal }: Props) => {
+const CreateModal = ({ id, children, label, closeModal, className }: Props) => {
   const layerRef = useRef<null | HTMLDivElement>(null)
 
   useEffect(() => {
@@ -43,15 +45,16 @@ const CreateModal = ({ id, children, label, closeModal }: Props) => {
   return createPortal(
     <div
       className={
-        'fixed inset-0 z-50 backdrop-blur-xs flex items-center justify-center'
+        'p-4 fixed inset-0 z-50 backdrop-blur-xs flex items-center justify-center'
       }
       onClick={closeModalLayer}
       ref={layerRef}
     >
       <div
-        className={
-          'bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-100 w-full max-w-150 rounded-2xl p-4 flex flex-col items-center relative max-h-full overflow-auto transition duration-300'
-        }
+        className={cn(
+          'bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-100 w-full max-w-150 rounded-2xl p-4 flex flex-col items-center relative max-h-full overflow-auto transition duration-300',
+          className,
+        )}
         role={'dialog'}
         aria-modal={true}
         aria-labelledby={id}
