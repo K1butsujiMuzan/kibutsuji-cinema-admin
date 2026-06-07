@@ -7,7 +7,7 @@ import {
 } from '../configs/query-keys.config.ts'
 import { DASHBOARD_API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import type { TAnime } from '../shared/types/tables/anime.type.ts'
-import type { TResponseError } from '../shared/types/TResponseError.type.ts'
+import type { TResponseError } from '../shared/types/response-error.type.ts'
 
 type TReturnData = {
   [DASHBOARD_QUERY_KEYS.QUANTITY]: TQuantity[]

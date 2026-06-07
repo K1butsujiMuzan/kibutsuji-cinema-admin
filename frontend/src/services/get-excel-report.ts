@@ -9,7 +9,7 @@ import type { TAnimeReport } from '../shared/types/reports/anime-report.type.ts'
 import type { TSubscriptionsReport } from '../shared/types/reports/subscriptions-report.type.ts'
 import { ERRORS } from '../constants/errors.ts'
 import { reformatDate } from '../lib/date-formater.ts'
-import type { TResponseError } from '../shared/types/TResponseError.type.ts'
+import type { TResponseError } from '../shared/types/response-error.type.ts'
 
 export type TGetExcel = {
   [EXCEL_REPORT_KEYS.ANIME]: TAnimeReport

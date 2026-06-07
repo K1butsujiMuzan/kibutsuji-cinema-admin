@@ -2,7 +2,7 @@ import { API_ENDPOINTS } from '../configs/api-endpoints.config.ts'
 import { ERRORS } from '../constants/errors.ts'
 import { getToken, setInformation } from '../stores/useUserStore.ts'
 import type { IUser } from '../shared/types/user.type.ts'
-import type { TResponseError } from '../shared/types/TResponseError.type.ts'
+import type { TResponseError } from '../shared/types/response-error.type.ts'
 
 type TTokenCheck = TResponseError | IUser
 

@@ -1,9 +1,9 @@
 export type TAnimeType = (typeof ANIME_TYPES)[number]
 
 export const ANIME_TYPES = [
-  'TVSERIES',
+  'TV_SERIES',
   'MOVIE',
-  'SHORTFILM',
+  'SHORT_FILM',
   'SPECIAL',
   'OVA',
   'ONA',
