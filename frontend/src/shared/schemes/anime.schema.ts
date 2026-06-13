@@ -6,8 +6,9 @@ import { ANIME_AGE_LIMITS } from '../enums/anime-age-limit.type.ts'
 import { ANIME_STATUSES } from '../enums/anime-status.type.ts'
 import { ANIME_ACCESSES } from '../enums/anime-access.type.ts'
 
-export const DataAnimeSchema = z.object({
+export const dataAnimeSchema = z.object({
   ageLimit: z.enum(ANIME_AGE_LIMITS),
+  authorName: z.string().trim(),
   description: z.string().trim().max(MAX_DESCRIPTION_LENGTH),
   episodesCount: z.number().int().nonnegative().max(MAX_INT),
   episodesLength: z.number().int().nonnegative().max(MAX_INT),
@@ -23,7 +24,4 @@ export const DataAnimeSchema = z.object({
   genreNames: z.string(),
 })
 
-export type TDataAnime = z.infer<typeof DataAnimeSchema>
-export type TDataSubmitAnime = Omit<TDataAnime, 'genreNames'> & {
-  genreNames: string[]
-}
+export type TFormAnime = z.infer<typeof dataAnimeSchema>

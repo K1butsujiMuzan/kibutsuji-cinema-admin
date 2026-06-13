@@ -25,7 +25,7 @@ const Settings = () => {
     >
       <ActionButton
         label={isOpen ? 'close settings menu' : 'open settings menu'}
-        className={cn('rounded-full transition-transform duration-700 p-2', {
+        className={cn('rounded-full transition-transform duration-700 p-2.5', {
           'rotate-180': isOpen,
         })}
         onClick={toggleSettings}

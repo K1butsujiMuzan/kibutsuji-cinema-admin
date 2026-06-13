@@ -15,7 +15,7 @@ import {
 } from '../../constants/service-message-labels.ts'
 import {
   createUserSchema,
-  type TCreateUser,
+  type TFormCreateUser,
 } from '../../shared/schemes/user.schema.ts'
 import { TABLE_KEY } from '../../configs/table-key.config.ts'
 
@@ -32,7 +32,7 @@ const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TCreateUser) => createData(data, TABLE_KEY.USERS),
+    mutationFn: (data: TFormCreateUser) => createData(data, TABLE_KEY.USERS),
     onSuccess,
   })
 
@@ -40,7 +40,7 @@ const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
     control,
     handleSubmit,
     formState: { isValid, errors, dirtyFields },
-  } = useForm<TCreateUser>({
+  } = useForm<TFormCreateUser>({
     resolver: zodResolver(createUserSchema),
     mode: 'onChange',
     defaultValues: {
@@ -51,7 +51,7 @@ const CreateUser = ({ closeModal, clearCheckBoxes }: Props) => {
     },
   })
 
-  const onFormSubmit: SubmitHandler<TCreateUser> = async (data) => {
+  const onFormSubmit: SubmitHandler<TFormCreateUser> = async (data) => {
     mutate(data)
   }
 

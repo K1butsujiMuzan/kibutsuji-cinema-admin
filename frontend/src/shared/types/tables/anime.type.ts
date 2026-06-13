@@ -6,21 +6,22 @@ import type { TAnimeAccess } from '../../enums/anime-access.type.ts'
 
 export type TAnimeWithGenres = {
   id: string
-  access: TAnimeAccess
   slug: string
-  title: string
-  image: string | null
-  backgroundImage: string | null
-  originalTitle: string | null
-  description: string | null
+  type: TAnimeType
   ageLimit: TAnimeAgeLimit
-  rating: number
-  releaseDate: string
-  episodesReleased: number
+  access: TAnimeAccess
+  description: string | null
+  authorName: string | null
   episodesCount: number
   episodesLength: number
-  type: TAnimeType
+  image: string | null
+  backgroundImage: string | null
+  releaseDate: string
+  originalTitle: string | null
+  title: string
   status: TAnimeStatus
+  rating: number
+  episodesReleased: number
   views: number
   createdAt: string
   updatedAt: string
@@ -28,3 +29,17 @@ export type TAnimeWithGenres = {
 }
 
 export type TAnime = Omit<TAnimeWithGenres, 'genres'>
+export type TAnimeData = Omit<
+  TAnimeWithGenres,
+  | 'genres'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'views'
+  | 'episodesReleased'
+  | 'rating'
+  | 'id'
+> & { genreNames: string[] }
+export type TAnimeFormData = Omit<
+  TAnimeWithGenres,
+  'genres' | 'createdAt' | 'updatedAt' | 'views' | 'episodesReleased' | 'rating'
+> & { genreNames: string }

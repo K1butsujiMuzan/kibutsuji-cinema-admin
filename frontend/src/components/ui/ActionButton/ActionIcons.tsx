@@ -1,3 +1,7 @@
+interface Props {
+  className?: string
+}
+
 export const ActionDeleteIcon = () => {
   return (
     <svg
@@ -43,51 +47,10 @@ export const ActionAddIcon = () => {
   )
 }
 
-export const ActionArrowLeftIcon = () => {
+export const ActionArrowIcon = ({ className }: Props) => {
   return (
     <svg
-      role={'img'}
-      aria-hidden={true}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M16.9323 24L18.5999 22.3136L8.68643 11.9843L9.74346 10.8826L9.73818 10.8886L18.5466 1.71186L16.903 -9.53674e-07C14.4685 2.53632 7.67175 9.61743 5.3999 11.9843C7.08723 13.7433 5.44174 12.0291 16.9323 24Z"
-        fill="white"
-      />
-    </svg>
-  )
-}
-
-export const ActionArrowRightIcon = () => {
-  return (
-    <svg
-      role={'img'}
-      aria-hidden={true}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M7.06768 0L5.4001 1.68644L15.3136 12.0157L14.2565 13.1174L14.2618 13.1114L5.45342 22.2881L7.09697 24C9.53151 21.4637 16.3282 14.3826 18.6001 12.0157C16.9128 10.2567 18.5583 11.9709 7.06768 0Z"
-        fill="white"
-      />
-    </svg>
-  )
-}
-
-export const ActionFileIcon = () => {
-  return (
-    <svg
+      className={className}
       role={'img'}
       aria-hidden={true}
       width="20"
@@ -97,11 +60,10 @@ export const ActionFileIcon = () => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M15.8327 7.5V14.8333C15.8327 15.7667 15.8327 16.2335 15.651 16.59C15.4913 16.9036 15.2363 17.1586 14.9227 17.3183C14.5662 17.5 14.0994 17.5 13.166 17.5H6.83268C5.89926 17.5 5.43255 17.5 5.07603 17.3183C4.76242 17.1586 4.50746 16.9036 4.34767 16.59C4.16602 16.2335 4.16602 15.7667 4.16602 14.8333V5.16667C4.16602 4.23324 4.16602 3.76653 4.34767 3.41002C4.50746 3.09641 4.76242 2.84144 5.07603 2.68166C5.43255 2.5 5.89927 2.5 6.83268 2.5H10.8327M15.8327 7.5L10.8327 2.5M15.8327 7.5H11.666C11.2058 7.5 10.8327 7.1269 10.8327 6.66667V2.5"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.88965 0L4.5 1.40536L12.7612 10.0131L11.8804 10.9312L11.8848 10.9261L4.54443 18.5734L5.91406 20C7.94284 17.8864 13.6068 11.9855 15.5 10.0131C14.0939 8.54721 15.4651 9.97579 5.88965 0Z"
+        fill="black"
       />
     </svg>
   )

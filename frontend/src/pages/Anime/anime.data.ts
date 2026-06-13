@@ -1,26 +1,16 @@
-import {
-  ANIME_STATUSES,
-  type TAnimeStatus,
-} from '../../shared/enums/anime-status.type.ts'
-import {
-  ANIME_TYPES,
-  type TAnimeType,
-} from '../../shared/enums/anime-type.type.ts'
-import {
-  ANIME_AGE_LIMITS,
-  type TAnimeAgeLimit,
-} from '../../shared/enums/anime-age-limit.type.ts'
+import { ANIME_STATUSES } from '../../shared/enums/anime-status.type.ts'
+import { ANIME_TYPES } from '../../shared/enums/anime-type.type.ts'
+import { ANIME_AGE_LIMITS } from '../../shared/enums/anime-age-limit.type.ts'
 import type { TFormInformation } from '../../shared/types/form-information.type.ts'
-import {
-  ANIME_ACCESSES,
-  type TAnimeAccess,
-} from '../../shared/enums/anime-access.type.ts'
+import { ANIME_ACCESSES } from '../../shared/enums/anime-access.type.ts'
 import { currentDate } from '../../lib/date-formater.ts'
+import type { TAnimeFormData } from '../../shared/types/tables/anime.type.ts'
 
 export const animeColumns: string[] = [
   'id',
   'access',
   'age_limit',
+  'authorName',
   'background_image',
   'created_at',
   'description',
@@ -40,24 +30,6 @@ export const animeColumns: string[] = [
   'genre_names',
 ]
 
-export type TAnimeFormData = {
-  id: string
-  title: string
-  description: string
-  access: TAnimeAccess
-  ageLimit: TAnimeAgeLimit
-  status: TAnimeStatus
-  type: TAnimeType
-  episodesCount: number
-  episodesLength: number
-  releaseDate: string
-  image: string
-  backgroundImage: string
-  originalTitle: string
-  slug: string
-  genreNames: string
-}
-
 export const initialAnimeData: TFormInformation<TAnimeFormData> = {
   data: {
     id: '',
@@ -66,15 +38,16 @@ export const initialAnimeData: TFormInformation<TAnimeFormData> = {
     ageLimit: ANIME_AGE_LIMITS[0],
     access: ANIME_ACCESSES[0],
     description: '',
+    authorName: '',
     episodesCount: 0,
     episodesLength: 0,
     image: '',
     backgroundImage: '',
-    genreNames: '',
     releaseDate: currentDate(),
     originalTitle: '',
     title: '',
     status: ANIME_STATUSES[0],
+    genreNames: '',
   },
   type: 'create',
 }

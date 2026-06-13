@@ -13,6 +13,7 @@ export const PAGES = {
   SUBSCRIPTIONS: '/subscriptions',
   TRANSACTIONS: '/transactions',
   USERS: '/users',
+  AUTHORS: '/authors',
 } as const
 
 export const PAGE_TITLES = {
@@ -29,6 +30,7 @@ export const PAGE_TITLES = {
   SUBSCRIPTIONS: MANY_UPPER_LABELS.SUBSCRIPTIONS,
   TRANSACTIONS: MANY_UPPER_LABELS.TRANSACTIONS,
   USERS: MANY_UPPER_LABELS.USERS,
+  AUTHORS: MANY_UPPER_LABELS.AUTHORS,
 } as const
 
 export type TPageTitle = (typeof PAGE_TITLES)[keyof typeof PAGE_TITLES]

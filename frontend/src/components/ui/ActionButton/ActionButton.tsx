@@ -1,9 +1,7 @@
 import {
   ActionAddIcon,
-  ActionArrowLeftIcon,
-  ActionArrowRightIcon,
+  ActionArrowIcon,
   ActionDeleteIcon,
-  ActionFileIcon,
 } from './ActionIcons.tsx'
 import { memo, useMemo } from 'react'
 import { cn } from '../../../lib/utils.ts'
@@ -12,7 +10,7 @@ interface Props {
   label: string
   onClick: () => void
   disabled?: boolean
-  type: 'add' | 'delete' | 'left' | 'right' | 'file'
+  type: 'add' | 'delete' | 'left' | 'right'
   className?: string
 }
 
@@ -23,8 +21,6 @@ const ActionButton = ({ label, onClick, disabled, type, className }: Props) => {
         return `create new ${label}`
       case 'delete':
         return `delete selected ${label}`
-      case 'file':
-        return `export ${label}`
       default:
         return label
     }
@@ -36,7 +32,7 @@ const ActionButton = ({ label, onClick, disabled, type, className }: Props) => {
       disabled={disabled}
       aria-label={ariaLabel}
       className={cn(
-        'aspect-square p-1 md:p-2 rounded-md disabled:cursor-not-allowed! disabled:opacity-70 hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300',
+        'aspect-square p-1.5 rounded-md disabled:cursor-not-allowed! disabled:opacity-70 not-disabled:hover:bg-pink-100 dark:not-disabled:hover:bg-gray-600 not-disabled:active:bg-pink-100 dark:not-disabled:active:bg-gray-600 not-disabled:active:scale-97 transition duration-300',
         className,
       )}
       type="button"
@@ -44,9 +40,8 @@ const ActionButton = ({ label, onClick, disabled, type, className }: Props) => {
     >
       {type === 'add' && <ActionAddIcon />}
       {type === 'delete' && <ActionDeleteIcon />}
-      {type === 'left' && <ActionArrowLeftIcon />}
-      {type === 'right' && <ActionArrowRightIcon />}
-      {type === 'file' && <ActionFileIcon />}
+      {type === 'left' && <ActionArrowIcon className={'rotate-180'} />}
+      {type === 'right' && <ActionArrowIcon />}
     </button>
   )
 }

@@ -1,11 +1,10 @@
 import { useCallback, useState } from 'react'
 import PageLoader from '../../components/ui/PageLoader/PageLoader.tsx'
-import {
-  animeColumns,
-  initialAnimeData,
-  type TAnimeFormData,
-} from './anime.data.ts'
-import type { TAnimeWithGenres } from '../../shared/types/tables/anime.type.ts'
+import { animeColumns, initialAnimeData } from './anime.data.ts'
+import type {
+  TAnimeFormData,
+  TAnimeWithGenres,
+} from '../../shared/types/tables/anime.type.ts'
 import AnimeForm from './AnimeForm.tsx'
 import Tbody from '../../components/ui/Tbody/Tbody.tsx'
 import PageWrapper from '../../components/ui/PageWrapper/PageWrapper.tsx'
@@ -67,6 +66,7 @@ const Anime = () => {
       slug,
       episodesLength,
       episodesCount,
+      authorName,
     } = anime
     setInformation({
       data: {
@@ -77,6 +77,7 @@ const Anime = () => {
         ageLimit,
         title,
         slug,
+        authorName,
         episodesLength,
         episodesCount,
         genreNames: genres.map((item) => item.name).join(' '),
@@ -117,6 +118,7 @@ const Anime = () => {
               { value: item.id, type: 'text' },
               { value: item.access, type: 'text' },
               { value: item.ageLimit, type: 'text' },
+              { value: item.authorName, type: 'nullable' },
               { value: item.backgroundImage, type: 'nullable' },
               { value: item.createdAt, type: 'date' },
               { value: item.description, type: 'nullable' },

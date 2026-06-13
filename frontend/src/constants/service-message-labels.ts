@@ -11,6 +11,7 @@ export const UPPER_LABELS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'Subscription',
   [TABLE_KEY.TRANSACTIONS]: 'Transaction',
   [TABLE_KEY.USERS]: 'User',
+  [TABLE_KEY.AUTHORS]: 'Author',
 } as const
 
 export const SERVICE_MANY_UPPER_LABELS = {
@@ -24,6 +25,7 @@ export const SERVICE_MANY_UPPER_LABELS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'Subscription(s)',
   [TABLE_KEY.TRANSACTIONS]: 'Transaction(s)',
   [TABLE_KEY.USERS]: 'User(s)',
+  [TABLE_KEY.AUTHORS]: 'Author(s)',
 } as const
 
 export const MANY_UPPER_LABELS = {
@@ -37,6 +39,7 @@ export const MANY_UPPER_LABELS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'Subscriptions',
   [TABLE_KEY.TRANSACTIONS]: 'Transactions',
   [TABLE_KEY.USERS]: 'Users',
+  [TABLE_KEY.AUTHORS]: 'Authors',
 } as const
 
 export const LOWER_LABELS = {
@@ -50,6 +53,7 @@ export const LOWER_LABELS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'subscription',
   [TABLE_KEY.TRANSACTIONS]: 'transaction',
   [TABLE_KEY.USERS]: 'user',
+  [TABLE_KEY.AUTHORS]: 'author',
 } as const
 
 export const MANY_LOWER_LABELS = {
@@ -63,6 +67,7 @@ export const MANY_LOWER_LABELS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'subscription(s)',
   [TABLE_KEY.TRANSACTIONS]: 'transaction(s)',
   [TABLE_KEY.USERS]: 'user(s)',
+  [TABLE_KEY.AUTHORS]: 'author(s)',
 } as const
 
 export const SEARCH_LABELS = {
@@ -76,4 +81,5 @@ export const SEARCH_LABELS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'User id',
   [TABLE_KEY.TRANSACTIONS]: 'User id',
   [TABLE_KEY.USERS]: 'Email',
+  [TABLE_KEY.AUTHORS]: 'English name',
 }

@@ -15,6 +15,7 @@ import { DashboardLoader, MainLoader } from '../lib/page-loaders.ts'
 import NotFound from '../pages/NotFound'
 import Subscriptions from '../pages/Subscriptions'
 import Transactions from '../pages/Transactions'
+import Authors from '../pages/Authors'
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
       {
         path: PAGES.USERS,
         element: <Users />,
+        loader: DashboardLoader,
+      },
+      {
+        path: PAGES.AUTHORS,
+        element: <Authors />,
         loader: DashboardLoader,
       },
     ],

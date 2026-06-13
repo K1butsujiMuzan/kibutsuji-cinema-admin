@@ -18,5 +18,5 @@ export const updateUserSchema = z.object({
   image: z.string(),
 })
 
-export type TUpdateUser = z.infer<typeof updateUserSchema>
-export type TCreateUser = z.infer<typeof createUserSchema>
+export type TFormUpdateUser = z.infer<typeof updateUserSchema>
+export type TFormCreateUser = z.infer<typeof createUserSchema>

@@ -11,6 +11,7 @@ export const QUERY_KEYS = {
   [TABLE_KEY.SUBSCRIPTIONS]: 'subscriptions',
   [TABLE_KEY.TRANSACTIONS]: 'transactions',
   [TABLE_KEY.USERS]: 'users',
+  [TABLE_KEY.AUTHORS]: 'authors',
 } as const
 
 export const DASHBOARD_QUERY_KEYS = {

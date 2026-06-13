@@ -5,49 +5,49 @@ const MainLink = () => {
   return (
     <Link
       className={
-        'inline p-2 rounded-full hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300'
+        'inline p-2.5 rounded-full hover:bg-pink-100 dark:hover:bg-gray-600 active:bg-pink-100 dark:active:bg-gray-600 active:scale-97 transition duration-300'
       }
       to={PAGES.DASHBOARD}
       aria-label={'to the main page'}
     >
       <svg
         aria-hidden={true}
-        className={' text-pink-300 shrink-0'}
-        width="24"
-        height="24"
-        viewBox="0 0 65 65"
+        className={'text-pink-300 shrink-0'}
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           className={'text-gray-700 dark:text-gray-100'}
-          d="M19.456 49V15.592H27.28V28.552L39.232 15.592H48.448L33.616 31.528L49.216 49H39.328L27.28 35.368V49H19.456Z"
+          d="M5.152 16V4.864H7.76V9.184L11.744 4.864H14.816L9.872 10.176L15.072 16H11.776L7.76 11.456V16H5.152Z"
           fill="#BFBFBF"
         />
         <rect
-          x="58"
-          y="65"
-          width="30"
-          height="7"
-          transform="rotate(-90 58 65)"
+          x="18"
+          y="20"
+          width="9"
+          height="2"
+          transform="rotate(-90 18 20)"
           fill="#7E57C2"
         />
         <rect
-          x="65"
-          y="65"
-          width="30"
-          height="7"
-          transform="rotate(-180 65 65)"
+          x="20"
+          y="20"
+          width="9"
+          height="2"
+          transform="rotate(-180 20 20)"
           fill="#7E57C2"
         />
         <rect
-          x="7"
-          width="30"
-          height="7"
-          transform="rotate(90 7 0)"
+          x="2"
+          width="9"
+          height="2"
+          transform="rotate(90 2 0)"
           fill="#7E57C2"
         />
-        <rect width="30" height="7" fill="#7E57C2" />
+        <rect width="9" height="2" fill="#7E57C2" />
       </svg>
     </Link>
   )

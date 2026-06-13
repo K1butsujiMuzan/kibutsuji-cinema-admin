@@ -8,11 +8,9 @@ import Select from '../../components/ui/Select/Select.tsx'
 import LoginButton from '../../components/ui/LoginButton/LoginButton.tsx'
 import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
 import {
-  DataAnimeSchema,
-  type TDataAnime,
-  type TDataSubmitAnime,
+  dataAnimeSchema,
+  type TFormAnime,
 } from '../../shared/schemes/anime.schema.ts'
-import { type TAnimeFormData } from './anime.data.ts'
 import LoginTextArea from '../../components/ui/LoginTextArea/LoginTextArea.tsx'
 import { useQuerySuccess } from '../../hooks/useQuerySuccess.ts'
 import { createData } from '../../services/create-data.ts'
@@ -27,6 +25,10 @@ import {
 import { TABLE_KEY } from '../../configs/table-key.config.ts'
 import { ANIME_ACCESSES } from '../../shared/enums/anime-access.type.ts'
 import { reformatDate } from '../../lib/date-formater.ts'
+import type {
+  TAnimeData,
+  TAnimeFormData,
+} from '../../shared/types/tables/anime.type.ts'
 
 interface Props {
   closeModal: () => void
@@ -57,6 +59,7 @@ const AnimeForm = ({
     backgroundImage,
     image,
     description,
+    authorName,
   } = anime
 
   const onSuccess = useQuerySuccess(
@@ -66,13 +69,12 @@ const AnimeForm = ({
   )
 
   const createMutation = useMutation({
-    mutationFn: (data: TDataSubmitAnime) => createData(data, TABLE_KEY.ANIME),
+    mutationFn: (data: TAnimeData) => createData(data, TABLE_KEY.ANIME),
     onSuccess: onSuccess,
   })
 
   const updateMutation = useMutation({
-    mutationFn: (data: TDataSubmitAnime) =>
-      updateData(id, data, TABLE_KEY.ANIME),
+    mutationFn: (data: TAnimeData) => updateData(id, data, TABLE_KEY.ANIME),
     onSuccess: onSuccess,
   })
 
@@ -80,8 +82,8 @@ const AnimeForm = ({
     control,
     handleSubmit,
     formState: { isValid, errors, isDirty },
-  } = useForm<TDataAnime>({
-    resolver: zodResolver(DataAnimeSchema),
+  } = useForm<TFormAnime>({
+    resolver: zodResolver(dataAnimeSchema),
     mode: 'onChange',
     defaultValues: {
       status,
@@ -90,23 +92,30 @@ const AnimeForm = ({
       episodesCount,
       slug,
       type,
-      originalTitle,
+      originalTitle: originalTitle || '',
       ageLimit,
       title,
       releaseDate,
-      description,
-      backgroundImage,
-      image,
+      description: description || '',
+      backgroundImage: backgroundImage || '',
+      image: image || '',
       genreNames,
+      authorName: authorName || '',
     },
   })
 
-  const onFormSubmit: SubmitHandler<TDataAnime> = (data) => {
+  const onFormSubmit: SubmitHandler<TFormAnime> = (data) => {
     const formatedDate = reformatDate(data.releaseDate)
     const formatedGenres =
       data.genreNames.length > 0 ? data.genreNames.split(' ') : []
-    const newData: TDataSubmitAnime = {
+    const newData: TAnimeData = {
       ...data,
+      description: data.description.length > 0 ? data.description : null,
+      image: data.image.length > 0 ? data.image : null,
+      backgroundImage:
+        data.backgroundImage.length > 0 ? data.backgroundImage : null,
+      originalTitle: data.originalTitle.length > 0 ? data.originalTitle : null,
+      authorName: data.authorName.length > 0 ? data.authorName : null,
       releaseDate: formatedDate,
       genreNames: formatedGenres,
     }
@@ -290,6 +299,19 @@ const AnimeForm = ({
               />
             )}
             name={'slug'}
+          />
+          <Controller
+            control={control}
+            render={({ field }) => (
+              <LoginInput
+                {...field}
+                hasError={!!errors.authorName?.message}
+                labelText={'Author name'}
+                id={'author-name'}
+                autoComplete={'off'}
+              />
+            )}
+            name={'authorName'}
           />
           <Controller
             control={control}

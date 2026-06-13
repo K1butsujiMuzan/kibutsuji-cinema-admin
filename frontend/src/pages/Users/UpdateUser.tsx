@@ -2,7 +2,7 @@ import CreateModal from '../../components/ui/CreateModal/CreateModal.tsx'
 import type { TUser } from '../../shared/types/tables/users.type.ts'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import {
-  type TUpdateUser,
+  type TFormUpdateUser,
   updateUserSchema,
 } from '../../shared/schemes/user.schema.ts'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -45,7 +45,12 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
   )
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: TUpdateUser) => updateData(id, data, TABLE_KEY.USERS),
+    mutationFn: (data: TFormUpdateUser) =>
+      updateData(
+        id,
+        { ...data, image: data.image.length > 0 ? data.image : null },
+        TABLE_KEY.USERS,
+      ),
     onSuccess,
   })
 
@@ -53,7 +58,7 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
     control,
     handleSubmit,
     formState: { isValid, errors, isDirty },
-  } = useForm<TUpdateUser>({
+  } = useForm<TFormUpdateUser>({
     resolver: zodResolver(updateUserSchema),
     mode: 'onChange',
     defaultValues: {
@@ -66,7 +71,7 @@ const UpdateUser = ({ closeModal, user, clearCheckBoxes }: Props) => {
     },
   })
 
-  const onFormSubmit: SubmitHandler<TUpdateUser> = (data) => {
+  const onFormSubmit: SubmitHandler<TFormUpdateUser> = (data) => {
     mutate(data)
   }
 

@@ -4,11 +4,9 @@ import type { TEpisode } from './tables/episodes.type.ts'
 import type { TLike } from './tables/likes.type.ts'
 import type { TList } from './tables/lists.type.ts'
 import type { TRating } from './tables/ratings.type.ts'
-import type { TUser } from './tables/users.type.ts'
-import type { TAnimeWithGenres } from './tables/anime.type.ts'
+import type { TUpdateUser, TUser } from './tables/users.type.ts'
+import type { TAnimeData, TAnimeWithGenres } from './tables/anime.type.ts'
 import type { TGenre } from './tables/genres.type.ts'
-import type { TCreateUser, TUpdateUser } from '../schemes/user.schema.ts'
-import type { TDataSubmitAnime } from '../schemes/anime.schema.ts'
 import type {
   TCreateComment,
   TUpdateComment,
@@ -31,6 +29,8 @@ import type {
   TCreateTransaction,
   TUpdateTransaction,
 } from '../schemes/transaction.schema.ts'
+import type { TAuthor, TAuthorData } from './tables/authors.type.ts'
+import type { TFormCreateUser } from '../schemes/user.schema.ts'
 
 export type TGetEndpoint = {
   [TABLE_KEY.ANIME]: TAnimeWithGenres[]
@@ -43,11 +43,12 @@ export type TGetEndpoint = {
   [TABLE_KEY.SUBSCRIPTIONS]: TSubscription[]
   [TABLE_KEY.TRANSACTIONS]: TTransaction[]
   [TABLE_KEY.USERS]: TUser[]
+  [TABLE_KEY.AUTHORS]: TAuthor[]
 }
 
 export type TCreateEndpoint = {
-  [TABLE_KEY.USERS]: TCreateUser
-  [TABLE_KEY.ANIME]: TDataSubmitAnime
+  [TABLE_KEY.USERS]: TFormCreateUser
+  [TABLE_KEY.ANIME]: TAnimeData
   [TABLE_KEY.COMMENTS]: TCreateComment
   [TABLE_KEY.EPISODES]: TCreateEpisode
   [TABLE_KEY.LIKES]: TCreateLike
@@ -56,11 +57,12 @@ export type TCreateEndpoint = {
   [TABLE_KEY.SUBSCRIPTIONS]: TCreateSubscription
   [TABLE_KEY.TRANSACTIONS]: TCreateTransaction
   [TABLE_KEY.RATINGS]: TCreateRating
+  [TABLE_KEY.AUTHORS]: TAuthorData
 }
 
 export type TUpdateEndpoint = {
   [TABLE_KEY.USERS]: TUpdateUser
-  [TABLE_KEY.ANIME]: TDataSubmitAnime
+  [TABLE_KEY.ANIME]: TAnimeData
   [TABLE_KEY.COMMENTS]: TUpdateComment
   [TABLE_KEY.EPISODES]: TUpdateEpisode
   [TABLE_KEY.LIKES]: TUpdateLike
@@ -69,6 +71,7 @@ export type TUpdateEndpoint = {
   [TABLE_KEY.SUBSCRIPTIONS]: TUpdateSubscription
   [TABLE_KEY.TRANSACTIONS]: TUpdateTransaction
   [TABLE_KEY.RATINGS]: TUpdateRating
+  [TABLE_KEY.AUTHORS]: TAuthorData
 }
 
 export type TCreateUpdateFormData = {

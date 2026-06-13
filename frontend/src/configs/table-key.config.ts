@@ -9,6 +9,7 @@ export const TABLE_KEY = {
   SUBSCRIPTIONS: 'SUBSCRIPTIONS',
   TRANSACTIONS: 'TRANSACTIONS',
   USERS: 'USERS',
+  AUTHORS: 'AUTHORS',
 } as const
 
 export type TCrudEndpointKeys = (typeof TABLE_KEY)[keyof typeof TABLE_KEY]

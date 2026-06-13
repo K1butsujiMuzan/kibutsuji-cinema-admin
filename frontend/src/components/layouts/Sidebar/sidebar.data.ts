@@ -2,6 +2,7 @@ import type { FC, SVGProps } from 'react'
 import { PAGES } from '../../../configs/pages.config.ts'
 import {
   SidebarAnimeIcon,
+  SidebarAuthorIcon,
   SidebarCommentIcon,
   SidebarEpisodeIcon,
   SidebarGenreIcon,
@@ -31,6 +32,11 @@ export const sidebar: ISidebar[] = [
     href: PAGES.ANIME,
     name: MANY_UPPER_LABELS.ANIME,
     icon: SidebarAnimeIcon,
+  },
+  {
+    href: PAGES.AUTHORS,
+    name: MANY_UPPER_LABELS.AUTHORS,
+    icon: SidebarAuthorIcon,
   },
   {
     href: PAGES.COMMENTS,

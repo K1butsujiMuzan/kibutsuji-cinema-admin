@@ -11,3 +11,5 @@ export type TUser = {
   createdAt: string
   updatedAt: string
 }
+
+export type TUpdateUser = Omit<TUser, 'id' | 'createdAt' | 'updatedAt'>
