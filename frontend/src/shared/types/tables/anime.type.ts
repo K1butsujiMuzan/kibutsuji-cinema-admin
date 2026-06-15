@@ -11,7 +11,7 @@ export type TAnimeWithGenres = {
   ageLimit: TAnimeAgeLimit
   access: TAnimeAccess
   description: string | null
-  authorName: string | null
+  authorSlug: string | null
   episodesCount: number
   episodesLength: number
   image: string | null

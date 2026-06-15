@@ -59,7 +59,7 @@ const AnimeForm = ({
     backgroundImage,
     image,
     description,
-    authorName,
+    authorSlug,
   } = anime
 
   const onSuccess = useQuerySuccess(
@@ -100,7 +100,7 @@ const AnimeForm = ({
       backgroundImage: backgroundImage || '',
       image: image || '',
       genreNames,
-      authorName: authorName || '',
+      authorSlug: authorSlug || '',
     },
   })
 
@@ -115,7 +115,7 @@ const AnimeForm = ({
       backgroundImage:
         data.backgroundImage.length > 0 ? data.backgroundImage : null,
       originalTitle: data.originalTitle.length > 0 ? data.originalTitle : null,
-      authorName: data.authorName.length > 0 ? data.authorName : null,
+      authorSlug: data.authorSlug.length > 0 ? data.authorSlug : null,
       releaseDate: formatedDate,
       genreNames: formatedGenres,
     }
@@ -305,13 +305,13 @@ const AnimeForm = ({
             render={({ field }) => (
               <LoginInput
                 {...field}
-                hasError={!!errors.authorName?.message}
-                labelText={'Author name'}
-                id={'author-name'}
+                hasError={!!errors.authorSlug?.message}
+                labelText={'Author slug'}
+                id={'author-slug'}
                 autoComplete={'off'}
               />
             )}
-            name={'authorName'}
+            name={'authorSlug'}
           />
           <Controller
             control={control}

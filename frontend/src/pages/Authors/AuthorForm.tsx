@@ -44,7 +44,7 @@ const AuthorForm = ({
     mutationFn: (data: TFormAuthor) =>
       createData(
         {
-          englishName: data.englishName,
+          ...data,
           image: data.image.length > 0 ? data.image : null,
           originalName: data.originalName.length > 0 ? data.originalName : null,
         },
@@ -58,7 +58,7 @@ const AuthorForm = ({
       updateData(
         id,
         {
-          englishName: data.englishName,
+          ...data,
           image: data.image.length > 0 ? data.image : null,
           originalName: data.originalName.length > 0 ? data.originalName : null,
         },
@@ -78,6 +78,7 @@ const AuthorForm = ({
       image: image || '',
       englishName,
       originalName: originalName || '',
+      slug: '',
     },
   })
 
@@ -146,6 +147,19 @@ const AuthorForm = ({
               />
             )}
             name={'image'}
+          />
+          <Controller
+            control={control}
+            render={({ field }) => (
+              <LoginInput
+                {...field}
+                hasError={!!errors.slug?.message}
+                labelText={'Slug'}
+                id={'slug'}
+                autoComplete={'off'}
+              />
+            )}
+            name={'slug'}
           />
         </div>
         <LoginButton

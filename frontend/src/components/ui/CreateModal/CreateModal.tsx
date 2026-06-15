@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
-import { useEffect, useRef } from 'react'
-import { type MouseEvent } from 'react'
+import { useEffect } from 'react'
+import { type PointerEvent } from 'react'
 import { KEYCODES } from '../../../constants/keycodes.ts'
 import CloseModalButton from '../CloseModalButton/CloseModalButton.tsx'
 import { cn } from '../../../lib/utils.ts'
@@ -14,8 +14,6 @@ interface Props {
 }
 
 const CreateModal = ({ id, children, label, closeModal, className }: Props) => {
-  const layerRef = useRef<null | HTMLDivElement>(null)
-
   useEffect(() => {
     const root = document.getElementById('root') as HTMLDivElement
     root.setAttribute('inert', 'true')
@@ -36,8 +34,8 @@ const CreateModal = ({ id, children, label, closeModal, className }: Props) => {
     }
   }, [closeModal])
 
-  const closeModalLayer = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget && event.button === 0) {
       closeModal()
     }
   }
@@ -47,8 +45,7 @@ const CreateModal = ({ id, children, label, closeModal, className }: Props) => {
       className={
         'p-4 fixed inset-0 z-50 backdrop-blur-xs flex items-center justify-center'
       }
-      onClick={closeModalLayer}
-      ref={layerRef}
+      onPointerDown={handlePointerDown}
     >
       <div
         className={cn(

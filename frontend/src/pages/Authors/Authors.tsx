@@ -49,13 +49,14 @@ const Authors = () => {
   }
 
   const onHandleEdit = (author: TAuthor) => {
-    const { id, englishName, originalName, image } = author
+    const { id, englishName, originalName, image, slug } = author
     setInformation({
       data: {
         id,
         englishName,
         originalName,
         image,
+        slug,
       },
       type: 'update',
     })
@@ -90,6 +91,7 @@ const Authors = () => {
               { value: item.englishName, type: 'text' },
               { value: item.image, type: 'nullable' },
               { value: item.originalName, type: 'nullable' },
+              { value: item.slug, type: 'text' },
               { value: item.updatedAt, type: 'date' },
             ]}
             onEdit={() => onHandleEdit(item)}

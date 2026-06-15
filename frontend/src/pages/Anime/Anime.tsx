@@ -66,7 +66,7 @@ const Anime = () => {
       slug,
       episodesLength,
       episodesCount,
-      authorName,
+      authorSlug,
     } = anime
     setInformation({
       data: {
@@ -77,15 +77,15 @@ const Anime = () => {
         ageLimit,
         title,
         slug,
-        authorName,
+        authorSlug,
         episodesLength,
         episodesCount,
         genreNames: genres.map((item) => item.name).join(' '),
-        originalTitle: originalTitle || '',
+        originalTitle,
         releaseDate: dateFormater(releaseDate),
-        description: description || '',
-        image: image || '',
-        backgroundImage: backgroundImage || '',
+        description,
+        image: image,
+        backgroundImage,
       },
       type: 'update',
     })
@@ -118,7 +118,7 @@ const Anime = () => {
               { value: item.id, type: 'text' },
               { value: item.access, type: 'text' },
               { value: item.ageLimit, type: 'text' },
-              { value: item.authorName, type: 'nullable' },
+              { value: item.authorSlug, type: 'nullable' },
               { value: item.backgroundImage, type: 'nullable' },
               { value: item.createdAt, type: 'date' },
               { value: item.description, type: 'nullable' },

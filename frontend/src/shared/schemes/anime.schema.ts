@@ -8,7 +8,10 @@ import { ANIME_ACCESSES } from '../enums/anime-access.type.ts'
 
 export const dataAnimeSchema = z.object({
   ageLimit: z.enum(ANIME_AGE_LIMITS),
-  authorName: z.string().trim(),
+  authorSlug: z.union([
+    z.string().trim().length(0),
+    z.string().trim().min(3).regex(SLUG_REGEXP),
+  ]),
   description: z.string().trim().max(MAX_DESCRIPTION_LENGTH),
   episodesCount: z.number().int().nonnegative().max(MAX_INT),
   episodesLength: z.number().int().nonnegative().max(MAX_INT),

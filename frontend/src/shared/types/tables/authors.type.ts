@@ -1,5 +1,6 @@
 export type TAuthor = {
   id: string
+  slug: string
   englishName: string
   originalName: string | null
   image: string | null

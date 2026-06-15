@@ -7,6 +7,7 @@ export const authorColumns: string[] = [
   'englishName',
   'image',
   'original_name',
+  'slug',
   'updated_at',
 ]
 
@@ -16,6 +17,7 @@ export const initialAuthorData: TFormInformation<TAuthorFormData> = {
     englishName: '',
     originalName: '',
     image: '',
+    slug: '',
   },
   type: 'create',
 }
