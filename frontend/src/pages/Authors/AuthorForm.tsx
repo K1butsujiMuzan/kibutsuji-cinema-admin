@@ -32,7 +32,7 @@ const AuthorForm = ({
   operationType,
   clearCheckBoxes,
 }: Props) => {
-  const { id, image, originalName, englishName } = author
+  const { id, image, originalName, englishName, slug } = author
 
   const onSuccess = useQuerySuccess(
     QUERY_KEYS.AUTHORS,
@@ -75,10 +75,10 @@ const AuthorForm = ({
     resolver: zodResolver(dataAuthorSchema),
     mode: 'onChange',
     defaultValues: {
-      image: image || '',
       englishName,
+      slug,
+      image: image || '',
       originalName: originalName || '',
-      slug: '',
     },
   })
 
