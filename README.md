@@ -20,6 +20,8 @@ Kibutsuji Admin Panel is a desktop application built with Wails that provides an
 - React-PDF
 - XLSX
 
+**Backend: <a href="https://github.com/K1butsujiMuzan/kibutsuji-cinema">Main website and backend repo</a>**
+- Next js Route Handlers
 ## Installation
 
 ### Prerequisites
